@@ -1,0 +1,44 @@
+rules_version = '2';
+
+// Temnorid Arena. Collections follow 3d-unity-firebase's layout:
+//   users/{uid}                 a player's profile        (only that player)
+//   users/{uid}/progress/{key}  a player's saved progress (only that player)
+//   scenes/{sceneId}            Scene JSON: levels, scans (signed-in players read; the owner writes)
+//   matches/{sessionId}         results and replays       (signed-in players read; clients never write)
+// Deploy: firebase deploy --only firestore:rules
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isUser(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    match /users/{uid} {
+      allow read, write: if isUser(uid);
+
+      match /progress/{key} {
+        allow read, write: if isUser(uid);
+      }
+    }
+
+    match /scenes/{sceneId} {
+      allow read: if signedIn();
+      allow create: if signedIn() && request.resource.data.ownerUid == request.auth.uid;
+      allow update: if signedIn()
+        && resource.data.ownerUid == request.auth.uid
+        && request.resource.data.ownerUid == resource.data.ownerUid;
+      allow delete: if signedIn() && resource.data.ownerUid == request.auth.uid;
+    }
+
+    // Written by a trusted server with admin credentials, which rules do not apply to,
+    // so a player cannot fake a result.
+    match /matches/{sessionId} {
+      allow read: if signedIn();
+      allow write: if false;
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "819171248831",
+    "project_id": "temnorid-arena",
+    "storage_bucket": "temnorid-arena.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:819171248831:android:2aa2c0bdd293bbc824d40a",
+        "android_client_info": {
+          "package_name": "arena.temnorid.waw"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "819171248831-1o0mn0f34frtd4qs4a4ohh4up2i1dg58.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDoSHhhtJ8H7Crmr-mghMlXYGnaC1TrP5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "819171248831-1o0mn0f34frtd4qs4a4ohh4up2i1dg58.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "819171248831-6vd54kq3706k592ivsivt5plq027oce2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "arena.temnorid.waw"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

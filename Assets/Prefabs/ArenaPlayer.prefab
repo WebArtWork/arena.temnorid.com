@@ -1,0 +1,150 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6255839742392506483
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 889879339395230050, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 889879339395230050, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 889879339395230050, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 889879339395230050, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 889879339395230050, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 889879339395230050, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 889879339395230050, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 889879339395230050, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 889879339395230050, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 889879339395230050, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 999549266097229460, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: m_Name
+      value: ArenaPlayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503907789324653473, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: m_InScenePlaced
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503907789324653473, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1407186366
+      objectReference: {fileID: 0}
+    - target: {fileID: 2503907789324653473, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      propertyPath: InScenePlacedSourceGlobalObjectIdHash
+      value: 3664090498
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 999549266097229460, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7595390359239220713}
+    - targetCorrespondingSourceObject: {fileID: 999549266097229460, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1835184880754510504}
+    - targetCorrespondingSourceObject: {fileID: 999549266097229460, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3076160703238814070}
+  m_SourcePrefab: {fileID: 100100000, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+--- !u!114 &2471366915432726093 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8402936270494803518, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+  m_PrefabInstance: {fileID: 6255839742392506483}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6561227728440907495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94ec007aff4bf8e439c5ebbe220de3ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: ITKamianets.Engine.CharacterView.Controls::ITKamianets.Engine.CharacterView.CharacterViewControls
+--- !u!1 &6561227728440907495 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 999549266097229460, guid: 78caa0169021a13438ca41851f64d8e3, type: 3}
+  m_PrefabInstance: {fileID: 6255839742392506483}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7595390359239220713
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6561227728440907495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7512bd61cd5d0474b8d3b52adb7c1417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Temnorid.Arena.Core::Temnorid.Arena.Core.Combatant
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHealth: 100
+  maxMana: 100
+  manaRegen: 12
+  isBot: 0
+  disableWhenDead:
+  - {fileID: 2471366915432726093}
+  - {fileID: 1835184880754510504}
+--- !u!114 &1835184880754510504
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6561227728440907495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21f07a0103fddb44ad45f54d6f8ce29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Temnorid.Arena.Spells::Temnorid.Arena.Spells.SpellCaster
+  ShowTopMostFoldoutHeaderGroup: 1
+  playerControlled: 1
+--- !u!114 &3076160703238814070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6561227728440907495}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb1692507cb5d8a499b6ae54b5c74ac4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: ITKamianets.Engine.Audio::ITKamianets.Engine.Audio.FootstepPlayer
+  footstepEvent: footstep
+  landEvent: land
+  defaultSurface: default
+  stride: 0.75
+  sprintStrideScale: 1.3
+  crouchVolume: 0.35
+  minLandSpeed: 3
+  loudLandSpeed: 12
