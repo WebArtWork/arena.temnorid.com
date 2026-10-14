@@ -18,6 +18,14 @@ Not used by this game: `3d-unity-interaction`, `3d-unity-spatial`, `3d-unity-xr`
 
 Scenes, prefabs wiring the packages together, and build settings live here; reusable code lives in the packages.
 
+### Generated models
+
+`Assets/Models/` contains a first-pass rigged mage, eleven arena props, and floor/wall
+PBR texture sets from `models-to-do.md`. Actual mesh previews, editable Blender
+sources, validation reports, and import notes are in `output/mage/` and `output/arena/`;
+the complete prop contact sheet is `output/arena/asset-preview-sheet.jpg`.
+The assets still need catalog wiring and verification inside Unity.
+
 ### Setup
 
 1. Clone this repo next to the package repos, so the folders are siblings (`3d/temnorid-arena`, `3d/3d-unity-core`, ...).

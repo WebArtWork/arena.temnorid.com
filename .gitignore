@@ -109,3 +109,8 @@ InitTestScene*.unity*
 .firebase/
 firebase-debug.log
 firestore-debug.log
+
+# Generated asset tooling dependencies and download caches
+/output/mage/validation/node_modules/
+/output/mage/npm-cache/
+__pycache__/

@@ -1,0 +1,346 @@
+[
+  {
+    "name": "arena-pillar",
+    "triangles": 1796,
+    "budget": [
+      1000,
+      3000
+    ],
+    "size_xyz_gltf": [
+      1.2,
+      4,
+      1.2
+    ],
+    "bounds_blender": [
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        0.0,
+        4.0
+      ]
+    ],
+    "materials": [
+      "arena-pbr"
+    ],
+    "helpers": []
+  },
+  {
+    "name": "arena-broken-pillar",
+    "triangles": 1162,
+    "budget": [
+      1000,
+      3000
+    ],
+    "size_xyz_gltf": [
+      1.2,
+      2.2,
+      1.2
+    ],
+    "bounds_blender": [
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        0.0,
+        2.200000047683716
+      ]
+    ],
+    "materials": [
+      "arena-pbr"
+    ],
+    "helpers": []
+  },
+  {
+    "name": "arena-crate",
+    "triangles": 550,
+    "budget": [
+      300,
+      1000
+    ],
+    "size_xyz_gltf": [
+      1.2,
+      1.2,
+      1.2
+    ],
+    "bounds_blender": [
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        0.0,
+        1.2000000476837158
+      ]
+    ],
+    "materials": [
+      "arena-pbr"
+    ],
+    "helpers": []
+  },
+  {
+    "name": "arena-platform",
+    "triangles": 2502,
+    "budget": [
+      1500,
+      4000
+    ],
+    "size_xyz_gltf": [
+      6,
+      1.2,
+      6
+    ],
+    "bounds_blender": [
+      [
+        -3.0,
+        3.0
+      ],
+      [
+        -3.0,
+        3.0
+      ],
+      [
+        0.0,
+        1.2000000476837158
+      ]
+    ],
+    "materials": [
+      "arena-pbr-2k"
+    ],
+    "helpers": []
+  },
+  {
+    "name": "arena-wall-segment",
+    "triangles": 1536,
+    "budget": [
+      800,
+      2000
+    ],
+    "size_xyz_gltf": [
+      4,
+      4,
+      0.6
+    ],
+    "bounds_blender": [
+      [
+        -2.0,
+        2.0
+      ],
+      [
+        -0.30000001192092896,
+        0.30000001192092896
+      ],
+      [
+        0.0,
+        4.0
+      ]
+    ],
+    "materials": [
+      "arena-pbr-2k"
+    ],
+    "helpers": []
+  },
+  {
+    "name": "arena-low-wall",
+    "triangles": 604,
+    "budget": [
+      500,
+      1500
+    ],
+    "size_xyz_gltf": [
+      3,
+      1,
+      0.6
+    ],
+    "bounds_blender": [
+      [
+        -1.5,
+        1.5
+      ],
+      [
+        -0.30000001192092896,
+        0.30000001192092896
+      ],
+      [
+        0.0,
+        1.0
+      ]
+    ],
+    "materials": [
+      "arena-pbr"
+    ],
+    "helpers": []
+  },
+  {
+    "name": "arena-rubble",
+    "triangles": 836,
+    "budget": [
+      500,
+      1500
+    ],
+    "size_xyz_gltf": [
+      2,
+      0.5,
+      1.5
+    ],
+    "bounds_blender": [
+      [
+        -1.0,
+        1.0
+      ],
+      [
+        -0.75,
+        0.75
+      ],
+      [
+        0.0,
+        0.5
+      ]
+    ],
+    "materials": [
+      "arena-pbr"
+    ],
+    "helpers": []
+  },
+  {
+    "name": "arena-stairs",
+    "triangles": 1120,
+    "budget": [
+      500,
+      1500
+    ],
+    "size_xyz_gltf": [
+      3,
+      1.2,
+      2.4
+    ],
+    "bounds_blender": [
+      [
+        -1.5,
+        1.5
+      ],
+      [
+        -1.2000000476837158,
+        1.2000000476837158
+      ],
+      [
+        0.0,
+        1.2000000476837158
+      ]
+    ],
+    "materials": [
+      "arena-pbr"
+    ],
+    "helpers": []
+  },
+  {
+    "name": "arena-brazier",
+    "triangles": 1456,
+    "budget": [
+      800,
+      2000
+    ],
+    "size_xyz_gltf": [
+      0.8,
+      1.4,
+      0.8
+    ],
+    "bounds_blender": [
+      [
+        -0.4000000059604645,
+        0.4000000059604645
+      ],
+      [
+        -0.4000000059604645,
+        0.4000000059604645
+      ],
+      [
+        0.0,
+        1.399999976158142
+      ]
+    ],
+    "materials": [
+      "arena-pbr"
+    ],
+    "helpers": [
+      "flame"
+    ]
+  },
+  {
+    "name": "arena-spawn-circle",
+    "triangles": 12,
+    "budget": [
+      0,
+      499
+    ],
+    "size_xyz_gltf": [
+      2,
+      0.02,
+      2
+    ],
+    "bounds_blender": [
+      [
+        -1.0,
+        1.0
+      ],
+      [
+        -1.0,
+        1.0
+      ],
+      [
+        0.0,
+        0.019999999552965164
+      ]
+    ],
+    "materials": [
+      "spawn-circle"
+    ],
+    "helpers": []
+  },
+  {
+    "name": "arena-banner",
+    "triangles": 548,
+    "budget": [
+      300,
+      1000
+    ],
+    "size_xyz_gltf": [
+      1.2,
+      3,
+      0.3
+    ],
+    "bounds_blender": [
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        -0.15000000596046448,
+        0.15000000596046448
+      ],
+      [
+        0.0,
+        3.0
+      ]
+    ],
+    "materials": [
+      "arena-pbr",
+      "accent"
+    ],
+    "helpers": []
+  }
+]

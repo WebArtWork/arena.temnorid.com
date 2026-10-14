@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "checked": [
+    "stone-floor_basecolor.png",
+    "stone-floor_normal.png",
+    "stone-floor_roughness.png",
+    "stone-wall_basecolor.png",
+    "stone-wall_normal.png",
+    "stone-wall_roughness.png"
+  ],
+  "floor": "horizontal and vertical edges match",
+  "wall": "horizontal edges match"
+}

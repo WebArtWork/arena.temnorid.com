@@ -1,5 +1,12 @@
 # Temnorid Arena: models to make
 
+**Delivery status (2026-10-15):** all 14 entries now have a first-pass asset in
+`Assets/Models/`: the rigged mage, eleven arena props, and both stone texture sets.
+See `output/mage/README.md` and `output/arena/README.md` for previews, validation
+reports, rebuild instructions, and remaining polish/integration work. These
+files are generated prototypes; asset-catalog wiring and in-game Unity checks
+remain to be done.
+
 A work list for generating the game's 3D models. Each entry is self-contained: what it is, its exact
 size, how it must be oriented, its budget, and a prompt to start from. Work top to bottom; the first
 group replaces the grey shapes the game shows today.

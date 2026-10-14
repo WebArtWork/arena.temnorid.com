@@ -1,0 +1,304 @@
+[
+  {
+    "name": "arena-pillar",
+    "triangles": 1796,
+    "bounds_gltf": [
+      [
+        -0.6000000238418579,
+        0,
+        -0.6000000238418579
+      ],
+      [
+        0.6000000238418579,
+        4,
+        0.6000000238418579
+      ]
+    ],
+    "bytes": 1730852,
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-broken-pillar",
+    "triangles": 1162,
+    "bounds_gltf": [
+      [
+        -0.6000000238418579,
+        0,
+        -0.6000000238418579
+      ],
+      [
+        0.6000000238418579,
+        2.200000047683716,
+        0.6000000238418579
+      ]
+    ],
+    "bytes": 1629868,
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-crate",
+    "triangles": 550,
+    "bounds_gltf": [
+      [
+        -0.6000000238418579,
+        0,
+        -0.6000000238418579
+      ],
+      [
+        0.6000000238418579,
+        1.2000000476837158,
+        0.6000000238418579
+      ]
+    ],
+    "bytes": 1532276,
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-platform",
+    "triangles": 2502,
+    "bounds_gltf": [
+      [
+        -3,
+        0,
+        -3
+      ],
+      [
+        3,
+        1.2000000476837158,
+        3
+      ]
+    ],
+    "bytes": 4340604,
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-wall-segment",
+    "triangles": 1536,
+    "bounds_gltf": [
+      [
+        -2,
+        0,
+        -0.30000001192092896
+      ],
+      [
+        2,
+        4,
+        0.30000001192092896
+      ]
+    ],
+    "bytes": 4185072,
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-low-wall",
+    "triangles": 604,
+    "bounds_gltf": [
+      [
+        -1.5,
+        0,
+        -0.30000001192092896
+      ],
+      [
+        1.5,
+        1,
+        0.30000001192092896
+      ]
+    ],
+    "bytes": 1560228,
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-rubble",
+    "triangles": 836,
+    "bounds_gltf": [
+      [
+        -1,
+        0,
+        -0.75
+      ],
+      [
+        1,
+        0.5,
+        0.75
+      ]
+    ],
+    "bytes": 1611628,
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-stairs",
+    "triangles": 1120,
+    "bounds_gltf": [
+      [
+        -1.5,
+        0,
+        -1.2000000476837158
+      ],
+      [
+        1.5,
+        1.2000000476837158,
+        1.2000000476837158
+      ]
+    ],
+    "bytes": 1638940,
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-brazier",
+    "triangles": 1456,
+    "bounds_gltf": [
+      [
+        -0.4000000059604645,
+        0,
+        -0.4000000059604645
+      ],
+      [
+        0.4000000059604645,
+        1.399999976158142,
+        0.4000000059604645
+      ]
+    ],
+    "bytes": 1632952,
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "NODE_EMPTY",
+          "message": "Empty node encountered.",
+          "severity": 2,
+          "pointer": "/nodes/0"
+        }
+      ],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-spawn-circle",
+    "triangles": 12,
+    "bounds_gltf": [
+      [
+        -1,
+        0,
+        -1
+      ],
+      [
+        1,
+        0.019999999552965164,
+        1
+      ]
+    ],
+    "bytes": 48672,
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "UNUSED_MESH_TANGENT",
+          "message": "Tangents are not used because the material has no normal texture.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+        }
+      ],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-banner",
+    "triangles": 548,
+    "bounds_gltf": [
+      [
+        -0.6000000238418579,
+        0,
+        -0.15000000596046448
+      ],
+      [
+        0.6000000238418579,
+        3,
+        0.15000000596046448
+      ]
+    ],
+    "bytes": 1557116,
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 2,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "UNUSED_MESH_TANGENT",
+          "message": "Tangents are not used because the material has no normal texture.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/1/attributes/TANGENT"
+        },
+        {
+          "code": "UNUSED_OBJECT",
+          "message": "This object may be unused.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/1/attributes/TEXCOORD_0"
+        }
+      ],
+      "truncated": false
+    }
+  }
+]

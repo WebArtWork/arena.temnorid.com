@@ -1,0 +1,44 @@
+{
+  "triangles": 23500,
+  "bones": 52,
+  "clips": [
+    "idle",
+    "walk",
+    "run",
+    "strafe-left",
+    "strafe-right",
+    "walk-back",
+    "crouch-idle",
+    "crouch-walk",
+    "jump-start",
+    "fall",
+    "land",
+    "cast-projectile",
+    "cast-nova",
+    "cast-shield",
+    "cast-blink",
+    "hit",
+    "death"
+  ],
+  "bounds_blender": [
+    [
+      -0.3449999988079071,
+      0.3449999988079071
+    ],
+    [
+      -0.19900000095367432,
+      0.14655226469039917
+    ],
+    [
+      0.0,
+      1.7999999523162842
+    ]
+  ],
+  "glb_bytes": 7498472,
+  "notes": [
+    "Procedural prototype, not a reconstruction of the concept image.",
+    "Basic procedural animation; requires animation and deformation polish.",
+    "Vertex color palette multiplied by embedded 2048 basecolor microfabric texture.",
+    "No dedicated baked normal or metallic-roughness texture maps."
+  ]
+}
