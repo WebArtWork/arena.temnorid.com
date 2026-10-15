@@ -1,0 +1,151 @@
+{
+	"$comment": "Every repo of the IT-Kamianets 3D Engine and the Temnorid games. tools/setup.mjs clones a repo and, by reading its package.json / Packages/manifest.json, every repo it needs. `requires` lists links that are not Unity package dependencies (e.g. a package that implements a schema). `path` (optional, default: the name) is where the repo lives in the workspace. `org` (optional, default: the top-level `org`) is the GitHub organization it lives in. Keep this list current: tools/new-package.mjs adds new packages automatically.",
+	"org": "IT-Kamianets",
+	"packageIdPrefix": "com.itkamianets.",
+	"repos": [
+		{
+			"name": "3d-scene-schema",
+			"kind": "schema",
+			"description": "Where things are: scenes as engine-independent JSON."
+		},
+		{
+			"name": "3d-asset-schema",
+			"kind": "schema",
+			"description": "What things are: models, materials, textures."
+		},
+		{
+			"name": "3d-network-schema",
+			"kind": "schema",
+			"description": "What happens between players: sessions, messages, results, replays."
+		},
+		{
+			"name": "3d-unity-core",
+			"kind": "engine",
+			"description": "Shared base: configuration, services, events, logging, startup."
+		},
+		{
+			"name": "3d-unity-scene",
+			"kind": "engine",
+			"description": "Loads Scene JSON into Unity and saves changes back.",
+			"requires": [
+				"3d-scene-schema"
+			]
+		},
+		{
+			"name": "3d-unity-input",
+			"kind": "engine",
+			"description": "One set of actions for mouse, keyboard, touch, gamepad and VR."
+		},
+		{
+			"name": "3d-unity-character",
+			"kind": "engine",
+			"description": "Reusable player character: walking, running, jumping, slopes."
+		},
+		{
+			"name": "3d-unity-assets",
+			"kind": "engine",
+			"description": "Loads models, materials and textures by id.",
+			"requires": [
+				"3d-asset-schema"
+			]
+		},
+		{
+			"name": "3d-unity-audio",
+			"kind": "engine",
+			"description": "3D sound, sound events, volume groups, music."
+		},
+		{
+			"name": "3d-unity-interaction",
+			"kind": "engine",
+			"description": "Object editing: select, move, rotate, scale, undo."
+		},
+		{
+			"name": "3d-unity-spatial",
+			"kind": "engine",
+			"description": "Turns a Meta Quest room scan into a scene."
+		},
+		{
+			"name": "3d-unity-xr",
+			"kind": "engine",
+			"description": "Meta Quest and VR: controllers, hands, locomotion, in-VR UI."
+		},
+		{
+			"name": "3d-unity-firebase",
+			"kind": "engine",
+			"description": "Sign-in, saved progress and stored scenes in Firebase."
+		},
+		{
+			"name": "3d-unity-network",
+			"kind": "engine",
+			"description": "Real-time multiplayer, server-authoritative.",
+			"requires": [
+				"3d-network-schema"
+			]
+		},
+		{
+			"name": "3d-constructor-character-view-camera",
+			"kind": "constructor",
+			"constructor": "character-view",
+			"description": "First- and third-person camera."
+		},
+		{
+			"name": "3d-constructor-character-view-controls",
+			"kind": "constructor",
+			"constructor": "character-view",
+			"description": "Camera-relative movement, look to turn."
+		},
+		{
+			"name": "3d-constructor-vr-controls",
+			"kind": "constructor",
+			"description": "VR controls for the IT-Kamianets 3D Engine: XR controllers to CharacterCommand (stick movement relative to the head, turning, room-scale steps, real crouching) and the hand aim ray, the VR counterpart of the character-view controls."
+		},
+		{
+			"name": "3d-constructor-character-view-template",
+			"kind": "template",
+			"constructor": "character-view",
+			"description": "Starter Unity project for first- and third-person games."
+		},
+		{
+			"name": "temnorid-arena",
+			"path": ".",
+			"org": "WebArtWork",
+			"kind": "game",
+			"description": "Temnorid Arena: round-based team matches like CS2, with spells. The Unity project."
+		},
+		{
+			"name": "temnorid-arena-core",
+			"org": "WebArtWork",
+			"kind": "game-package",
+			"description": "Rounds, teams, economy and match state."
+		},
+		{
+			"name": "temnorid-arena-spells",
+			"org": "WebArtWork",
+			"kind": "game-package",
+			"description": "Spells instead of guns: casting, mana, hits."
+		},
+		{
+			"name": "temnorid-arena-maps",
+			"org": "WebArtWork",
+			"kind": "game-package",
+			"description": "Arenas: spawns and objective sites."
+		},
+		{
+			"name": "temnorid-arena-hud",
+			"org": "WebArtWork",
+			"kind": "game-package",
+			"description": "Health, mana, spells, spell shop, scoreboard."
+		},
+		{
+			"name": "temnorid-arena-menus",
+			"org": "WebArtWork",
+			"kind": "game-package",
+			"description": "Start, find a match, lobby, settings, results."
+		},
+		{
+			"name": "3d.itkamianets.com",
+			"kind": "website",
+			"description": "Website, catalog and docs (Angular, prerendered)."
+		}
+	]
+}

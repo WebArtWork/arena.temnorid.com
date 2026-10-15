@@ -3,6 +3,8 @@ using ITKamianets.Engine.Audio;
 using ITKamianets.Engine.Character;
 using ITKamianets.Engine.CharacterView;
 using ITKamianets.Engine.Network;
+using ITKamianets.Engine.VR;
+using ITKamianets.Engine.XR;
 using Temnorid.Arena.Core;
 using Temnorid.Arena.Hud;
 using Temnorid.Arena.Maps;
@@ -31,6 +33,7 @@ public static class ArenaSceneBuilder
     [MenuItem("Temnorid/Build Arena Scene")]
     public static void Build()
     {
+        ArenaArtBuilder.Build();
         BuildPlayer();
         BuildBot();
         BuildMatch();
@@ -57,7 +60,26 @@ public static class ArenaSceneBuilder
         var caster = player.AddComponent<SpellCaster>();
         player.AddComponent<FootstepPlayer>();
 
-        Set(combatant, "disableWhenDead", new Object[] { player.GetComponent<CharacterViewControls>(), caster });
+        // The mage replaces the base prefab's capsule body.
+        player.transform.Find("Body").gameObject.SetActive(false);
+        player.transform.Find("Nose").gameObject.SetActive(false);
+        AddMage(player);
+
+        // Flat screens: the camera-relative controls. VR: the XR rig, VR controls and the casting
+        // hand. The switch picks one set on the owner's copy; other copies run neither.
+        var flat = player.GetComponent<CharacterViewControls>();
+        var rig = player.AddComponent<XRCharacterRig>();
+        var vr = player.AddComponent<VRControls>();
+        var aim = player.AddComponent<HandAim>();
+        player.AddComponent<SpellAimVisual>();
+        var mode = player.AddComponent<XRModeSwitch>();
+        flat.enabled = rig.enabled = vr.enabled = aim.enabled = mode.enabled = false;
+        Set(mode, "vrOnly", new Object[] { rig, vr, aim });
+        Set(mode, "flatOnly", new Object[] { flat });
+        Set(player.GetComponent<NetworkCharacter>(), "ownerOnly", new Object[] { mode });
+
+        Set(combatant, "disableWhenDead", new Object[] { flat, vr, caster });
+        Set(combatant, "hideBodyWhenDead", false);
 
         PrefabUtility.SaveAsPrefabAsset(player, PlayerPath);
         Object.DestroyImmediate(player);
@@ -78,21 +100,27 @@ public static class ArenaSceneBuilder
         Set(combatant, "isBot", true);
         Set(combatant, "disableWhenDead", new Object[] { brain });
         Set(caster, "playerControlled", false);
-
-        const string materialPath = "Assets/Prefabs/ArenaBot.mat";
-        var red = AssetDatabase.LoadAssetAtPath<Material>(materialPath);
-        if (red == null)
-        {
-            red = new Material(Shader.Find("Universal Render Pipeline/Lit")) { color = new Color(0.75f, 0.2f, 0.2f) };
-            red.SetColor("_BaseColor", red.color);
-            AssetDatabase.CreateAsset(red, materialPath);
-        }
-
-        Part(bot, PrimitiveType.Capsule, "Body", new Vector3(0f, 0.9f, 0f), new Vector3(0.7f, 0.9f, 0.7f), red);
-        Part(bot, PrimitiveType.Cube, "Nose", new Vector3(0f, 1.5f, 0.35f), new Vector3(0.15f, 0.15f, 0.3f), red);
+        Set(combatant, "hideBodyWhenDead", false);
+        AddMage(bot);
 
         PrefabUtility.SaveAsPrefabAsset(bot, BotPath);
         Object.DestroyImmediate(bot);
+    }
+
+    // The mage model with its animation controller, driven by CharacterAnimator (movement) and
+    // ArenaCharacterVisuals (casts, hits, death, accent color).
+    private static void AddMage(GameObject character)
+    {
+        var model = (GameObject)PrefabUtility.InstantiatePrefab(AssetDatabase.LoadAssetAtPath<GameObject>(ArenaArtBuilder.MagePath));
+        model.name = "Model";
+        model.transform.SetParent(character.transform, false);
+        var animator = model.GetComponent<Animator>();
+        animator.runtimeAnimatorController = AssetDatabase.LoadAssetAtPath<RuntimeAnimatorController>(ArenaArtBuilder.ControllerPath);
+        animator.applyRootMotion = false;
+        animator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+
+        character.AddComponent<CharacterAnimator>();
+        character.AddComponent<ArenaCharacterVisuals>();
     }
 
     // Spawned at runtime by ArenaMatchSpawner: a scene-placed NetworkObject needs editor-made ids.
@@ -114,6 +142,7 @@ public static class ArenaSceneBuilder
         var camera = Camera.main;
         camera.nearClipPlane = 0.05f;
         camera.gameObject.AddComponent<CharacterViewCamera>();
+        camera.gameObject.AddComponent<XRHeadDriver>();
 
         var session = new GameObject("NetworkSession").AddComponent<NetworkSession>();
         Set(session, "playerPrefab", AssetDatabase.LoadAssetAtPath<GameObject>(PlayerPath));
@@ -123,6 +152,9 @@ public static class ArenaSceneBuilder
         var map = new GameObject("Arena map").AddComponent<ArenaMap>();
         Set(map, "arena", AssetDatabase.LoadAssetAtPath<TextAsset>(ArenaJson));
         Set(map, "assetLibraries", new Object[] { AssetDatabase.LoadAssetAtPath<TextAsset>(PropsJson) });
+        Set(map, "catalogs", new Object[] { AssetDatabase.LoadAssetAtPath<ITKamianets.Engine.Assets.AssetCatalog>(ArenaArtBuilder.CatalogPath) });
+        Set(map, "floorMaterial", AssetDatabase.LoadAssetAtPath<Material>(ArenaArtBuilder.FloorMaterialPath));
+        Set(map, "wallMaterial", AssetDatabase.LoadAssetAtPath<Material>(ArenaArtBuilder.WallMaterialPath));
 
         var spawner = new GameObject("Arena match").AddComponent<ArenaMatchSpawner>();
         Set(spawner, "matchPrefab", AssetDatabase.LoadAssetAtPath<GameObject>(MatchPath));
@@ -144,17 +176,6 @@ public static class ArenaSceneBuilder
         }
 
         EditorBuildSettings.scenes = scenes.ToArray();
-    }
-
-    private static void Part(GameObject parent, PrimitiveType type, string name, Vector3 position, Vector3 scale, Material material)
-    {
-        var part = GameObject.CreatePrimitive(type);
-        part.name = name;
-        Object.DestroyImmediate(part.GetComponent<Collider>());
-        part.transform.SetParent(parent.transform, false);
-        part.transform.localPosition = position;
-        part.transform.localScale = scale;
-        part.GetComponent<Renderer>().sharedMaterial = material;
     }
 
     private static void Set(Object target, string field, object value)

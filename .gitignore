@@ -114,3 +114,23 @@ firestore-debug.log
 /output/mage/validation/node_modules/
 /output/mage/npm-cache/
 __pycache__/
+
+# ---- Workspace ----
+# This repo is the workspace root: the Temnorid Arena project, plus the agent guide (CLAUDE.md),
+# the repo list (workspace.json) and the setup tools. Every package, the website and the
+# constructor starters are their own git repos cloned into this folder (node tools/setup.mjs);
+# the manifest loads the packages from them (file:../<repo>). They are ignored here.
+/3d-*/
+/temnorid-arena-*/
+/3d.itkamianets.com/
+/constructors/
+
+# Claude Code: shared project settings are tracked; personal overrides are not.
+/.claude/settings.local.json
+/.claude/worktrees/
+
+# Tools
+node_modules/
+Thumbs.db
+desktop.ini
+.DS_Store

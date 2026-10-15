@@ -31,6 +31,8 @@ wrong way or be the wrong size.
 | Materials | PBR metallic-roughness (glTF standard). **One material per prop** where possible |
 | Textures | power of two (512, 1024, 2048), PNG or JPG; base color in sRGB; normal map optional |
 | Contents | the model only: no cameras, lights, ground planes or hidden helper objects |
+| Vertex colors | **none** (no `COLOR_0` / `COLOR_1`; Blender's "Color Attributes" export off) |
+| Skinned meshes | all material parts **share one vertex set**: one mesh, one set of vertices, one index list per material (Blender: export the character as a single joined mesh). Separate vertex data per material makes Unity's GLB importer fail |
 | Names | lowercase with dashes, as given below (`arena-pillar.glb`) |
 
 **Size must match the bounds below.** The game already places these objects using these exact
@@ -43,7 +45,7 @@ weathered wood, aged bronze/iron accents, small glowing arcane runes (cyan-viole
 saturated color besides the spells. No text or logos. Avoid fine detail thinner than ~3 cm (it
 shimmers at game distance).
 
-**Where files go:** `temnorid-arena/Assets/Models/<group>/<file>.glb` (create the folders). After
+**Where files go:** `Assets/Models/<group>/<file>.glb` (create the folders). After
 delivery, Claude wires each file to its asset id, so the game swaps the placeholder for the model.
 
 ## Priority
@@ -64,6 +66,7 @@ delivery, Claude wires each file to its asset id, so the game swaps the placehol
 | 12 | `arena/brazier` | `arena-brazier.glb` | arena | (light source, mood) |
 | 13 | `arena/spawn-circle` | `arena-spawn-circle.glb` | arena | (marks spawn points) |
 | 14 | `arena/banner` | `arena-banner.glb` | arena | (decoration on walls) |
+| 15 | app icon | `AppIcon.png` | branding | the generated placeholder icon (needed for the App Store) |
 
 ---
 
@@ -343,6 +346,50 @@ recolor it. **Budget:** 300–1 000 triangles, 1024.
 
 ---
 
+## 15. App icon — `branding/app-icon`
+
+**File:** `Assets/Branding/AppIcon.png` (replace the placeholder made by
+`Tools~/make-placeholder-icon.cjs`; keep the file name, the project already uses it as the icon of
+every platform).
+
+**Used for:** the game's icon on iPhone, Android and Windows, and in the App Store / Google Play.
+
+**Format:** 1024 × 1024 PNG, **RGB without transparency** (the App Store rejects icons with an
+alpha channel), square corners (iOS and Android round them themselves), no text, readable at
+60 × 60 pixels: one bold shape, strong contrast. Keep the important part inside the centre 80 %
+(Android crops adaptive icons to a circle or squircle).
+
+**Prompt:**
+> A game app icon for a dark fantasy arena spell-fighting game: a glowing orange fireball held
+> between two stylized mage hands, inside a thin golden rune circle, on a dark blue-grey stone
+> background. Bold silhouette, high contrast, painterly but clean, no text, no border, square
+> 1024×1024, readable at small sizes.
+
+---
+
+## 16. VR hands — `characters/vr-hands`
+
+**Files:** `Assets/Models/characters/vr-hand-left.glb`, `vr-hand-right.glb`.
+
+**Used for:** the player's own hands in VR (Meta Quest), shown where the controllers are, instead
+of today's grey spheres. Only the local player sees them; other players see the mage.
+
+**Size and orientation:** a real adult hand in a mage's leather glove (palm about 9 × 10 cm,
+fingers 8 cm), **front +Z = where the controller points** (the fingers point along +Z when the hand
+is open), +Y up (back of the hand), origin at the **centre of the palm** where a controller is
+held. Left and right are mirror images.
+
+**Budget:** 3,000 triangles each, one 1024 texture set shared by both. Rigged (wrist and three
+bones per finger) with clips `Idle` (relaxed), `Grip` (closed around a controller), `Point` (index
+out), `Cast` (open, fingers spread); no root motion.
+
+**Prompt:**
+> A pair of stylized fantasy mage hands in dark leather fingerless gloves with small glowing
+> orange runes on the back, for a VR game, low poly but clean, PBR, rigged, matching a robed
+> fire mage.
+
+---
+
 ## Checklist per delivered model
 
 - [ ] GLB, one file per asset, named as above, in `Assets/Models/<group>/`
@@ -350,4 +397,7 @@ recolor it. **Budget:** 300–1 000 triangles, 1024.
 - [ ] Origin at bottom centre, +Y up, front +Z, transforms applied
 - [ ] Triangle count inside the budget; textures power of two and embedded
 - [ ] Character: humanoid rig, all clips named exactly as listed, no root motion
+- [ ] Character: no vertex colors, one shared vertex set across materials. If a delivered file breaks
+      either rule, `node tools/glb-fix-skinned.cjs in.glb out.glb --strip-colors` (in the workspace
+      root) fixes it without changing how it looks
 - [ ] Tell Claude which files arrived; it connects each one to its asset id and checks it in the arena

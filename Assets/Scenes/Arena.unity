@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &292154875
+--- !u!1 &146036740
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,54 +127,135 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 292154877}
-  - component: {fileID: 292154876}
+  - component: {fileID: 146036745}
+  - component: {fileID: 146036744}
+  - component: {fileID: 146036743}
+  - component: {fileID: 146036742}
+  - component: {fileID: 146036741}
   m_Layer: 0
-  m_Name: NetworkSession
-  m_TagString: Untagged
+  m_Name: Main Camera
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &292154876
+--- !u!114 &146036741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 292154875}
+  m_GameObject: {fileID: 146036740}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08215b675e267d345960eb3ea1cd118d, type: 3}
+  m_Script: {fileID: 11500000, guid: d6ecd54fafa6b7741a62415ee308aa3c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: ITKamianets.Engine.Network::ITKamianets.Engine.Network.NetworkSession
-  playerPrefab: {fileID: 6561227728440907495, guid: da30b84103643a5458a636a289d31c5d, type: 3}
-  networkPrefabs:
-  - {fileID: 6690746346820473026, guid: e6e3eabeed446544ea356b21e74bf5a0, type: 3}
-  - {fileID: 8198727105111014532, guid: 8b69ce9bde276254f8030c96acb3b942, type: 3}
-  port: 7777
-  tickRate: 60
-  startFromCommandLine: 1
-  disconnectTimeout: 10
-  mode: temnorid-arena.deathmatch
-  displayName: Player
-  maxPlayers: 0
---- !u!4 &292154877
+  m_EditorClassIdentifier: ITKamianets.Engine.XR::ITKamianets.Engine.XR.XRHeadDriver
+--- !u!114 &146036742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146036740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc7b3fb6809f9e4ba7bc996c246566a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: ITKamianets.Engine.CharacterView.Camera::ITKamianets.Engine.CharacterView.CharacterViewCamera
+  target: {fileID: 0}
+  settings:
+    Sensitivity: 1
+    MinPitch: -85
+    MaxPitch: 85
+    FieldOfView: 75
+    StartView: 0
+    AllowToggle: 1
+    ViewTransitionSpeed: 6
+    HideTargetInFirstPerson: 1
+    Distance: 3.5
+    ShoulderOffset: {x: 0.5, y: 0.15}
+    CollisionRadius: 0.2
+    CollisionLayers:
+      serializedVersion: 2
+      m_Bits: 4294967295
+    CollisionRecoverySpeed: 5
+    LockCursor: 1
+--- !u!81 &146036743
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146036740}
+  m_Enabled: 1
+--- !u!20 &146036744
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146036740}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.05
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: -1
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
+--- !u!4 &146036745
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 292154875}
+  m_GameObject: {fileID: 146036740}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &336524467
+--- !u!1 &541668944
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -182,9 +263,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 336524470}
-  - component: {fileID: 336524469}
-  - component: {fileID: 336524468}
+  - component: {fileID: 541668947}
+  - component: {fileID: 541668946}
+  - component: {fileID: 541668945}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -192,13 +273,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &336524468
+--- !u!114 &541668945
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336524467}
+  m_GameObject: {fileID: 541668944}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
@@ -221,13 +302,13 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
---- !u!108 &336524469
+--- !u!108 &541668946
 Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336524467}
+  m_GameObject: {fileID: 541668944}
   m_Enabled: 1
   serializedVersion: 13
   m_Type: 1
@@ -286,13 +367,13 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
---- !u!4 &336524470
+--- !u!4 &541668947
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 336524467}
+  m_GameObject: {fileID: 541668944}
   serializedVersion: 2
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
@@ -301,7 +382,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
---- !u!1 &620108956
+--- !u!1 &565914030
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -309,8 +390,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 620108958}
-  - component: {fileID: 620108957}
+  - component: {fileID: 565914032}
+  - component: {fileID: 565914031}
   m_Layer: 0
   m_Name: Arena map
   m_TagString: Untagged
@@ -318,13 +399,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &620108957
+--- !u!114 &565914031
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 620108956}
+  m_GameObject: {fileID: 565914030}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fb5edaa18c5a4a246a40b6fc092c508f, type: 3}
@@ -333,14 +414,18 @@ MonoBehaviour:
   arena: {fileID: 4900000, guid: 11edd106753290d4e8de4a532e91c6b2, type: 3}
   assetLibraries:
   - {fileID: 4900000, guid: 439b66075d4e89d4d8a211fa9654952f, type: 3}
+  catalogs:
+  - {fileID: 11400000, guid: c51a162db2315c24b85cebbd2dd9c1e4, type: 2}
+  floorMaterial: {fileID: 2100000, guid: d00404d7b5a6cf94c8e19d691388d527, type: 2}
+  wallMaterial: {fileID: 2100000, guid: 22fe94b27a13d8a458a10822fc090cc3, type: 2}
   surfaceMaterial: {fileID: 0}
---- !u!4 &620108958
+--- !u!4 &565914032
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 620108956}
+  m_GameObject: {fileID: 565914030}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -349,7 +434,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &710143782
+--- !u!1 &894270123
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -357,177 +442,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 710143784}
-  - component: {fileID: 710143783}
-  m_Layer: 0
-  m_Name: Menus
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &710143783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 710143782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a3bf7918c72cc854981e2fbc3ef46dc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Temnorid.Arena.Menus::Temnorid.Arena.Menus.ArenaMenus
-  firebaseConfig: {fileID: 4900000, guid: 8310a995351b08240998470d40fd5d9b, type: 3}
-  defaultAddress: 127.0.0.1
---- !u!4 &710143784
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 710143782}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1442735468
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1442735472}
-  - component: {fileID: 1442735471}
-  - component: {fileID: 1442735470}
-  - component: {fileID: 1442735469}
-  m_Layer: 0
-  m_Name: Main Camera
-  m_TagString: MainCamera
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1442735469
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1442735468}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cc7b3fb6809f9e4ba7bc996c246566a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: ITKamianets.Engine.CharacterView.Camera::ITKamianets.Engine.CharacterView.CharacterViewCamera
-  target: {fileID: 0}
-  settings:
-    Sensitivity: 1
-    MinPitch: -85
-    MaxPitch: 85
-    FieldOfView: 75
-    StartView: 0
-    AllowToggle: 1
-    ViewTransitionSpeed: 6
-    HideTargetInFirstPerson: 1
-    Distance: 3.5
-    ShoulderOffset: {x: 0.5, y: 0.15}
-    CollisionRadius: 0.2
-    CollisionLayers:
-      serializedVersion: 2
-      m_Bits: 4294967295
-    CollisionRecoverySpeed: 5
-    LockCursor: 1
---- !u!81 &1442735470
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1442735468}
-  m_Enabled: 1
---- !u!20 &1442735471
-Camera:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1442735468}
-  m_Enabled: 1
-  serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
-  m_projectionMatrixMode: 1
-  m_GateFitMode: 2
-  m_FOVAxisMode: 0
-  m_Iso: 200
-  m_ShutterSpeed: 0.005
-  m_Aperture: 16
-  m_FocusDistance: 10
-  m_FocalLength: 50
-  m_BladeCount: 5
-  m_Curvature: {x: 2, y: 11}
-  m_BarrelClipping: 0.25
-  m_Anamorphism: 0
-  m_SensorSize: {x: 36, y: 24}
-  m_LensShift: {x: 0, y: 0}
-  m_NormalizedViewPortRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
-  near clip plane: 0.05
-  far clip plane: 1000
-  field of view: 60
-  orthographic: 0
-  orthographic size: 5
-  m_Depth: -1
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
-  m_TargetDisplay: 0
-  m_TargetEye: 3
-  m_HDR: 1
-  m_AllowMSAA: 1
-  m_AllowDynamicResolution: 0
-  m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
-  m_StereoConvergence: 10
-  m_StereoSeparation: 0.022
---- !u!4 &1442735472
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1442735468}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1907263884
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1907263886}
-  - component: {fileID: 1907263885}
+  - component: {fileID: 894270125}
+  - component: {fileID: 894270124}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -535,13 +451,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1907263885
+--- !u!114 &894270124
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1907263884}
+  m_GameObject: {fileID: 894270123}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0f4b1e3aaf8719044bb444882d702b9e, type: 3}
@@ -549,13 +465,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Temnorid.Arena.Hud::Temnorid.Arena.Hud.ArenaHud
   killFeedLines: 5
   killFeedSeconds: 6
---- !u!4 &1907263886
+--- !u!4 &894270125
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1907263884}
+  m_GameObject: {fileID: 894270123}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -564,7 +480,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1931887356
+--- !u!1 &1959093700
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -572,8 +488,54 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1931887358}
-  - component: {fileID: 1931887357}
+  - component: {fileID: 1959093702}
+  - component: {fileID: 1959093701}
+  m_Layer: 0
+  m_Name: Menus
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1959093701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959093700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3bf7918c72cc854981e2fbc3ef46dc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Temnorid.Arena.Menus::Temnorid.Arena.Menus.ArenaMenus
+  firebaseConfig: {fileID: 4900000, guid: 8310a995351b08240998470d40fd5d9b, type: 3}
+  defaultAddress: 127.0.0.1
+--- !u!4 &1959093702
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1959093700}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2108338146
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2108338148}
+  - component: {fileID: 2108338147}
   m_Layer: 0
   m_Name: Arena match
   m_TagString: Untagged
@@ -581,26 +543,81 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1931887357
+--- !u!114 &2108338147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1931887356}
+  m_GameObject: {fileID: 2108338146}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12afa3a64c925be4b8b658e9e44b682a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Temnorid.Arena.Core::Temnorid.Arena.Core.ArenaMatchSpawner
   matchPrefab: {fileID: 8198727105111014532, guid: 8b69ce9bde276254f8030c96acb3b942, type: 3}
---- !u!4 &1931887358
+--- !u!4 &2108338148
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1931887356}
+  m_GameObject: {fileID: 2108338146}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2114949912
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2114949914}
+  - component: {fileID: 2114949913}
+  m_Layer: 0
+  m_Name: NetworkSession
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &2114949913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114949912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08215b675e267d345960eb3ea1cd118d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: ITKamianets.Engine.Network::ITKamianets.Engine.Network.NetworkSession
+  playerPrefab: {fileID: 6561227728440907495, guid: da30b84103643a5458a636a289d31c5d, type: 3}
+  networkPrefabs:
+  - {fileID: 6690746346820473026, guid: e6e3eabeed446544ea356b21e74bf5a0, type: 3}
+  - {fileID: 8198727105111014532, guid: 8b69ce9bde276254f8030c96acb3b942, type: 3}
+  port: 7777
+  tickRate: 60
+  startFromCommandLine: 1
+  disconnectTimeout: 10
+  mode: temnorid-arena.deathmatch
+  displayName: Player
+  maxPlayers: 0
+--- !u!4 &2114949914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2114949912}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -613,10 +630,10 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1442735472}
-  - {fileID: 336524470}
-  - {fileID: 292154877}
-  - {fileID: 620108958}
-  - {fileID: 1931887358}
-  - {fileID: 1907263886}
-  - {fileID: 710143784}
+  - {fileID: 146036745}
+  - {fileID: 541668947}
+  - {fileID: 2114949914}
+  - {fileID: 565914032}
+  - {fileID: 2108338148}
+  - {fileID: 894270125}
+  - {fileID: 1959093702}

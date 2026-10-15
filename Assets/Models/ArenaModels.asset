@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce88fd0568149c34fbde1fc01e5bf9d9, type: 3}
+  m_Name: ArenaModels
+  m_EditorClassIdentifier: ITKamianets.Engine.Assets::ITKamianets.Engine.Assets.AssetCatalog
+  entries:
+  - Id: arena/banner
+    Asset: {fileID: -6765201039859444881, guid: ce62600a771552b48b1bb2ed48ff6eb3, type: 3}
+  - Id: arena/brazier
+    Asset: {fileID: -5897955525689521318, guid: 3542ab67a4318354695c9a3b363bfad3, type: 3}
+  - Id: arena/broken-pillar
+    Asset: {fileID: -6172096752254585295, guid: 082e2c6f7db5eb9499cc3936744e42f5, type: 3}
+  - Id: arena/crate
+    Asset: {fileID: -7915762768710286496, guid: ec8f54e77b7a2714a819e4d3e56bf915, type: 3}
+  - Id: arena/low-wall
+    Asset: {fileID: -1418722553615743385, guid: 88fe116f0b9e37a489c019da2ddb7215, type: 3}
+  - Id: arena/pillar
+    Asset: {fileID: 6987989923961581119, guid: 9051e92cd24abc94d8333d43bb7f29a9, type: 3}
+  - Id: arena/platform
+    Asset: {fileID: 6573107006811566801, guid: fb746cc9da917af40acb69f711276d32, type: 3}
+  - Id: arena/rubble
+    Asset: {fileID: -9195362688802676687, guid: 48f5045c8ecf238468e533b8fc682b6d, type: 3}
+  - Id: arena/spawn-circle
+    Asset: {fileID: 942703510090148145, guid: 3775fb44d3a044f4aac88a8224fbd405, type: 3}
+  - Id: arena/stairs
+    Asset: {fileID: 700689372727781500, guid: 2733d50ce6761eb4c8d91d3d9a16611d, type: 3}
+  - Id: arena/wall-segment
+    Asset: {fileID: 2684829644257479153, guid: 4a0d3f4f2dd520b49a403f56dc72a84a, type: 3}
+  - Id: characters/mage
+    Asset: {fileID: 8771091787928289351, guid: e7f251f22dd43474b9da41aaa6a30fda, type: 3}

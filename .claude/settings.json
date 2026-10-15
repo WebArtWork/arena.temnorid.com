@@ -1,0 +1,7 @@
+{
+  "enabledPlugins": {
+    "unity@knowledge-work-plugins": true,
+    "unity-perf@gqy-plugins": true,
+    "meta-vr@meta-vr": true
+  }
+}

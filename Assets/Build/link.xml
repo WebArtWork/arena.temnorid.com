@@ -1,0 +1,23 @@
+<!--
+  IL2CPP builds (iOS, Android) strip code that is never called directly. These assemblies are
+  read by reflection: Scene/Asset/Network JSON models (Newtonsoft), Firebase REST documents,
+  components added from code. Keep them whole.
+-->
+<linker>
+  <assembly fullname="ITKamianets.Engine.Core" preserve="all"/>
+  <assembly fullname="ITKamianets.Engine.Scene" preserve="all"/>
+  <assembly fullname="ITKamianets.Engine.Assets" preserve="all"/>
+  <assembly fullname="ITKamianets.Engine.Input" preserve="all"/>
+  <assembly fullname="ITKamianets.Engine.Character" preserve="all"/>
+  <assembly fullname="ITKamianets.Engine.Audio" preserve="all"/>
+  <assembly fullname="ITKamianets.Engine.Firebase" preserve="all"/>
+  <assembly fullname="ITKamianets.Engine.Network" preserve="all"/>
+  <assembly fullname="ITKamianets.Engine.CharacterView.Camera" preserve="all"/>
+  <assembly fullname="ITKamianets.Engine.CharacterView.Controls" preserve="all"/>
+  <assembly fullname="Temnorid.Arena.Core" preserve="all"/>
+  <assembly fullname="Temnorid.Arena.Spells" preserve="all"/>
+  <assembly fullname="Temnorid.Arena.Maps" preserve="all"/>
+  <assembly fullname="Temnorid.Arena.Hud" preserve="all"/>
+  <assembly fullname="Temnorid.Arena.Menus" preserve="all"/>
+  <assembly fullname="glTFast" preserve="all"/>
+</linker>
