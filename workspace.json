@@ -1,7 +1,9 @@
 {
-	"$comment": "Every repo of the IT-Kamianets 3D Engine and the Temnorid games. tools/setup.mjs clones a repo and, by reading its package.json / Packages/manifest.json, every repo it needs. `requires` lists links that are not Unity package dependencies (e.g. a package that implements a schema). `path` (optional, default: the name) is where the repo lives in the workspace. `org` (optional, default: the top-level `org`) is the GitHub organization it lives in. Keep this list current: tools/new-package.mjs adds new packages automatically.",
+	"$comment": "Every repo of the IT-Kamianets 3D Engine and the Temnorid games. tools/setup.mjs clones a repo and, by reading its package.json / Packages/manifest.json, every repo it needs. `requires` lists links that are not Unity package dependencies (e.g. a package that implements a schema). `path` (optional) is where the repo lives in the workspace; by default the repos of the kinds in `packageKinds` live in `packagesDir/<name>` (Unity loads the ones with a package.json as embedded packages and skips the others), and the rest (the game is the root, the website a root folder) in a root folder named after them. `org` (optional, default: the top-level `org`) is the GitHub organization it lives in. Keep this list current: tools/new-package.mjs adds new packages automatically.",
 	"org": "IT-Kamianets",
 	"packageIdPrefix": "com.itkamianets.",
+	"packagesDir": "Packages",
+	"packageKinds": ["schema", "engine", "constructor", "template", "game-package"],
 	"repos": [
 		{
 			"name": "3d-scene-schema",
@@ -109,6 +111,7 @@
 			"name": "temnorid-arena",
 			"path": ".",
 			"org": "WebArtWork",
+			"requires": ["temnorid-arena-core", "temnorid-arena-spells", "temnorid-arena-maps", "temnorid-arena-hud", "temnorid-arena-menus", "3d-constructor-character-view-camera", "3d-constructor-character-view-controls", "3d-constructor-vr-controls", "3d-unity-core", "3d-unity-scene", "3d-unity-input", "3d-unity-character", "3d-unity-assets", "3d-unity-audio", "3d-unity-xr", "3d-unity-firebase", "3d-unity-network"],
 			"kind": "game",
 			"description": "Temnorid Arena: round-based team matches like CS2, with spells. The Unity project."
 		},

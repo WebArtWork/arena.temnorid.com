@@ -3,19 +3,32 @@
 This folder holds the engine ecosystem and the game built on it, **Temnorid Arena** (round-based
 team matches like CS2, with spells instead of guns). **The root folder is the game itself:** the
 `temnorid-arena` Unity project and git repo (`WebArtWork/temnorid-arena`, branch `master`), which also
-holds this file, `WORKSPACE.md` (new-machine setup), `workspace.json` and `tools/`. Every package,
-the website and the constructor starters are their **own git repos cloned inside it** (GitHub org
-`IT-Kamianets`; the `temnorid-arena-*` repos are in `WebArtWork`, set by `org` in `workspace.json`),
-and the root `.gitignore` ignores those folders (`/3d-*/`, `/temnorid-arena-*/`, ...). The game's
-manifest loads them as `file:../<repo>`. (Until 2026-10-15 the root was a separate
-`temnorid-arena-workspace` repo with the game in a `temnorid-arena/` subfolder; that repo is retired.)
+holds this file, `WORKSPACE.md` (new-machine setup), `workspace.json` and `tools/`. Every other repo
+is its **own git repo cloned inside it** (GitHub org `IT-Kamianets`; the `temnorid-arena-*` repos are in
+`WebArtWork`, set by `org` in `workspace.json`):
+
+```text
+3d/                                  this repo: the game (Assets/, ProjectSettings/, tools/, ...)
+  Packages/manifest.json             tracked: Unity's registry packages (XR, URP, Input System, ...)
+  Packages/3d-unity-core/ ...        engine, constructor and game package repos: Unity loads each
+                                     as an embedded package (no manifest entry), so edits recompile at once
+  Packages/3d-scene-schema/ ...      the schemas and the template project: no package.json, Unity skips them
+  3d.itkamianets.com/                the website (its npm package.json would break Unity in Packages/)
+  constructors/                      the six starter repos
+```
+
+The root `.gitignore` ignores `Packages/*` (except `manifest.json` and `packages-lock.json`), the
+website and `constructors/`. Every package folder in `Packages/` is compiled into the game, so clone
+only what the game uses (`tools/setup.mjs` does). (Until 2026-10-15 the root was a separate
+`temnorid-arena-workspace` repo with the game in a `temnorid-arena/` subfolder and the packages next to
+it; that repo is retired.)
 
 **Which repos exist, and getting them:**
 
 - `workspace.json` lists every repo with its kind (schema, engine, constructor, template, game,
   game-package, website) and a one-line description. It is the answer to "what exists?".
-- `node tools/setup.mjs <repo>` clones a repo and everything it needs into the root, by reading
-  `package.json` / `Packages/manifest.json` (plus `requires` in `workspace.json`). For a game:
+- `node tools/setup.mjs <repo>` clones a repo and everything it needs into its place (above), by
+  reading its `package.json` plus `requires` in `workspace.json` (the game lists its packages there). For a game:
   `node tools/setup.mjs temnorid-arena`. `--list` shows what is cloned, `--pull` updates, `--dry`
   only plans. Run it before working on a repo that is missing here.
 - `https://3d.itkamianets.com/packages.md` (generated from the website catalog) documents every
@@ -25,10 +38,11 @@ manifest loads them as `file:../<repo>`. (Until 2026-10-15 the root was a separa
   isometric, side-view, fixed-view, free-view). They are **not part of this workspace**: not in
   `workspace.json`, not touched by `tools/`. A developer runs
   `git clone https://github.com/IT-Kamianets/3d-constructor-<style> <game-name>`, and that clone is
-  the game's own workspace: the Unity project at its root, engine repos cloned inside it and
-  git-ignored (`/3d-*/`), changes to them sent as a branch or fork PR to `master`. Each starter holds
-  only `AGENTS.md`, `CLAUDE.md` (→ AGENTS.md), `README.md`, `.gitignore`, `.gitattributes`,
-  `LICENSE`. Edit them in their own folders; this workspace only keeps them on disk.
+  the game's own workspace, laid out like this one: an empty Unity project (URP, Unity 6000.6) at its
+  root, engine repos cloned into `Packages/` and git-ignored (they override the git-URL versions in
+  the manifest), changes to them sent as a branch or fork PR to `master`. Each starter holds the
+  project (`Assets/`, `Packages/manifest.json`, `ProjectSettings/`) plus `AGENTS.md`, `CLAUDE.md`
+  (→ AGENTS.md), `README.md`, `.gitignore`, `.gitattributes`, `LICENSE`. Edit them in their own folders; this workspace only keeps them on disk.
 
 The plan (which packages exist and which the game uses) is the pitch page on the website:
 `3d.itkamianets.com/src/app/pages/pitch/pitch.component.ts` (`packageColumns`, `exampleUses`).
@@ -83,8 +97,8 @@ Website and catalog: `3d.itkamianets.com` (Angular 22, prerendered; has its own 
 | `temnorid-arena` (the workspace root) | Unity project of the game | used packages via `file:` | **Playable v0.1**: `Arena` scene (first build scene) built by Temnorid → Build Arena Scene; prefabs `ArenaPlayer`, `ArenaBot`, `ArenaMatch`; test scenes `Playground`, `NetworkPlayground`; dev bot `-bot`; Firebase config + rules; app id `arena.temnorid.waw`; glTFast, TMP essentials; models in `Assets/Models` (mage + arena props, Temnorid → Build Arena Art); Temnorid → Build Windows Release (zip) / Build Android APK / Build iOS Xcode Project / Build Quest APK; placeholder app icon; phone settings (landscape, IL2CPP, `Assets/Build/link.xml`, iOS Info.plist post-process); **VR (Meta Quest 3)**: OpenXR + Meta OpenXR, XRI (Editor simulator: Temnorid → VR Simulator in Play Mode), XR off on every target except while Build Quest APK runs, `Quest` quality level, `ArenaPlayer` with both control sets behind `XRModeSwitch` |
 
 **Not used by Temnorid Arena** (still built, as engine packages): `3d-unity-interaction`,
-`3d-unity-spatial`. They are not in the game project, so nothing
-compiles them until a project that uses them exists.
+`3d-unity-spatial`. They are not in the game's `requires`, so a new machine doesn't clone them; where
+they are cloned into `Packages/` (as here) the game compiles them too, which keeps them checked.
 
 `vroom-scanner` / `vroom-sync` (mentioned in some READMEs) are a separate product built on these
 packages; they are not in this workspace. Engine packages must stay free of VRoom/game logic.
@@ -138,15 +152,15 @@ node tools/new-package.mjs 3d-unity-foo --asm ITKamianets.Engine.Foo --display "
   [--unity-deps com.unity.inputsystem@1.20.0] [--asm-refs Unity.InputSystem] [--project temnorid-arena]
 ```
 
-It creates the layout above (never overwrites existing files) and runs `git init`. With
-`--project temnorid-arena` it also adds the package to that project's `Packages/manifest.json`;
-leave it out for packages the game does not use. Then fill in the README and add the package to
+It creates the layout above in `Packages/<folder>` (never overwrites existing files), runs `git init`
+and adds the repo to `workspace.json`. The game compiles it at once (embedded package); add it to the
+game's `requires` in `workspace.json` if the game uses it, so a new machine clones it. Then fill in the README and add the package to
 this file's map (and to the website plan if it is new).
 
 ## Developing and verifying
 
-- Open the workspace root (the game project) in Unity 6000.6.5f1. It loads every package the game uses
-  from its folder inside the root, so edits recompile immediately and break-other-package errors show up right away.
+- Open the workspace root (the game project) in Unity 6000.6.5f1. It loads every package in
+  `Packages/` as an embedded package, so edits recompile immediately and break-other-package errors show up right away.
 - Changed files reach the Editor only after an asset refresh (normally on window focus): run
   `AssetDatabase.Refresh()` (via `unity command eval`) before `recompile`, and recompile before a build, or
   the build fails with "script class layout is incompatible between the editor and the player".

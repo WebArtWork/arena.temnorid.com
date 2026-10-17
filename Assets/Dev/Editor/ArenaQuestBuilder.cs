@@ -43,9 +43,9 @@ public static class ArenaQuestBuilder
         {
             var settings = GeneralSettings(group);
             settings.InitManagerOnStart = true;
-            foreach (var loader in settings.AssignedSettings.activeLoaders.ToArray())
+            foreach (var loader in settings.Manager.activeLoaders.ToArray())
             {
-                XRPackageMetadataStore.RemoveLoader(settings.AssignedSettings, loader.GetType().FullName, group);
+                XRPackageMetadataStore.RemoveLoader(settings.Manager, loader.GetType().FullName, group);
             }
         }
 
@@ -108,9 +108,9 @@ public static class ArenaQuestBuilder
     public static void RemoveAndroidLoader()
     {
         var settings = XRGeneralSettingsPerBuildTarget.XRGeneralSettingsForBuildTarget(BuildTargetGroup.Android);
-        if (settings != null && settings.AssignedSettings != null && settings.AssignedSettings.activeLoaders.Count > 0)
+        if (settings != null && settings.Manager != null && settings.Manager.activeLoaders.Count > 0)
         {
-            XRPackageMetadataStore.RemoveLoader(settings.AssignedSettings, OpenXRLoader, BuildTargetGroup.Android);
+            XRPackageMetadataStore.RemoveLoader(settings.Manager, OpenXRLoader, BuildTargetGroup.Android);
             AssetDatabase.SaveAssets();
         }
     }
@@ -118,7 +118,7 @@ public static class ArenaQuestBuilder
     private static void ApplyQuestSettings()
     {
         var settings = GeneralSettings(BuildTargetGroup.Android);
-        XRPackageMetadataStore.AssignLoader(settings.AssignedSettings, OpenXRLoader, BuildTargetGroup.Android);
+        XRPackageMetadataStore.AssignLoader(settings.Manager, OpenXRLoader, BuildTargetGroup.Android);
         settings.InitManagerOnStart = true;
 
         PlayerSettings.Android.minSdkVersion = QuestMinSdk;
@@ -131,12 +131,12 @@ public static class ArenaQuestBuilder
 
     private static XRGeneralSettings GeneralSettings(BuildTargetGroup group)
     {
-        if (!EditorBuildSettings.TryGetConfigObject(XRGeneralSettings.k_SettingsKey, out XRGeneralSettingsPerBuildTarget perTarget) || perTarget == null)
+        if (!EditorBuildSettings.TryGetConfigObject(XRGeneralSettings.settingsKey, out XRGeneralSettingsPerBuildTarget perTarget) || perTarget == null)
         {
             Directory.CreateDirectory("Assets/XR");
             perTarget = ScriptableObject.CreateInstance<XRGeneralSettingsPerBuildTarget>();
             AssetDatabase.CreateAsset(perTarget, "Assets/XR/XRGeneralSettingsPerBuildTarget.asset");
-            EditorBuildSettings.AddConfigObject(XRGeneralSettings.k_SettingsKey, perTarget, true);
+            EditorBuildSettings.AddConfigObject(XRGeneralSettings.settingsKey, perTarget, true);
         }
 
         if (!perTarget.HasManagerSettingsForBuildTarget(group))

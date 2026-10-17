@@ -1,6 +1,7 @@
 #!/usr/bin/env node
-// Scaffolds (or completes) a Unity package in this workspace and, with --project, registers it in
-// that Unity project's Packages/manifest.json (e.g. --project temnorid-arena).
+// Scaffolds (or completes) a Unity package in Packages/<folder>, where the game project at the
+// workspace root loads it as an embedded package, and registers it in workspace.json. A game uses it
+// once it is listed in the game's `requires` there (so tools/setup.mjs clones it on a new machine).
 // Safe to re-run: existing files are never overwritten.
 //
 // Usage:
@@ -16,12 +17,13 @@
 //     --unity-deps com.unity.inputsystem@1.20.0 --asm-refs Unity.InputSystem
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync, copyFileSync, readdirSync } from 'node:fs';
-import { join, dirname, resolve, relative } from 'node:path';
+import { join, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const REFERENCE_PACKAGE = join(ROOT, '3d-unity-core'); // LICENSE and .gitignore are copied from here
+const PACKAGES = join(ROOT, 'Packages'); // Unity packages live here, embedded in the game project
+const REFERENCE_PACKAGE = join(PACKAGES, '3d-unity-core'); // LICENSE and .gitignore are copied from here
 const UNITY_VERSION = '6000.6';
 const PACKAGE_PREFIX = 'com.itkamianets.';
 
@@ -39,7 +41,7 @@ if (!folder || folder.startsWith('--') || !opt('asm') || !opt('display')) {
 }
 
 const asm = opt('asm');
-const dir = join(ROOT, folder);
+const dir = join(PACKAGES, folder);
 const created = [];
 
 const writeIfMissing = (path, content) => {
@@ -51,8 +53,8 @@ const writeIfMissing = (path, content) => {
 
 // Resolve workspace dependencies: their package id, version and Runtime assembly name.
 const deps = list('deps').map((depFolder) => {
-	const pkg = JSON.parse(readFileSync(join(ROOT, depFolder, 'package.json'), 'utf8'));
-	const runtimeAsm = readdirSync(join(ROOT, depFolder, 'Runtime')).find((f) => f.endsWith('.asmdef'));
+	const pkg = JSON.parse(readFileSync(join(PACKAGES, depFolder, 'package.json'), 'utf8'));
+	const runtimeAsm = readdirSync(join(PACKAGES, depFolder, 'Runtime')).find((f) => f.endsWith('.asmdef'));
 	if (!runtimeAsm) throw new Error(`${depFolder} has no Runtime asmdef`);
 	return { id: pkg.name, version: pkg.version, asm: runtimeAsm.replace(/\.asmdef$/, '') };
 });
@@ -165,19 +167,7 @@ if (existsSync(registryPath)) {
 	}
 }
 
-// Register in the Unity project that uses it, so it compiles there from its own folder.
-if (opt('project')) {
-	// The project's folder comes from workspace.json (`path`; the game is the workspace root, ".").
-	const projectEntry = JSON.parse(readFileSync(join(ROOT, 'workspace.json'), 'utf8')).repos.find((r) => r.name === opt('project'));
-	const projectDir = join(ROOT, projectEntry?.path ?? opt('project'));
-	const manifestPath = join(projectDir, 'Packages', 'manifest.json');
-	const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
-	if (!manifest.dependencies[packageId]) {
-		manifest.dependencies[packageId] = `file:${relative(join(projectDir, 'Packages'), join(ROOT, folder)).replaceAll('\\', '/')}`;
-		manifest.dependencies = Object.fromEntries(Object.entries(manifest.dependencies).sort(([a], [b]) => a.localeCompare(b)));
-		writeFileSync(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
-		created.push(`${opt('project')} manifest entry ${packageId}`);
-	}
-}
+// No manifest entry: Unity loads every package folder inside Packages/ as an embedded package, so
+// the game compiles the new package as soon as it exists. (--project only marks a game package.)
 
 console.log(created.length ? `Created:\n  ${created.join('\n  ')}` : `${folder}: nothing to do, already complete.`);

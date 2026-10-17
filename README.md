@@ -8,7 +8,7 @@ This folder is the game's Unity project (Unity 6000.6, URP).
 
 The game starts from the Character View constructor (`3d-constructor-character-view-template`): first- and third-person camera and controls, on the shared engine packages.
 
-`Packages/manifest.json` references each package from its folder inside this one (`file:../3d-unity-core`, ...), so editing a package recompiles it here immediately. It lists only what the game uses:
+Each package is its own git repo cloned into `Packages/` (`node tools/setup.mjs temnorid-arena`), where Unity loads it as an embedded package, so editing a package recompiles it here immediately; `Packages/manifest.json` lists only Unity's own packages. The game uses:
 
 * Engine: `3d-unity-core`, `-scene`, `-input`, `-character`, `-assets`, `-audio`, `-firebase`, `-network`
 * Constructor: `3d-constructor-character-view-camera`, `-controls`

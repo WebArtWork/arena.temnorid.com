@@ -32,7 +32,7 @@ node tools/setup.mjs temnorid-arena
 ```
 
 `setup.mjs` clones every package the game needs (game packages, engine packages, schemas) into
-the root, which is what the game's `file:../<repo>` package paths expect.
+`Packages/`, where Unity loads them as embedded packages, and the website into the root.
 It reads the dependencies from the repos themselves, so nothing has to be listed by hand.
 
 ```bash

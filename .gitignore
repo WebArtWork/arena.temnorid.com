@@ -117,11 +117,14 @@ __pycache__/
 
 # ---- Workspace ----
 # This repo is the workspace root: the Temnorid Arena project, plus the agent guide (CLAUDE.md),
-# the repo list (workspace.json) and the setup tools. Every package, the website and the
-# constructor starters are their own git repos cloned into this folder (node tools/setup.mjs);
-# the manifest loads the packages from them (file:../<repo>). They are ignored here.
-/3d-*/
-/temnorid-arena-*/
+# the repo list (workspace.json) and the setup tools. Every Unity package is its own git repo
+# cloned into Packages/ (node tools/setup.mjs), where Unity loads it as an embedded package; the
+# schemas and the template project are cloned there too (Unity skips folders without package.json).
+# Only the manifest and its lock file belong to this repo. The website and the constructor starters
+# are repos cloned into the root, also ignored here.
+/Packages/*
+!/Packages/manifest.json
+!/Packages/packages-lock.json
 /3d.itkamianets.com/
 /constructors/
 

@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "com.itkamianets.3d-constructor-character-view-camera": {
-      "version": "file:../3d-constructor-character-view-camera",
+      "version": "file:3d-constructor-character-view-camera",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.itkamianets.3d-unity-input": "0.1.0",
@@ -12,9 +12,9 @@
       }
     },
     "com.itkamianets.3d-constructor-character-view-controls": {
-      "version": "file:../3d-constructor-character-view-controls",
+      "version": "file:3d-constructor-character-view-controls",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.itkamianets.3d-unity-input": "0.1.0",
@@ -23,9 +23,9 @@
       }
     },
     "com.itkamianets.3d-constructor-vr-controls": {
-      "version": "file:../3d-constructor-vr-controls",
+      "version": "file:3d-constructor-vr-controls",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.itkamianets.3d-unity-input": "0.1.0",
@@ -35,9 +35,9 @@
       }
     },
     "com.itkamianets.3d-unity-assets": {
-      "version": "file:../3d-unity-assets",
+      "version": "file:3d-unity-assets",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.itkamianets.3d-unity-scene": "0.1.0",
@@ -50,9 +50,9 @@
       }
     },
     "com.itkamianets.3d-unity-audio": {
-      "version": "file:../3d-unity-audio",
+      "version": "file:3d-unity-audio",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.itkamianets.3d-unity-scene": "0.1.0",
@@ -62,9 +62,9 @@
       }
     },
     "com.itkamianets.3d-unity-character": {
-      "version": "file:../3d-unity-character",
+      "version": "file:3d-unity-character",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.unity.modules.physics": "1.0.0",
@@ -72,15 +72,15 @@
       }
     },
     "com.itkamianets.3d-unity-core": {
-      "version": "file:../3d-unity-core",
+      "version": "file:3d-unity-core",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {}
     },
     "com.itkamianets.3d-unity-firebase": {
-      "version": "file:../3d-unity-firebase",
+      "version": "file:3d-unity-firebase",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.itkamianets.3d-unity-scene": "0.1.0",
@@ -89,9 +89,9 @@
       }
     },
     "com.itkamianets.3d-unity-input": {
-      "version": "file:../3d-unity-input",
+      "version": "file:3d-unity-input",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.unity.inputsystem": "1.20.0",
@@ -99,10 +99,21 @@
         "com.unity.modules.xr": "1.0.0"
       }
     },
-    "com.itkamianets.3d-unity-network": {
-      "version": "file:../3d-unity-network",
+    "com.itkamianets.3d-unity-interaction": {
+      "version": "file:3d-unity-interaction",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
+      "dependencies": {
+        "com.itkamianets.3d-unity-core": "0.1.0",
+        "com.itkamianets.3d-unity-scene": "0.1.0",
+        "com.itkamianets.3d-unity-input": "0.1.0",
+        "com.unity.modules.physics": "1.0.0"
+      }
+    },
+    "com.itkamianets.3d-unity-network": {
+      "version": "file:3d-unity-network",
+      "depth": 0,
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.itkamianets.3d-unity-character": "0.1.0",
@@ -111,19 +122,28 @@
       }
     },
     "com.itkamianets.3d-unity-scene": {
-      "version": "file:../3d-unity-scene",
+      "version": "file:3d-unity-scene",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.unity.nuget.newtonsoft-json": "3.2.2",
         "com.unity.modules.physics": "1.0.0"
       }
     },
-    "com.itkamianets.3d-unity-xr": {
-      "version": "file:../3d-unity-xr",
+    "com.itkamianets.3d-unity-spatial": {
+      "version": "file:3d-unity-spatial",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
+      "dependencies": {
+        "com.itkamianets.3d-unity-core": "0.1.0",
+        "com.itkamianets.3d-unity-scene": "0.1.0"
+      }
+    },
+    "com.itkamianets.3d-unity-xr": {
+      "version": "file:3d-unity-xr",
+      "depth": 0,
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-character": "0.1.0",
         "com.itkamianets.3d-unity-core": "0.1.0",
@@ -134,9 +154,9 @@
       }
     },
     "com.itkamianets.temnorid-arena-core": {
-      "version": "file:../temnorid-arena-core",
+      "version": "file:temnorid-arena-core",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.itkamianets.3d-unity-character": "0.1.0",
@@ -145,9 +165,9 @@
       }
     },
     "com.itkamianets.temnorid-arena-hud": {
-      "version": "file:../temnorid-arena-hud",
+      "version": "file:temnorid-arena-hud",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.itkamianets.3d-unity-input": "0.1.0",
@@ -160,9 +180,9 @@
       }
     },
     "com.itkamianets.temnorid-arena-maps": {
-      "version": "file:../temnorid-arena-maps",
+      "version": "file:temnorid-arena-maps",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.itkamianets.3d-unity-scene": "0.1.0",
@@ -171,9 +191,9 @@
       }
     },
     "com.itkamianets.temnorid-arena-menus": {
-      "version": "file:../temnorid-arena-menus",
+      "version": "file:temnorid-arena-menus",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.itkamianets.3d-unity-input": "0.1.0",
@@ -189,9 +209,9 @@
       }
     },
     "com.itkamianets.temnorid-arena-spells": {
-      "version": "file:../temnorid-arena-spells",
+      "version": "file:temnorid-arena-spells",
       "depth": 0,
-      "source": "local",
+      "source": "embedded",
       "dependencies": {
         "com.itkamianets.3d-unity-core": "0.1.0",
         "com.itkamianets.3d-unity-input": "0.1.0",

@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 // Clones a repo of the workspace and every repo it needs into this folder. The workspace root is the
-// Temnorid Arena Unity project itself (`path: "."` in workspace.json); every other repo is a folder
-// inside it (git-ignored by the game), so `file:../<repo>` paths in its manifest resolve. Dependencies are read from the repos themselves
+// Temnorid Arena Unity project itself (`path: "."` in workspace.json). Unity packages are cloned into
+// its Packages/ folder, where Unity loads them as embedded packages (no manifest entry needed), and so
+// are the schemas and the template project (no package.json, so Unity skips them). Only the website
+// (an npm package.json Unity would reject) goes to a root folder. All of them are git-ignored by the game. Dependencies are read from the repos themselves
 // (package.json and Packages/manifest.json), plus `requires` in workspace.json, so nothing is
 // listed twice. Repos already on disk are left alone unless --pull is given.
 //
@@ -36,8 +38,13 @@ const args = process.argv.slice(2);
 const flag = (name) => args.includes(`--${name}`);
 const targets = args.filter((a) => !a.startsWith('--'));
 
-/** Where a repo lives: its `path` in workspace.json, else a folder named after it. */
-const dirOf = (name) => join(ROOT, byName.get(name)?.path ?? name);
+/**
+ * Where a repo lives: its `path` in workspace.json; else Packages/<name> for a repo of a kind
+ * in `packageKinds`, or a name not listed yet, which only package dependencies produce); else a root
+ * folder named after it.
+ */
+const isPackage = (name) => !byName.has(name) || (registry.packageKinds ?? []).includes(byName.get(name).kind);
+const dirOf = (name) => join(ROOT, byName.get(name)?.path ?? (isPackage(name) ? join(registry.packagesDir ?? 'Packages', name) : name));
 const isCloned = (name) => existsSync(join(dirOf(name), '.git'));
 const readJson = (path) => (existsSync(path) ? JSON.parse(readFileSync(path, 'utf8')) : null);
 
@@ -59,7 +66,8 @@ function git(cwd, ...gitArgs) {
 }
 
 if (flag('list')) {
-	const onDisk = readdirSync(ROOT).filter((f) => statSync(join(ROOT, f)).isDirectory() && existsSync(join(ROOT, f, '.git')));
+	const reposIn = (dir) => (existsSync(dir) ? readdirSync(dir).filter((f) => statSync(join(dir, f)).isDirectory() && existsSync(join(dir, f, '.git'))) : []);
+	const onDisk = [...reposIn(ROOT), ...reposIn(join(ROOT, registry.packagesDir ?? 'Packages'))];
 	const width = Math.max(...registry.repos.map((r) => r.name.length));
 	let kind = '';
 	for (const r of registry.repos) {
