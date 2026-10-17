@@ -10,11 +10,11 @@ The game starts from the Character View constructor (`3d-constructor-character-v
 
 Each package is its own git repo cloned into `Packages/` (`node tools/setup.mjs temnorid-arena`), where Unity loads it as an embedded package, so editing a package recompiles it here immediately; `Packages/manifest.json` lists only Unity's own packages. The game uses:
 
-* Engine: `3d-unity-core`, `-scene`, `-input`, `-character`, `-assets`, `-audio`, `-firebase`, `-network`
-* Constructor: `3d-constructor-character-view-camera`, `-controls`
+* Engine: `3d-unity-core`, `-scene`, `-input`, `-character`, `-assets`, `-audio`, `-xr`, `-firebase`, `-network`
+* Constructor: `3d-constructor-character-view-camera`, `-controls`, `3d-constructor-vr-controls`
 * Game: `temnorid-arena-core`, `-spells`, `-maps`, `-hud`, `-menus`
 
-Not used by this game: `3d-unity-interaction`, `3d-unity-spatial`, `3d-unity-xr`.
+Not used by this game: `3d-unity-interaction`, `3d-unity-spatial`.
 
 Scenes, prefabs wiring the packages together, and build settings live here; reusable code lives in the packages.
 
@@ -29,7 +29,7 @@ the catalog `Assets/Models/ArenaModels.asset` (asset ids `arena/*`, `characters/
 `StoneFloor`/`StoneWall` URP materials, and `Mage.controller` (movement blend tree, jump, crouch,
 death; casts and hit on an upper-body layer). Player and bots use the mage, recolored per
 combatant (you cyan, other players gold, bots red). Skinned GLBs must keep one vertex set per
-mesh and no vertex colors: fix a delivered one with `node ../tools/glb-fix-skinned.cjs in.glb out.glb --strip-colors`.
+mesh and no vertex colors: fix a delivered one with `node tools/glb-fix-skinned.cjs in.glb out.glb --strip-colors`.
 Not used yet: the stairs model, the brazier flame (no fire or light).
 
 ### Setup
