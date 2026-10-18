@@ -1,5 +1,11 @@
 # Temnorid Arena: models to make
 
+**Latest revision (2026-10-18):** a shared-platform realism pass updates all twelve
+models (mage plus eleven props) and both stone material sets. Current editable source,
+actual Unity previews, backups and validation are in `output/realism/`. The mage is
+24,500 triangles with 52 bones and 17 clips; prop triangle budgets and collision
+dimensions are retained. Original sources and earlier reviews remain available.
+
 **Delivery status (2026-10-15):** all 14 entries now have a first-pass asset in
 `Assets/Models/`: the rigged mage, eleven arena props, and both stone texture sets.
 See `output/mage/README.md` and `output/arena/README.md` for previews, validation

@@ -20,6 +20,12 @@ Scenes, prefabs wiring the packages together, and build settings live here; reus
 
 ### Generated models
 
+The latest shared-platform realism pass covers the mage, all eleven arena models and both
+stone PBR surfaces. Editable Blender source, current Unity render previews, original-asset
+backups and validation reports are in `output/realism/` (see its README). The mage is now
+24,500 triangles with its 52 bones and 17 clips retained. The older sources and previews
+below are preserved as earlier checkpoints.
+
 `Assets/Models/` contains a first-pass rigged mage, eleven arena props, and floor/wall
 PBR texture sets from `models-to-do.md`. Actual mesh previews, editable Blender
 sources, validation reports, and import notes are in `output/mage/` and `output/arena/`;

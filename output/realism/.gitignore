@@ -1,0 +1,6 @@
+/before/
+/npm-cache/
+*.blend1
+models-*.blend
+*-diagnostic.json
+*.log

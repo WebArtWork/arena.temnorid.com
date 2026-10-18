@@ -58,6 +58,17 @@ public static class ArenaArtBuilder
 
         var baseMap = AssetDatabase.LoadAssetAtPath<Texture2D>($"{Materials}/{texture}_basecolor.png");
         var normalMap = AssetDatabase.LoadAssetAtPath<Texture2D>(normalPath);
+        var packedPath = $"{Materials}/{texture}_metallic-smoothness.png";
+        var aoPath = $"{Materials}/{texture}_ao.png";
+        foreach (var linearPath in new[] { packedPath, aoPath })
+        {
+            var linearImporter = AssetImporter.GetAtPath(linearPath) as TextureImporter;
+            if (linearImporter != null && linearImporter.sRGBTexture)
+            {
+                linearImporter.sRGBTexture = false;
+                linearImporter.SaveAndReimport();
+            }
+        }
         var tiling = new Vector2(1f / metersPerTile, 1f / metersPerTile);
 
         material.SetTexture("_BaseMap", baseMap);
@@ -71,8 +82,28 @@ public static class ArenaArtBuilder
             material.EnableKeyword("_NORMALMAP");
         }
 
-        // Rough stone; the delivered roughness map is not in URP's packing (smoothness in alpha).
-        material.SetFloat("_Smoothness", 0.15f);
+        var packedMap = AssetDatabase.LoadAssetAtPath<Texture2D>(packedPath);
+        if (packedMap != null)
+        {
+            material.SetTexture("_MetallicGlossMap", packedMap);
+            material.EnableKeyword("_METALLICSPECGLOSSMAP");
+            material.SetFloat("_Smoothness", 1f);
+            material.SetFloat("_SmoothnessTextureChannel", 0f);
+        }
+        else
+        {
+            material.SetTexture("_MetallicGlossMap", null);
+            material.DisableKeyword("_METALLICSPECGLOSSMAP");
+            material.SetFloat("_Smoothness", 0.15f);
+        }
+        var aoMap = AssetDatabase.LoadAssetAtPath<Texture2D>(aoPath);
+        material.SetTexture("_OcclusionMap", aoMap);
+        if (aoMap != null)
+        {
+            material.EnableKeyword("_OCCLUSIONMAP");
+            material.SetFloat("_OcclusionStrength", 0.7f);
+        }
+        else material.DisableKeyword("_OCCLUSIONMAP");
         material.SetFloat("_Metallic", 0f);
         EditorUtility.SetDirty(material);
     }

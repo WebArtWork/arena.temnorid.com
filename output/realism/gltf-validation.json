@@ -1,0 +1,328 @@
+[
+  {
+    "name": "arena-pillar",
+    "triangles": 1796,
+    "bytes": 3609328,
+    "materials": 1,
+    "bounds": [
+      [
+        -0.6000000238418579,
+        0,
+        -0.6000000238418579
+      ],
+      [
+        0.6000000238418579,
+        4,
+        0.6000000238418579
+      ]
+    ],
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-broken-pillar",
+    "triangles": 1162,
+    "bytes": 1165884,
+    "materials": 1,
+    "bounds": [
+      [
+        -0.6000000238418579,
+        0,
+        -0.6000000238418579
+      ],
+      [
+        0.6000000238418579,
+        2.200000047683716,
+        0.6000000238418579
+      ]
+    ],
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-crate",
+    "triangles": 550,
+    "bytes": 2189556,
+    "materials": 1,
+    "bounds": [
+      [
+        -0.6000000238418579,
+        0,
+        -0.6000000238418579
+      ],
+      [
+        0.6000000238418579,
+        1.2000000476837158,
+        0.6000000238418579
+      ]
+    ],
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-platform",
+    "triangles": 2502,
+    "bytes": 3547984,
+    "materials": 1,
+    "bounds": [
+      [
+        -3,
+        0,
+        -3
+      ],
+      [
+        3,
+        1.2000000476837158,
+        3
+      ]
+    ],
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-wall-segment",
+    "triangles": 1536,
+    "bytes": 2869384,
+    "materials": 1,
+    "bounds": [
+      [
+        -2,
+        0,
+        -0.30000001192092896
+      ],
+      [
+        2,
+        4,
+        0.30000001192092896
+      ]
+    ],
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-low-wall",
+    "triangles": 604,
+    "bytes": 1045020,
+    "materials": 1,
+    "bounds": [
+      [
+        -1.5,
+        0,
+        -0.30000001192092896
+      ],
+      [
+        1.5,
+        1,
+        0.30000001192092896
+      ]
+    ],
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-rubble",
+    "triangles": 836,
+    "bytes": 1094948,
+    "materials": 1,
+    "bounds": [
+      [
+        -1,
+        0,
+        -0.75
+      ],
+      [
+        1,
+        0.5,
+        0.75
+      ]
+    ],
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-stairs",
+    "triangles": 1120,
+    "bytes": 1129720,
+    "materials": 1,
+    "bounds": [
+      [
+        -1.5,
+        0,
+        -1.2000000476837158
+      ],
+      [
+        1.5,
+        1.2000000476837158,
+        1.2000000476837158
+      ]
+    ],
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-brazier",
+    "triangles": 1456,
+    "bytes": 878048,
+    "materials": 1,
+    "bounds": [
+      [
+        -0.4000000059604645,
+        0,
+        -0.4000000059604645
+      ],
+      [
+        0.4000000059604645,
+        1.399999976158142,
+        0.4000000059604645
+      ]
+    ],
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "NODE_EMPTY",
+          "message": "Empty node encountered.",
+          "severity": 2,
+          "pointer": "/nodes/0"
+        }
+      ],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-spawn-circle",
+    "triangles": 12,
+    "bytes": 47996,
+    "materials": 1,
+    "bounds": [
+      [
+        -1,
+        0,
+        -1
+      ],
+      [
+        1,
+        0.019999999552965164,
+        1
+      ]
+    ],
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 1,
+      "numHints": 0,
+      "messages": [
+        {
+          "code": "UNUSED_MESH_TANGENT",
+          "message": "Tangents are not used because the material has no normal texture.",
+          "severity": 2,
+          "pointer": "/meshes/0/primitives/0/attributes/TANGENT"
+        }
+      ],
+      "truncated": false
+    }
+  },
+  {
+    "name": "arena-banner",
+    "triangles": 548,
+    "bytes": 2005152,
+    "materials": 2,
+    "bounds": [
+      [
+        -0.6000000238418579,
+        0,
+        -0.15000000596046448
+      ],
+      [
+        0.6000000238418579,
+        3,
+        0.15000000596046448
+      ]
+    ],
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  },
+  {
+    "name": "mage",
+    "triangles": 24500,
+    "bytes": 7455008,
+    "materials": 2,
+    "bounds": [
+      [
+        -0.3446767330169678,
+        0,
+        -0.14584475755691528
+      ],
+      [
+        0.3446771800518036,
+        1.7999999523162842,
+        0.19900000095367432
+      ]
+    ],
+    "issues": {
+      "numErrors": 0,
+      "numWarnings": 0,
+      "numInfos": 0,
+      "numHints": 0,
+      "messages": [],
+      "truncated": false
+    }
+  }
+]

@@ -1,0 +1,15 @@
+PASS arena-banner.glb: 548 triangles; imported materials and nonblank URP render
+PASS arena-brazier.glb: 1456 triangles; imported materials and nonblank URP render
+PASS arena-broken-pillar.glb: 1162 triangles; imported materials and nonblank URP render
+PASS arena-crate.glb: 550 triangles; imported materials and nonblank URP render
+PASS arena-low-wall.glb: 604 triangles; imported materials and nonblank URP render
+PASS arena-pillar.glb: 1796 triangles; imported materials and nonblank URP render
+PASS arena-platform.glb: 2502 triangles; imported materials and nonblank URP render
+PASS arena-rubble.glb: 836 triangles; imported materials and nonblank URP render
+PASS arena-spawn-circle.glb: 12 triangles; imported materials and nonblank URP render
+PASS arena-stairs.glb: 1120 triangles; imported materials and nonblank URP render
+PASS arena-wall-segment.glb: 1536 triangles; imported materials and nonblank URP render
+PASS mage accent recolors through the runtime material property block
+PASS mage.glb: 24500 triangles; imported materials and nonblank URP render
+PASS stone-floor: normal, linear occlusion and smoothness maps; nonblank URP render
+PASS stone-wall: normal, linear occlusion and smoothness maps; nonblank URP render

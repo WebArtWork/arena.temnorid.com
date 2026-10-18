@@ -1,0 +1,484 @@
+[
+  {
+    "name": "arena-wall-segment",
+    "before_triangles": 1536,
+    "triangles": 1536,
+    "texture_size": 1024,
+    "bounds_blender": [
+      [
+        -2,
+        2
+      ],
+      [
+        -0.30000001192092896,
+        0.30000001192092896
+      ],
+      [
+        0,
+        4
+      ]
+    ],
+    "before_bounds": [
+      [
+        -2,
+        2
+      ],
+      [
+        -0.30000001192092896,
+        0.30000001192092896
+      ],
+      [
+        0,
+        4
+      ]
+    ],
+    "materials": [
+      "arena-wall-segment-surface"
+    ],
+    "bytes": 2869384,
+    "source": "output/arena/arena-assets.blend",
+    "repaired_degenerate_tangents": 0
+  },
+  {
+    "name": "arena-stairs",
+    "before_triangles": 1120,
+    "triangles": 1120,
+    "texture_size": 512,
+    "bounds_blender": [
+      [
+        -1.5,
+        1.5
+      ],
+      [
+        -1.2000000476837158,
+        1.2000000476837158
+      ],
+      [
+        0,
+        1.2000000476837158
+      ]
+    ],
+    "before_bounds": [
+      [
+        -1.5,
+        1.5
+      ],
+      [
+        -1.2000000476837158,
+        1.2000000476837158
+      ],
+      [
+        0,
+        1.2000000476837158
+      ]
+    ],
+    "materials": [
+      "arena-stairs-surface"
+    ],
+    "bytes": 1129720,
+    "source": "output/arena/arena-assets.blend",
+    "repaired_degenerate_tangents": 0
+  },
+  {
+    "name": "arena-spawn-circle",
+    "before_triangles": 12,
+    "triangles": 12,
+    "texture_size": 1024,
+    "bounds_blender": [
+      [
+        -1,
+        1
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        0.019999999552965164
+      ]
+    ],
+    "before_bounds": [
+      [
+        -1,
+        1
+      ],
+      [
+        -1,
+        1
+      ],
+      [
+        0,
+        0.019999999552965164
+      ]
+    ],
+    "materials": [
+      "spawn-circle"
+    ],
+    "bytes": 47996,
+    "source": "output/arena/arena-assets.blend",
+    "repaired_degenerate_tangents": 0
+  },
+  {
+    "name": "arena-rubble",
+    "before_triangles": 836,
+    "triangles": 836,
+    "texture_size": 512,
+    "bounds_blender": [
+      [
+        -1,
+        1
+      ],
+      [
+        -0.75,
+        0.75
+      ],
+      [
+        0,
+        0.5
+      ]
+    ],
+    "before_bounds": [
+      [
+        -1,
+        1
+      ],
+      [
+        -0.75,
+        0.75
+      ],
+      [
+        0,
+        0.5
+      ]
+    ],
+    "materials": [
+      "arena-rubble-surface"
+    ],
+    "bytes": 1094948,
+    "source": "output/arena/arena-assets.blend",
+    "repaired_degenerate_tangents": 0
+  },
+  {
+    "name": "arena-platform",
+    "before_triangles": 2502,
+    "triangles": 2502,
+    "texture_size": 1024,
+    "bounds_blender": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        0,
+        1.2000000476837158
+      ]
+    ],
+    "before_bounds": [
+      [
+        -3,
+        3
+      ],
+      [
+        -3,
+        3
+      ],
+      [
+        0,
+        1.2000000476837158
+      ]
+    ],
+    "materials": [
+      "arena-platform-surface"
+    ],
+    "bytes": 3547984,
+    "source": "output/arena/arena-assets.blend",
+    "repaired_degenerate_tangents": 0
+  },
+  {
+    "name": "arena-pillar",
+    "before_triangles": 1796,
+    "triangles": 1796,
+    "texture_size": 1024,
+    "bounds_blender": [
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        0,
+        4
+      ]
+    ],
+    "before_bounds": [
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        0,
+        4
+      ]
+    ],
+    "materials": [
+      "arena-pillar-surface"
+    ],
+    "bytes": 3609328,
+    "source": "output/arena/arena-assets.blend",
+    "repaired_degenerate_tangents": 0
+  },
+  {
+    "name": "arena-low-wall",
+    "before_triangles": 604,
+    "triangles": 604,
+    "texture_size": 512,
+    "bounds_blender": [
+      [
+        -1.5,
+        1.5
+      ],
+      [
+        -0.30000001192092896,
+        0.30000001192092896
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "before_bounds": [
+      [
+        -1.5,
+        1.5
+      ],
+      [
+        -0.30000001192092896,
+        0.30000001192092896
+      ],
+      [
+        0,
+        1
+      ]
+    ],
+    "materials": [
+      "arena-low-wall-surface"
+    ],
+    "bytes": 1045020,
+    "source": "output/arena/arena-assets.blend",
+    "repaired_degenerate_tangents": 0
+  },
+  {
+    "name": "arena-crate",
+    "before_triangles": 550,
+    "triangles": 550,
+    "texture_size": 1024,
+    "bounds_blender": [
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        0,
+        1.2000000476837158
+      ]
+    ],
+    "before_bounds": [
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        0,
+        1.2000000476837158
+      ]
+    ],
+    "materials": [
+      "arena-crate-surface"
+    ],
+    "bytes": 2189556,
+    "source": "output/arena/arena-assets.blend",
+    "repaired_degenerate_tangents": 0
+  },
+  {
+    "name": "arena-broken-pillar",
+    "before_triangles": 1162,
+    "triangles": 1162,
+    "texture_size": 512,
+    "bounds_blender": [
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        0,
+        2.200000047683716
+      ]
+    ],
+    "before_bounds": [
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        0,
+        2.200000047683716
+      ]
+    ],
+    "materials": [
+      "arena-broken-pillar-surface"
+    ],
+    "bytes": 1165884,
+    "source": "output/arena/arena-assets.blend",
+    "repaired_degenerate_tangents": 0
+  },
+  {
+    "name": "arena-brazier",
+    "before_triangles": 1456,
+    "triangles": 1456,
+    "texture_size": 512,
+    "bounds_blender": [
+      [
+        -0.4000000059604645,
+        0.4000000059604645
+      ],
+      [
+        -0.4000000059604645,
+        0.4000000059604645
+      ],
+      [
+        0,
+        1.399999976158142
+      ]
+    ],
+    "before_bounds": [
+      [
+        -0.4000000059604645,
+        0.4000000059604645
+      ],
+      [
+        -0.4000000059604645,
+        0.4000000059604645
+      ],
+      [
+        0,
+        1.399999976158142
+      ]
+    ],
+    "materials": [
+      "arena-brazier-surface"
+    ],
+    "bytes": 878048,
+    "source": "output/arena/arena-assets.blend",
+    "repaired_degenerate_tangents": 0
+  },
+  {
+    "name": "mage",
+    "before_triangles": 63999,
+    "triangles": 24500,
+    "texture_size": 2048,
+    "bounds_blender": [
+      [
+        -0.3446767330169678,
+        0.3446771800518036
+      ],
+      [
+        -0.19900000095367432,
+        0.14584475755691528
+      ],
+      [
+        0,
+        1.7999999523162842
+      ]
+    ],
+    "before_bounds": [
+      [
+        -0.3449999988079071,
+        0.3449999988079071
+      ],
+      [
+        -0.19900000095367432,
+        0.14584475755691528
+      ],
+      [
+        0,
+        1.7999999523162842
+      ]
+    ],
+    "materials": [
+      "mage-mesh-body",
+      "accent"
+    ],
+    "bytes": 7455008,
+    "source": "output/mage/mage.blend",
+    "repaired_degenerate_tangents": 2
+  },
+  {
+    "name": "arena-banner",
+    "before_triangles": 548,
+    "triangles": 548,
+    "texture_size": 1024,
+    "bounds_blender": [
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        -0.15000000596046448,
+        0.15000000596046448
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "before_bounds": [
+      [
+        -0.6000000238418579,
+        0.6000000238418579
+      ],
+      [
+        -0.15000000596046448,
+        0.15000000596046448
+      ],
+      [
+        0,
+        3
+      ]
+    ],
+    "materials": [
+      "arena-banner-surface.001",
+      "accent"
+    ],
+    "bytes": 2005152,
+    "source": "output/arena/arena-assets.blend",
+    "repaired_degenerate_tangents": 0
+  }
+]

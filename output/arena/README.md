@@ -1,5 +1,10 @@
 # Temnorid Arena assets: first production pass
 
+**Current game revision:** the shared-platform realism pass is documented in
+`../realism/README.md`. Its editable source is `../realism/models.blend`, with current
+Unity previews and validation reports alongside it. This folder's original source and
+studio renders remain the earlier checkpoint described below.
+
 All 13 remaining entries from `models-to-do.md` are supplied: eleven GLB models
 and two stone PBR texture sets. These are procedural stylized assets matching
 the approved mage prototype's level of detail. They have not yet been connected

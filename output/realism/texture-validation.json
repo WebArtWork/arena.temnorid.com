@@ -1,0 +1,22 @@
+[
+  {
+    "name": "stone-floor",
+    "resolution": [
+      2048,
+      2048
+    ],
+    "horizontal_seam": "PASS",
+    "vertical_seam": "PASS",
+    "smoothness_alpha": "PASS"
+  },
+  {
+    "name": "stone-wall",
+    "resolution": [
+      2048,
+      2048
+    ],
+    "horizontal_seam": "PASS",
+    "vertical_seam": "not required",
+    "smoothness_alpha": "PASS"
+  }
+]

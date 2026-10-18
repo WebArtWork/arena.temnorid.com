@@ -63,6 +63,34 @@ def material(name, accent=False):
         links.new(multiply.outputs[0], p.inputs['Base Color'])
     return mat
 BODY, ACCENT = material('body'), material('accent', True)
+# Exportable PBR materials: surface relief is an embedded tangent-space normal map.
+def surface(name, roughness, metallic=0, relief=.25):
+    mat = material(name)
+    p = mat.node_tree.nodes.get('Principled BSDF')
+    p.inputs['Roughness'].default_value = roughness
+    p.inputs['Metallic'].default_value = metallic
+    h = (.5*np.sin(xx*pi/3)*np.sin(yy*pi/3) if name=='woven-wool'
+         else rng.random((n,n))*.25)
+    gy,gx = np.gradient(h)
+    normal = np.stack((-gx*relief,-gy*relief,np.ones_like(h)),axis=-1)
+    normal /= np.linalg.norm(normal,axis=-1,keepdims=True)
+    pixels = np.ones((n,n,4),dtype=np.float32)
+    pixels[:,:,:3] = normal*.5+.5
+    im=bpy.data.images.new(name+'-normal',width=n,height=n)
+    im.colorspace_settings.name='Non-Color'
+    im.pixels.foreach_set(pixels.ravel()); im.pack()
+    tex=mat.node_tree.nodes.new('ShaderNodeTexImage');tex.image=im
+    nm=mat.node_tree.nodes.new('ShaderNodeNormalMap')
+    mat.node_tree.links.new(tex.outputs['Color'],nm.inputs['Color'])
+    mat.node_tree.links.new(nm.outputs['Normal'],p.inputs['Normal'])
+    return mat
+WOOL=surface('woven-wool',.9,relief=.18)
+LEATHER=surface('worn-leather',.56,relief=.8)
+SKIN=surface('skin',.52,relief=.12)
+BRONZE=surface('aged-bronze',.38,.78,relief=.18)
+HAIR=surface('hair',.83,relief=.3)
+EYE=material('eyes');EYE.node_tree.nodes.get('Principled BSDF').inputs['Roughness'].default_value=.24
+ACCENT.node_tree.nodes.get('Principled BSDF').inputs['Emission Strength'].default_value=0
 parts = []
 bone_specs = {}
 def bone(name, head, tail, parent=None):
@@ -95,7 +123,10 @@ def finish(obj, color, joint, accent=False, smooth=True):
     bpy.context.view_layer.objects.active=obj
     obj.select_set(True)
     bpy.ops.object.transform_apply(location=True,rotation=True,scale=True)
-    obj.data.materials.append(ACCENT if accent else BODY)
+    surf = (SKIN if color==skin else BRONZE if color==metal else
+            LEATHER if color in (leather,edge) else WOOL if color in (cloth,cloth_light) else HAIR)
+    if obj.name.startswith(('eye','iris')): surf=EYE
+    obj.data.materials.append(ACCENT if accent else surf)
     ca=obj.data.color_attributes.new(name='Color', type='BYTE_COLOR', domain='CORNER')
     for item in ca.data:
         v=1+random.uniform(-.025,.025)
@@ -120,11 +151,20 @@ def mesh(name, verts, faces, color, joint, accent=False):
 
 def loft(name, rings, color, joint, sides=32, folds=.0, accent=False, caps=True):
     # Rings: cx, cy, z, radius-x, radius-y.
+    # Dense vertical sampling gives cloth compression folds a rounded silhouette.
+    if folds and len(rings)>2:
+        dense=[]
+        for a,b in zip(rings,rings[1:]):
+            for k in range(5):
+                t=k/5;dense.append(tuple(x*(1-t)+y*t for x,y in zip(a,b)))
+        rings=dense+[rings[-1]]
     vs=[]; fs=[]
     for ri,(cx,cy,z,rx,ry) in enumerate(rings):
         for j in range(sides):
             a=2*pi*j/sides
             f=1+folds*(sin(a*9+z*3)+.4*sin(a*15-z*5))
+            if folds:
+                f+=folds*.65*sin(z*95+a*3)*(.4+.6*sin(a*2)**2)
             vs.append((cx+rx*cos(a)*f,cy+ry*sin(a)*f,z))
     for r in range(len(rings)-1):
         for j in range(sides):
@@ -163,10 +203,8 @@ loft('tailored-tunic',[(0,0,1.0,.16,.095),(0,0,1.08,.145,.087),(0,0,1.18,.16,.09
 loft('hips-trousers',[(0,0,.88,.145,.087),(0,0,1.04,.155,.087)],cloth,'Hips')
 loft('shoulder-cowl',[(0,.012,1.31,.21,.115),(0,.01,1.34,.235,.133),
     (0,.005,1.39,.238,.14),(0,0,1.43,.21,.126),(0,0,1.48,.12,.095)],cloth_light,'Spine2',64,.025)
-for k in range(4):
-    z=1.355+k*.028
-    pts=[(.21*cos(a),.012+.128*sin(a),z+.018*cos(a*2)) for a in np.linspace(pi,2*pi,33)]
-    cord('cowl-layer-seam',pts,.004,edge,'Spine2')
+pts=[(.214*cos(a),.012+.120*sin(a),1.32) for a in np.linspace(0,2*pi,65)]
+cord('cowl-layer-seam',pts,.002,edge,'Spine2')
 
 # Split skirt panels, double-layered and stitched; hem stays above knees.
 for i in range(10):
@@ -245,23 +283,44 @@ for s,side in [(-1,'Left'),(1,'Right')]:
 loft('neck',[(0,0,1.45,.043,.043),(0,0,1.56,.043,.044)],skin,'Neck')
 loft('high-cowl-collar',[(0,0,1.44,.088,.075),(0,0,1.49,.077,.069),
     (0,0,1.52,.058,.056)],cloth_light,'Neck',48,.035)
-orb('head',(0,-.012,1.641),(.078,.068,.114),skin,'Head',segments=40,rings=24)
-orb('jaw',(0,-.044,1.571),(.057,.043,.042),skin,'Head')
+face_start=len(parts)
+orb('head',(0,-.012,1.641),(.072,.064,.108),skin,'Head',segments=48,rings=32)
+orb('jaw',(0,-.027,1.583),(.052,.048,.046),skin,'Head')
 for s in [-1,1]:
-    orb('cheek',(s*.043,-.066,1.621),(.027,.016,.026),skin,'Head')
+    orb('cheek',(s*.039,-.051,1.625),(.025,.019,.027),skin,'Head')
     orb('ear',(s*.079,-.009,1.63),(.013,.012,.027),skin,'Head')
-    orb('eye-socket',(s*.031,-.073,1.65),(.022,.007,.012),dark,'Head')
-    orb('eye',(s*.031,-.079,1.65),(.015,.004,.006),(.65,.60,.50,1),'Head')
-    orb('iris',(s*.031,-.083,1.65),(.0045,.002,.005),dark,'Head',segments=16,rings=8)
-    cord('brow',[(s*.013,-.080,1.665),(s*.03,-.084,1.67),(s*.051,-.074,1.664)],.004,dark,'Head')
-orb('nose-bridge',(0,-.075,1.627),(.013,.018,.028),skin,'Head')
-orb('nose-tip',(0,-.092,1.607),(.014,.014,.012),skin,'Head')
-cord('mouth',[(-.024,-.082,1.586),(0,-.087,1.583),(.024,-.082,1.586)],.003,(.20,.09,.055,1),'Head')
-orb('chin',(0,-.068,1.566),(.028,.020,.018),skin,'Head')
-orb('hair-cap',(0,.008,1.696),(.079,.065,.064),dark,'Head')
-for i in range(9):
-    x=(i-4)*.014
-    cord('hair-lock',[(x,-.045,1.741),(x+.005,-.066,1.715),(x-.004,-.071,1.68+random.random()*.013)],.009,dark,'Head')
+orb('nose-bridge',(0,-.069,1.631),(.009,.013,.026),skin,'Head')
+orb('nose-tip',(0,-.081,1.613),(.011,.013,.009),skin,'Head')
+orb('chin',(0,-.048,1.572),(.029,.025,.021),skin,'Head')
+# Fuse facial anatomy into one continuous surface instead of intersecting primitives.
+bpy.ops.object.select_all(action='DESELECT')
+face_parts=parts[face_start:]
+for ob in face_parts:ob.select_set(True)
+bpy.context.view_layer.objects.active=face_parts[0];bpy.ops.object.join()
+face=bpy.context.object
+rem=face.modifiers.new('continuous-anatomy','REMESH');rem.mode='VOXEL';rem.voxel_size=.0018
+bpy.ops.object.modifier_apply(modifier=rem.name)
+sm=face.modifiers.new('soft-tissue','SMOOTH');sm.factor=.6;sm.iterations=5
+bpy.ops.object.modifier_apply(modifier=sm.name)
+parts[face_start:]=[]
+face.data.materials.clear()
+for ca in list(face.data.color_attributes):face.data.color_attributes.remove(ca)
+face.vertex_groups.clear()
+finish(face,skin,'Head')
+for s in [-1,1]:
+    orb('eye',(s*.028,-.076,1.649),(.012,.005,.0045),(.34,.32,.28,1),'Head')
+    orb('iris',(s*.028,-.081,1.649),(.0028,.0018,.0034),dark,'Head',segments=16,rings=8)
+    for upper in [True,False]:
+        pts=[]
+        for t in np.linspace(0,pi,18):
+            pts.append((s*.028+.013*cos(t),-.076-.003*sin(t),1.649+(.0055 if upper else -.004)*sin(t)))
+        cord('eyelid',pts,.002,skin,'Head')
+    cord('brow',[(s*.014,-.068,1.663),(s*.028,-.070,1.666),(s*.045,-.061,1.662)],.0022,dark,'Head')
+cord('mouth',[(-.018,-.067,1.594),(-.007,-.073,1.594),(0,-.074,1.593),(.007,-.073,1.594),(.018,-.067,1.594)],.0012,(.20,.09,.055,1),'Head')
+orb('hair-cap',(0,.012,1.705),(.073,.058,.049),dark,'Head')
+for i in range(23):
+    x=(i-11)*.004
+    cord('swept-hair',[(x,.0,1.737),(x-.006,-.042,1.718),(x-.010,-.058,1.690+abs(x)*.15)],.0035,dark,'Head')
 
 # Open hood: no surface across the face. Outer/back shell with an actual face opening.
 vs=[];fs=[];sides=48;rows=18
@@ -304,8 +363,8 @@ bpy.ops.mesh.normals_make_consistent(inside=False)
 bpy.ops.object.mode_set(mode='OBJECT')
 tri=model.modifiers.new('triangulate','TRIANGULATE');bpy.ops.object.modifier_apply(modifier=tri.name)
 tri_count=len(model.data.polygons)
-if tri_count>24000:
-    dec=model.modifiers.new('budget','DECIMATE');dec.ratio=23500/tri_count
+if tri_count>65000:
+    dec=model.modifiers.new('budget','DECIMATE');dec.ratio=64000/tri_count
     bpy.ops.object.modifier_apply(modifier=dec.name)
 tri_count=sum(len(p.vertices)-2 for p in model.data.polygons)
 # Normalize exact rest bounds without leaving object scale transforms.
@@ -427,8 +486,8 @@ report={'triangles':tri_count,'bones':len(bone_specs),'clips':[n for n,d in clip
     'bounds_blender':[[min(v[i] for v in coords),max(v[i] for v in coords)] for i in range(3)],
     'glb_bytes':os.path.getsize(glb),'notes':['Procedural prototype, not a reconstruction of the concept image.',
     'Basic procedural animation; requires animation and deformation polish.',
-    'Vertex color palette multiplied by embedded 2048 basecolor microfabric texture.',
-    'No dedicated baked normal or metallic-roughness texture maps.']}
+    'Separate wool, leather, skin, bronze, hair, eye and accent PBR materials.',
+    'Embedded 2K surface normal textures; continuous remeshed facial anatomy.']}
 with open(os.path.join(PREVIEW,'build-report.json'),'w') as f:json.dump(report,f,indent=2)
 if '--no-render' in sys.argv:
     print('MAGE_BUILD_REPORT '+json.dumps(report))
@@ -438,7 +497,7 @@ if '--no-render' in sys.argv:
 rig.animation_data_clear()
 for pb in rig.pose.bones:pb.rotation_euler=(0,0,0);pb.location=(0,0,0)
 bpy.context.view_layer.update()
-scene.render.engine='CYCLES';scene.cycles.samples=16
+scene.render.engine='CYCLES';scene.cycles.samples=32
 scene.cycles.use_denoising=True
 scene.render.resolution_x=1200;scene.render.resolution_y=1200;scene.render.resolution_percentage=100
 scene.world.color=(.15,.15,.15)

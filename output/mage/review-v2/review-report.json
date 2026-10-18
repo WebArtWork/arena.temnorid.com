@@ -1,0 +1,25 @@
+{
+  "triangles": 79999,
+  "bones": 52,
+  "clips": [
+    "cast-blink",
+    "cast-nova",
+    "cast-projectile",
+    "cast-shield",
+    "crouch-idle",
+    "crouch-walk",
+    "death",
+    "fall",
+    "hit",
+    "idle",
+    "jump-start",
+    "land",
+    "run",
+    "strafe-left",
+    "strafe-right",
+    "walk",
+    "walk-back"
+  ],
+  "unweighted_vertices": 0,
+  "status": "Review candidate; walking pose inspected; Unity validation pending."
+}

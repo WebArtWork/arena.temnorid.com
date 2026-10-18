@@ -1,0 +1,1 @@
+PASS: Unity compilation; shader supported; 3 projectile emitters; no collider; wake expires; flight and impact rendered.

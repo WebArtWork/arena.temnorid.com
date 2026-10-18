@@ -1,0 +1,1 @@
+PASS: all four spells compiled and rendered; nonblank previews; elemental shader supported; cosmetic effects have no colliders; frost/blink fade; shield follows owner and uses transparent membrane.

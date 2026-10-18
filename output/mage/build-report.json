@@ -1,5 +1,5 @@
 {
-  "triangles": 23500,
+  "triangles": 63999,
   "bones": 52,
   "clips": [
     "idle",
@@ -27,18 +27,18 @@
     ],
     [
       -0.19900000095367432,
-      0.14655226469039917
+      0.14584475755691528
     ],
     [
       0.0,
       1.7999999523162842
     ]
   ],
-  "glb_bytes": 7498472,
+  "glb_bytes": 33276016,
   "notes": [
     "Procedural prototype, not a reconstruction of the concept image.",
     "Basic procedural animation; requires animation and deformation polish.",
-    "Vertex color palette multiplied by embedded 2048 basecolor microfabric texture.",
-    "No dedicated baked normal or metallic-roughness texture maps."
+    "Separate wool, leather, skin, bronze, hair, eye and accent PBR materials.",
+    "Embedded 2K surface normal textures; continuous remeshed facial anatomy."
   ]
 }
