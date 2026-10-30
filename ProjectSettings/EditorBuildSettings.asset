@@ -6,15 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Arena.unity
-    guid: 0768820f822a9ad46b35e83e6dbd7dd9
-  - enabled: 1
-    path: Assets/Scenes/NetworkPlayground.unity
-    guid: 99ca999f344969d468754b008417a213
-  - enabled: 1
-    path: Assets/Scenes/Playground.unity
-    guid: 01e57b5ec02621f498a53af0f8d89436
-  m_configObjects:
-    com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: 46e81a6fb36e0de4a85af35cf226913c, type: 2}
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: ce9f013419c13d348b13515438e2bdf8, type: 2}
-    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: c6ec13e46a6b1b04bac07bf7b91f59cb, type: 2}
+    path: Assets/Scenes/Main.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  m_configObjects: {}

@@ -1,132 +1,98 @@
 # Temnorid Arena
 
-**Temnorid Arena** is the sample game of the **IT-Kamianets 3D Engine**: round-based team matches, like CS2, with spells instead of guns.
+**Step into the arena. Win your class’s crown.**
 
-This folder is the game's Unity project (Unity 6000.6, URP).
+Heroic duels, glory and trophies. A [Temnorid](https://temnorid.com) game for **Windows**, built on the [IT Kamianets 3D Engine](https://3d.itkamianets.com) with Unity 6000.6.
 
-### Logic
+**Status:** in development, first playable not released yet. Website: https://arena.temnorid.com · Download: [Temnorid-Arena-Setup.exe](https://github.com/WebArtWork/arena.temnorid.com/releases/latest/download/Temnorid-Arena-Setup.exe)
 
-The game starts from the Character View constructor (`3d-constructor-character-view-template`): first- and third-person camera and controls, on the shared engine packages.
+## What it is
 
-Each package is its own git repo cloned into `Packages/` (`node tools/setup.mjs temnorid-arena`), where Unity loads it as an embedded package, so editing a package recompiles it here immediately; `Packages/manifest.json` lists only Unity's own packages. The game uses:
+Step into the arena, face other heroes, and fight with weapons and elemental magic. Win, raise your reputation and earn unique rewards.
 
-* Engine: `3d-unity-core`, `-scene`, `-input`, `-character`, `-assets`, `-audio`, `-xr`, `-firebase`, `-network`
-* Constructor: `3d-constructor-character-view-camera`, `-controls`, `3d-constructor-vr-controls`
-* Game: `temnorid-arena-core`, `-spells`, `-maps`, `-hud`, `-menus`
+## The first playable
 
-Not used by this game: `3d-unity-interaction`, `3d-unity-spatial`.
+The first playable is a free-for-all in a stone courtyard: you and five bots, two fighters of each class, Warrior, Archer and Mage. Every period the best fighter of each class becomes that class’s Hero.
 
-Scenes, prefabs wiring the packages together, and build settings live here; reusable code lives in the packages.
+### How a session goes
 
-### Generated models
+1. Choose your class on the start screen: **Warrior**, **Archer** or **Mage**.
+2. Fight everyone in the courtyard. Bots of all three classes hunt you and each other.
+3. Defeat a fighter and score a kill. If you fall, you are back after three seconds at the spawn circle furthest from the fighting.
+4. When the period ends (90 seconds), the fighters of each class are ranked against their own class: most kills first, then fewest deaths.
+5. The best fighter of each class becomes that class’s **Hero** and wears a gold HERO badge through the next period: up to three Heroes, one per class.
+6. Start the next period and try to take a Hero title, or defend yours.
 
-The latest shared-platform realism pass covers the mage, all eleven arena models and both
-stone PBR surfaces. Editable Blender source, current Unity render previews, original-asset
-backups and validation reports are in `output/realism/` (see its README). The mage is now
-24,500 triangles with its 52 bones and 17 clips retained. The older sources and previews
-below are preserved as earlier checkpoints.
+### Controls
 
-`Assets/Models/` contains a first-pass rigged mage, eleven arena props, and floor/wall
-PBR texture sets from `models-to-do.md`. Actual mesh previews, editable Blender
-sources, validation reports, and import notes are in `output/mage/` and `output/arena/`;
-the complete prop contact sheet is `output/arena/asset-preview-sheet.jpg`.
-**Temnorid → Build Arena Art** (also run by Build Arena Scene) turns them into what the game uses:
-the catalog `Assets/Models/ArenaModels.asset` (asset ids `arena/*`, `characters/mage`), the
-`StoneFloor`/`StoneWall` URP materials, and `Mage.controller` (movement blend tree, jump, crouch,
-death; casts and hit on an upper-body layer). Player and bots use the mage, recolored per
-combatant (you cyan, other players gold, bots red). Skinned GLBs must keep one vertex set per
-mesh and no vertex colors: fix a delivered one with `node tools/glb-fix-skinned.cjs in.glb out.glb --strip-colors`.
-Not used yet: the stairs model, the brazier flame (no fire or light).
+| Key | Action |
+| --- | --- |
+| W A S D | Move |
+| Mouse | Look and aim |
+| Shift | Run |
+| Space | Jump |
+| Left mouse (hold) | Attack: sword swing, arrow or fireball |
+| Tab (hold) | Scoreboard |
+| V | Switch between third and first person |
+| Esc | Pause menu (resume, save and quit) |
 
-### Setup
+### Win and lose
 
-1. Clone this repo (it is the workspace root), then `node tools/setup.mjs temnorid-arena` clones the package repos into it (`3d/3d-unity-core`, ...; git-ignored here). See [WORKSPACE.md](WORKSPACE.md).
-2. Open this folder in Unity 6000.6 (Unity Hub → Add → this folder).
-3. Optional, for live editing from Claude Code: `unity pipeline install` in this folder.
+- **Win:** Score the most kills in your class during a period to become its Hero.
+- **Lose:** There is no losing: if you fall, you come back after three seconds. Your best period and how often you were Hero are saved.
 
-### Phones (iOS and Android)
+### The scene
 
-The game runs on phones with touch controls (move stick, drag to look, Cast/Jump/Crouch/Sprint,
-tappable spell bar), landscape only, inside the screen's safe area. Already set in this project:
-app id `arena.temnorid.waw`, IL2CPP (Android ARM64), minimal code stripping plus
-`Assets/Build/link.xml` (keeps the engine and game assemblies that JSON and Firebase read by
-reflection), `Assets/Build/Editor/IosInfoPlist.cs` (Local Network prompt text, export
-compliance "no non-exempt encryption"), iOS automatic signing, build number 1, iOS 15+, and a
-placeholder app icon (`Assets/Branding/AppIcon.png`, all platforms; real art is item 15 of
-`models-to-do.md`). Raise Player Settings → Version for each release and the iOS build number
-for each upload.
+One stone courtyard, 40 by 40 metres: walls, pillars, crates, low walls, a raised platform with stairs, braziers and eight spawn circles. The props and the mage are the delivered models; the Warrior and the Archer wear the same body with a class sash and a simple weapon until their own models exist.
 
-**iOS (on a Mac):**
+## How it connects to Lords
 
-1. Unity Hub: install 6000.6.5f1 with **iOS Build Support**; install Xcode.
-2. Clone this repo and the package repos into it, as here (`node tools/setup.mjs temnorid-arena`).
-3. Open the project, **Temnorid → Build iOS Xcode Project** (exports `Builds/iOS`, then returns to the previous platform).
-4. Xcode → Settings → Accounts: sign in with the Apple developer account.
-5. Open `Builds/iOS/Unity-iPhone.xcodeproj` → target Unity-iPhone → Signing & Capabilities: tick "Automatically manage signing", pick your team (bundle id `arena.temnorid.waw`).
-6. Plug in the iPhone (first time: trust the computer, turn on Developer Mode in Settings → Privacy & Security), choose it as the run destination, Run. The first launch asks to allow local network access: needed to host or join games on Wi-Fi.
-7. Release: App Store Connect → My Apps → new app with bundle id `arena.temnorid.waw`; in Xcode pick "Any iOS Device", Product → Archive → Distribute App → TestFlight / App Store Connect.
+Arena results, reputation and trophies are meant to carry into Lords, where heroes are raised. Today Arena is offline and separate.
 
-The Xcode project can also be exported on Windows (with the iOS module) and copied to a Mac,
-but building it there from the Unity project is simpler: rebuild and run in one place.
+This is for a later phase: [Lords](https://lords.temnorid.com) is the central strategy game and every Temnorid game will be connected to it. **This version is fully offline and does not talk to Lords**; progress is saved locally on the player's PC. Keep identifiers and save data simple and stable so the connection is cheap to add later.
 
-**Android (Windows or Mac):** install the Android module (`unity install-modules 6000.6.5f1 --module android`), then **Temnorid → Build Android APK** makes a development APK at `Builds/Android/TemnoridArena.apk` (debug-signed; the Editor returns to its platform afterwards). Install it with `adb install -r Builds/Android/TemnoridArena.apk` (USB debugging on), or send the file to the phone and open it. No Android Studio needed.
+## Scope of this version
 
-Testing touch in the Editor: Window → General → Device Simulator, pick a phone; the touch controls and safe area show there. Touch controls appear whenever the game is in the Touch scheme (phones always start in it).
+- One arena, three classes, six fighters, timed periods and a Hero for each class.
+- No multiplayer, online ranking, phones or VR in this version. The earlier multiplayer Arena is kept on the `legacy` branch.
 
-### Meta Quest 3 (VR)
+Everything is drawn with Unity primitives (blocks, capsules, spheres), simple colours and text. No models, no paid assets. Every visible object has a stable asset id (for example `resources/wood-node`) so real models can replace the placeholders without touching gameplay.
 
-The same project is also a VR game for Meta Quest 3: you stand in the arena as the mage, walk with
-the left stick, turn with the right one (snap 30° or smooth), and cast with the trigger along your
-hand; health, mana and the spell bar are on your other wrist. A Quest player joins the same matches
-as PC and phone players. Plan and progress: `quest-plan.md`.
+## For developers and agents
 
-How it fits together: XR is **off for every platform in the project**, so Windows, phone and iOS
-builds never start it. **Temnorid → Build Quest APK** turns OpenXR on for Android only while it
-builds (OpenXR with Meta Quest Support, Oculus Touch and Touch Plus controller profiles, single-pass
-multiview, foveated rendering, the system keyboard), uses the `Quest` quality level
-(`Assets/Settings/Quest_RPAsset.asset`: MSAA 4x, no HDR, 20 m shadows), Vulkan, Android 12L
-(API 32) as minimum, landscape, writes `Builds/Quest/TemnoridArena.apk` (development, debug key) and
-puts the phone settings back. **Temnorid → Set Up Quest XR** creates those settings without
-building; **Build Android APK** always takes OpenXR off first.
+- **Unity:** 6000.6, Universal 3D (URP). Open the folder in Unity Hub. `Library/` is rebuilt locally and not committed.
+- **Platform:** Windows only. Keyboard and mouse. One arena, offline, local save.
+- **The old Arena:** the earlier multiplayer game (Netcode, Firebase, phones, Meta Quest) is on the `legacy` branch. This project starts again from the Character View starter: nothing from that code is used, and the models are kept.
+- **Starts from:** the IT Kamianets 3D Engine Character View starter. [AGENTS.md](AGENTS.md) is still the starter's generic guide; this README is the game's own.
+- **Engine pieces this game uses:** the Character View set (`3d-unity-character`, the camera and controls), `3d-unity-core`, `3d-unity-input` (all input, through `EngineInput`, including the Tab scoreboard added as a game action), `3d-unity-save`, and the shared `3d-unity-combat` (health, teams, melee cone, **projectiles** for arrows and fireballs), `3d-unity-ai` (bots; **ranged attackers** that keep their distance), `3d-unity-feedback` (effects, health bars above heads), `3d-unity-ui` (the screens) and `3d-unity-graybox` (asset ids and builder helpers). The classes, the scoring and Heroes, the match and the screens are written in this game (`Assets/Scripts`).
+- **Packages while developing:** the packages sit in the shared workspace folder next to the games (`../3d-unity-*`, `../3d-constructor-character-view-*`) and `Packages/manifest.json` points at them with `file:../../<package>`. When they get their own repositories, only these paths change.
+- **Models:** `Assets/Models` keeps the delivered art as GLB files: the rigged mage with its animator (`characters/Mage.controller` and clips), eleven courtyard props and the stone floor and wall materials. `glTFast` imports them. Placeholder rule: the Warrior and the Archer use the mage's body with a class sash and a primitive weapon. Every placed object carries an asset id (`arena/pillar`, `characters/warrior`) so a real model can replace it later. The editable Blender sources and previews are in `output/`, and the brief for new models is `models-to-do.md`.
+- **Level building:** menu **Temnorid > Arena > Build Scene** (or `-executeMethod Temnorid.Arena.EditorTools.ArenaSceneBuilder.Build`) rebuilds `Assets/Scenes/Main.unity` from scratch: floor, walls, props, stairs, braziers, banners, spawn circles, the six fighters, camera and light. Do not edit that scene by hand. The NavMesh is baked at game start from box colliders, and the fighters are switched on after it exists.
+- **Code map (`Assets/Scripts`):**
+  - `ArenaScoring` (kills, deaths, the ranking inside each class, Heroes) and `ArenaSession` with `ArenaSaveStore` (the player's record): no Unity in them. `Classes` holds the numbers of the three classes: this is the whole balance.
+  - `ArenaGame` (the match: periods, respawns, pause, saving), `Fighter` (one fighter, bot or player, and what its attack does), `PlayerControl` (aims and fires), `FighterAnimation`, `HeroBadge`, `ArenaHud` (all screens, plain uGUI).
+- **Tests:** `Assets/Tests/EditMode` covers the scoring (rankings, ties, Heroes, titles moving between periods) and the player's record; `Assets/Tests/PlayMode` loads the scene, checks six fighters stand on the NavMesh, starts matches, plays a whole period with bots and checks the Heroes and respawns. Run them from Window > General > Test Runner, or with `Unity.exe -batchmode -nographics -runTests -testPlatform EditMode` (or `PlayMode`).
+- **Save file:** `<persistent data path>/arena/default.json` (on Windows `%USERPROFILE%\AppData\LocalLow\Temnorid\Temnorid Arenarena\default.json`): periods played, best period, times Hero and the latest Heroes.
+- **Windows build:** **Temnorid > Arena > Build Windows Player** (or `-executeMethod Temnorid.Arena.EditorTools.ArenaReleaseBuilder.BuildWindows`) writes `Builds/Windows/TemnoridArena` and a portable zip. `installer/Arena.iss` turns the folder into `Builds/Installer/Temnorid-Arena-Setup.exe` with Inno Setup.
+- **Do not add:** networking, Firebase, accounts, or any link to Lords in this version.
 
-The player prefab carries both control sets: `XRModeSwitch` turns on the XR rig, `VRControls` and
-`HandAim` in a headset and `CharacterViewControls` otherwise, on the owner's copy only. The HUD and
-menus become world-space panels in VR (`ArenaVRCanvas`); the menu camera follows the headset
-(`XRHeadDriver`).
+## Website and downloads
 
-**On the headset:**
+The `docs/` folder is this game's public website (`docs/index.html`, served at https://arena.temnorid.com through GitHub Pages; `docs/CNAME` holds the domain). It repeats the information in this README: what the game is, how to play, controls and the download button.
 
-1. Quest 3 in Developer Mode (Meta Horizon app → your headset → Developer Mode), connected by USB-C, "Allow USB debugging" accepted in the headset.
-2. **Temnorid → Build Quest APK**, then `adb install -r Builds/Quest/TemnoridArena.apk`.
-3. On the headset: Library → Unknown Sources → Temnorid Arena. Logs: `adb logcat -s Unity`.
+The download button points to the latest GitHub Release asset:
 
-Controls: left stick move, right stick turn (click: next spell), trigger of your casting hand cast
-(pick a spell on the wrist by pointing at it), A jump, B crouch (or crouch for real), left stick
-click sprint, Y scoreboard, ☰ pause. Settings (in VR): snap or smooth turning, comfort vignette,
-casting hand.
+`https://github.com/WebArtWork/arena.temnorid.com/releases/latest/download/Temnorid-Arena-Setup.exe`
 
-**Without a headset:** **Temnorid → VR Simulator in Play Mode** (imports the XR Interaction
-Toolkit's simulator sample the first time) starts Play mode with a simulated headset and
-controllers driven by keyboard and mouse; the game takes its VR layout. Turn it off for flat play.
+Release steps (when the first playable is ready):
 
-### Status
+1. Build the Windows player from Unity (File > Build Profiles > Windows).
+2. Wrap the build in a Windows installer named `Temnorid-Arena-Setup.exe`.
+3. Create a GitHub Release (tag `v0.1.0`) and attach that file.
+4. Open the website, click the button, install, play, save, restart, uninstall.
 
-**Playable v0.1: an endless free-for-all deathmatch against bots.** Open `Assets/Scenes/Arena.unity` (the first build scene) and press Play:
+When you change the game's description, controls or rules, update this README and `docs/index.html` together.
 
-* Main menu: type your name, **Play vs bots** (you host; 5 bots join), or **Join** another player's game by address. Settings: volumes, mouse sensitivity, invert look.
-* In the match: WASD / left stick move, mouse / right stick look, Space jump, Shift sprint, Ctrl crouch, V first/third person; **1-4** pick a spell, **left mouse / right trigger** casts it; **Tab** scoreboard; **Esc** pause (Leave match).
-* Spells: 1 Fireball, 2 Frost nova, 3 Arcane shield, 4 Blink.
-* With Firebase (`Assets/Firebase/google-services.json`) you are signed in anonymously and your kills and deaths are added up across matches.
+## License
 
-Contents:
-
-* `Assets/Scenes/Arena.unity`: NetworkSession (player `ArenaPlayer`, network prefabs `ArenaBot`, `ArenaMatch`), ArenaMap (first arena), ArenaMatchSpawner, HUD, Menus, a camera with `CharacterViewCamera`.
-* `Assets/Prefabs/`: `Player` (offline), `NetworkPlayer` (variant with `NetworkCharacter`), `ArenaPlayer` (variant with `Combatant`, `SpellCaster`, footsteps), `ArenaBot`, `ArenaMatch`.
-* `Assets/Dev/Editor/ArenaSceneBuilder.cs`: **Temnorid → Build Arena Scene** rebuilds the prefabs and the scene from the packages; `ArenaArtBuilder.cs`: **Temnorid → Build Arena Art** (catalog, materials, mage controller).
-* `Assets/Dev/Editor/ArenaReleaseBuilder.cs`: **Temnorid → Build Windows Release** makes a release build in `Builds/Release/TemnoridArena` and zips it as `Builds/TemnoridArena-<version>-windows.zip` (version from Player Settings; folders Unity marks "don't ship" are left out). Players unzip it and run `TemnoridArena.exe`.
-* `Assets/Models/`: mage and arena models (GLB), stone textures, the generated catalog, materials and controller.
-* `Assets/Dev/NetworkTestBot.cs`: started with `-bot`, a client walks, jumps and casts by itself (network tests).
-* `Assets/Scenes/Playground.unity` and `NetworkPlayground.unity`: test levels for the character and the network.
-* Firebase: `Assets/Firebase/` (config), `firebase.json`, `.firebaserc`, `firestore.rules` (deploy with `firebase deploy --only firestore:rules` from Git Bash).
-* App identifier `arena.temnorid.waw`; TextMeshPro Essential Resources imported; glTFast for GLB models; Run In Background on.
-* VR: OpenXR 1.18 (with Meta OpenXR 2.6.1), XR Interaction Toolkit 3.6.1 (Editor simulator), XR Plug-in Management 4.7; `Assets/Dev/Editor/ArenaQuestBuilder.cs` (Set Up Quest XR, Build Quest APK), `ArenaVRSimulator.cs` (VR Simulator in Play Mode); `Assets/XR/` (XR and OpenXR settings), `Assets/Settings/Quest_RPAsset.asset`. Checked with simulated headset and controllers: a full round (menu, Play vs bots, cast, wrist spell pick, pause, settings, resume, leave).
+See [LICENSE](LICENSE).

@@ -1,0 +1,29 @@
+{
+  "name": "Temnorid.Arena",
+  "rootNamespace": "Temnorid.Arena",
+  "references": [
+    "ITKamianets.Engine.Core",
+    "ITKamianets.Engine.Input",
+    "ITKamianets.Engine.Save",
+    "ITKamianets.Engine.Combat",
+    "ITKamianets.Engine.AI",
+    "ITKamianets.Engine.Feedback",
+    "ITKamianets.Engine.Graybox",
+    "ITKamianets.Engine.UI",
+    "ITKamianets.Engine.Character",
+    "ITKamianets.Engine.CharacterView.Camera",
+    "ITKamianets.Engine.CharacterView.Controls",
+    "Unity.AI.Navigation",
+    "Unity.InputSystem",
+    "UnityEngine.UI"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": ["Newtonsoft.Json.dll"],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
