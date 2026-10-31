@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://arena.temnorid.com/sitemap.xml

@@ -4,57 +4,95 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Temnorid Arena</title>
-	<meta name="description" content="Temnorid Arena: Step into the arena, face other heroes, and fight with weapons and elemental magic. Win, raise your reputation and earn unique rewards.">
+	<meta name="description" content="Fight as a Warrior, Archer or Mage in Temnorid Arena. Face bots or friends, earn your class’s Hero title, and play on Windows.">
 	<link rel="canonical" href="https://arena.temnorid.com/">
+	<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+	<link rel="icon" type="image/png" href="/favicon.png" sizes="48x48">
+	<link rel="icon" type="image/svg+xml" href="/favicon.svg" sizes="any">
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
 	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="Temnorid Arena">
 	<meta property="og:title" content="Temnorid Arena">
-	<meta property="og:description" content="Heroic duels, glory and trophies. Step into the arena. Win your class’s crown.">
+	<meta property="og:description" content="Fight as a Warrior, Archer or Mage in Temnorid Arena. Face bots or friends, earn your class’s Hero title, and play on Windows.">
 	<meta property="og:url" content="https://arena.temnorid.com/">
+	<meta property="og:locale" content="en_US">
+	<meta property="og:image" content="https://arena.temnorid.com/seo.png">
+	<meta property="og:image:type" content="image/png">
+	<meta property="og:image:width" content="1200">
+	<meta property="og:image:height" content="630">
+	<meta property="og:image:alt" content="Temnorid Arena artwork showing two mages fighting with elemental magic in a stone courtyard.">
+	<meta name="twitter:card" content="summary_large_image">
+	<meta name="twitter:title" content="Temnorid Arena">
+	<meta name="twitter:description" content="Fight as a Warrior, Archer or Mage in Temnorid Arena. Face bots or friends, earn your class’s Hero title, and play on Windows.">
+	<meta name="twitter:image" content="https://arena.temnorid.com/seo.png">
+	<meta name="twitter:image:alt" content="Temnorid Arena artwork showing two mages fighting with elemental magic in a stone courtyard.">
 	<meta name="theme-color" content="#0f0d14">
-	<style>
-		:root { --accent: #3fb7a8; --bg: #0f0d14; --panel: #1a1722; --line: #2d2838; --text: #e9e6f0; --muted: #a9a3b8; }
-		* { box-sizing: border-box; }
-		html { scroll-behavior: smooth; }
-		body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-		a { color: var(--accent); }
-		.wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
-		header.site { border-bottom: 1px solid var(--line); }
-		header.site .wrap { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; }
-		.brand { font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: .02em; }
-		nav a { margin-left: 18px; color: var(--muted); text-decoration: none; font-size: 15px; }
-		nav a:hover { color: var(--text); }
-		.hero { padding: 72px 0 56px; border-bottom: 1px solid var(--line); background: radial-gradient(900px 300px at 50% -10%, color-mix(in srgb, var(--accent) 22%, transparent), transparent); }
-		.eyebrow { color: var(--accent); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 13px; margin: 0 0 10px; }
-		h1 { font-size: clamp(36px, 7vw, 60px); line-height: 1.08; margin: 0 0 12px; }
-		.tagline { font-size: 22px; color: var(--text); margin: 0 0 18px; }
-		.lead { color: var(--muted); max-width: 640px; margin: 0 0 28px; }
-		.btn { display: inline-block; background: var(--accent); color: #111; font-weight: 700; padding: 13px 24px; border-radius: 10px; text-decoration: none; }
-		.btn:hover { filter: brightness(1.1); }
-		.fine { color: var(--muted); font-size: 14px; margin: 14px 0 0; }
-		section { padding: 48px 0; border-bottom: 1px solid var(--line); }
-		h2 { font-size: 28px; margin: 0 0 16px; }
-		h3 { font-size: 18px; margin: 28px 0 8px; }
-		p { margin: 0 0 14px; }
-		ol, ul { padding-left: 22px; margin: 0 0 14px; }
-		li { margin-bottom: 8px; }
-		table { width: 100%; border-collapse: collapse; background: var(--panel); border-radius: 10px; overflow: hidden; }
-		th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); }
-		th { color: var(--muted); font-weight: 600; font-size: 14px; }
-		tr:last-child td { border-bottom: 0; }
-		td:first-child { white-space: nowrap; font-weight: 600; }
-		.cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-		.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
-		.card h3 { margin-top: 0; }
-		.note { background: var(--panel); border-left: 3px solid var(--accent); padding: 14px 16px; border-radius: 6px; color: var(--muted); }
-		footer { padding: 32px 0 56px; color: var(--muted); font-size: 14px; }
-		:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-		@media (max-width: 560px) { nav a:not(:last-child) { display: none; } }
-	</style>
+	<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://arena.temnorid.com/#website",
+      "name": "Temnorid Arena",
+      "url": "https://arena.temnorid.com/",
+      "inLanguage": "en",
+      "image": "https://arena.temnorid.com/seo.png",
+      "about": {
+        "@id": "https://arena.temnorid.com/#game"
+      }
+    },
+    {
+      "@type": "WebPage",
+      "@id": "https://arena.temnorid.com/#webpage",
+      "name": "Temnorid Arena",
+      "url": "https://arena.temnorid.com/",
+      "description": "Fight as a Warrior, Archer or Mage in Temnorid Arena. Face bots or friends, earn your class’s Hero title, and play on Windows.",
+      "isPartOf": {
+        "@id": "https://arena.temnorid.com/#website"
+      },
+      "about": {
+        "@id": "https://arena.temnorid.com/#game"
+      },
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://arena.temnorid.com/seo.png",
+        "width": 1200,
+        "height": 630
+      }
+    },
+    {
+      "@type": "VideoGame",
+      "@id": "https://arena.temnorid.com/#game",
+      "name": "Temnorid Arena",
+      "url": "https://arena.temnorid.com/",
+      "description": "Fight as a Warrior, Archer or Mage in Temnorid Arena. Face bots or friends, earn your class’s Hero title, and play on Windows.",
+      "image": "https://arena.temnorid.com/seo.png",
+      "thumbnailUrl": "https://arena.temnorid.com/logo.png",
+      "genre": "Action",
+      "gamePlatform": "Windows",
+      "operatingSystem": "Windows 10 or later, 64-bit",
+      "softwareVersion": "0.2.0",
+      "downloadUrl": "https://github.com/WebArtWork/arena.temnorid.com/releases/latest/download/Temnorid-Arena-Setup.exe",
+      "releaseNotes": "https://github.com/WebArtWork/arena.temnorid.com/releases/tag/v0.2.0",
+      "isAccessibleForFree": true,
+      "inLanguage": "en",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Temnorid",
+        "url": "https://temnorid.com/"
+      }
+    }
+  ]
+}
+</script>
+	<link rel="stylesheet" href="./site.css">
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 	<header class="site">
 		<div class="wrap">
-			<a class="brand" href="./">Temnorid Arena</a>
+			<a class="brand" href="./"><img src="./logo.svg" alt="" width="44" height="44">Temnorid Arena</a>
 			<nav aria-label="Main">
 				<a href="#play">How to play</a>
 				<a href="#controls">Controls</a>
@@ -63,30 +101,23 @@
 		</div>
 	</header>
 
-	<main>
-		<div class="hero">
-			<div class="wrap">
-				<p class="eyebrow">A Temnorid game · Windows, Android, iOS · in development</p>
+	<main id="main" tabindex="-1">
+		<div class="hero"><div class="wrap hero-grid"><div class="hero-copy">
+				<p class="eyebrow">Heroic duels</p>
 				<h1>Temnorid Arena</h1>
 				<p class="tagline">Step into the arena. Win your class’s crown.</p>
-				<p class="lead">Heroic duels, glory and trophies.</p>
+				<p class="lead">Fight as a Warrior, Archer or Mage in the courtyard.</p>
 				<a class="btn" href="https://github.com/WebArtWork/arena.temnorid.com/releases/latest/download/Temnorid-Arena-Setup.exe">Download for Windows</a>
-				<p class="fine">Free · version 0.3.0 · Windows 10 or later · installer. The first playable is still being built, so the download may not be published yet.</p>
-			</div>
-		</div>
+				<p class="fine">Free · Windows 10 or later, 64-bit<br>In development</p>
+			</div><figure class="brand-art"><img src="./logo.svg" alt="" width="1024" height="1024"><figcaption>Warrior · Archer · Mage</figcaption></figure></div></div>
 
-		<section id="about">
-			<div class="wrap">
-				<h2>About the game</h2>
+		<section id="about" aria-labelledby="about-title"><div class="wrap section-grid"><div class="section-intro"><h2 id="about-title">About the game</h2></div><div class="section-body"><p>Heroic duels, glory and trophies.</p>
 				<p>Step into the arena, face other heroes, and fight with weapons and elemental magic. Win, raise your reputation and earn unique rewards.</p>
 				<p class="note">The courtyard and the mage are the real models; the Warrior and the Archer borrow the mage's body until their own models exist.</p>
 				<p><img src="assets/arena-props.jpg" alt="The stone props of the Arena courtyard" style="max-width:100%;border-radius:10px"></p>
-			</div>
-		</section>
+			</div></div></section>
 
-		<section id="play">
-			<div class="wrap">
-				<h2>How to play</h2>
+		<section id="play" aria-labelledby="play-title"><div class="wrap section-grid"><div class="section-intro"><h2 id="play-title">How to play</h2></div><div class="section-body">
 				<p>The first playable is a free-for-all in a stone courtyard: you and five bots, two fighters of each class, Warrior, Archer and Mage. Every period the best fighter of each class becomes that class’s Hero.</p>
 				<ol>
 					<li>Choose your class on the start screen: <strong>Warrior</strong>, <strong>Archer</strong> or <strong>Mage</strong>.</li>
@@ -100,14 +131,11 @@
 					<div class="card"><h3>You win</h3><p>Score the most kills in your class during a period to become its Hero.</p></div>
 					<div class="card"><h3>You lose</h3><p>There is no losing: if you fall, you come back after three seconds. Your best period and how often you were Hero are saved.</p></div>
 				</div>
-			</div>
-		</section>
+			</div></div></section>
 
-		<section id="controls">
-			<div class="wrap">
-				<h2>Controls</h2>
+		<section id="controls" aria-labelledby="controls-title"><div class="wrap section-grid"><div class="section-intro"><h2 id="controls-title">Controls</h2></div><div class="section-body">
 				<table>
-					<thead><tr><th>Key</th><th>Action</th></tr></thead>
+					<thead><tr><th scope="col">Key</th><th scope="col">Action</th></tr></thead>
 					<tbody>
 						<tr><td>W A S D</td><td>Move</td></tr>
 						<tr><td>Mouse</td><td>Look and aim</td></tr>
@@ -120,57 +148,41 @@
 					</tbody>
 				</table>
 				<p class="fine">Keyboard and mouse on Windows, touch on phones. Your progress is saved on your PC.</p>
-			</div>
-		</section>
+			</div></div></section>
 
-		<section id="others">
-			<div class="wrap">
-				<h2>Playing with others</h2>
+		<section id="others" aria-labelledby="others-title"><div class="wrap section-grid"><div class="section-intro"><h2 id="others-title">Playing with others</h2></div><div class="section-body">
 				<p>Up to four people fight in the same courtyard, free for all. Choose <strong>Play with others</strong> on the main menu: one player hosts (a direct address on the same network, or a short code), the others join. Each person picks a class; bots take the other fighters, and a bot gives its place to anyone who joins later. The host runs the bots, the periods, the score and the Heroes and checks every hit. If the host leaves, the match ends for everybody.</p>
 				<p>Windows, Android and iOS players can meet in the same match.</p>
-			</div>
-		</section>
+			</div></div></section>
 
-		<section id="updates">
-			<div class="wrap">
-				<h2>Updates</h2>
+		<section id="updates" aria-labelledby="updates-title"><div class="wrap section-grid"><div class="section-intro"><h2 id="updates-title">Updates</h2></div><div class="section-body">
 				<p>The Windows game updates itself from the newest GitHub release when it starts. You can turn that off in Profile.</p>
-			</div>
-		</section>
+			</div></div></section>
 
-		<section id="phones">
-			<div class="wrap">
-				<h2>Phones</h2>
+		<section id="phones" aria-labelledby="phones-title"><div class="wrap section-grid"><div class="section-intro"><h2 id="phones-title">Phones</h2></div><div class="section-body">
 				<p>Android and iOS builds are made from the same project with Unity Build Profiles. A stick on the left moves, dragging the right side looks, and Attack, Jump, Run and Pause buttons sit on the right; the tabs along the bottom open the scoreboard and your profile. The class screen and every menu work by tap.</p>
-			</div>
-		</section>
+			</div></div></section>
 
-		<section id="lords">
-			<div class="wrap">
-				<h2>Part of the world of Temnorid</h2>
+		<section id="lords" aria-labelledby="lords-title"><div class="wrap section-grid"><div class="section-intro"><h2 id="lords-title">Part of the world of Temnorid</h2></div><div class="section-body">
 				<p>Arena results, reputation and trophies are meant to carry into Lords, where heroes are raised. Today Arena does not talk to Lords.</p>
 				<p>The first time you press Play, you can sign in with the same Google account as in Lords, play as a guest, or play offline; Profile lets you change this later. Google sign-in is offered on Windows; phones offer guest only for now. The account gives the game your name and nothing else. Arena does not need an account: the single-player game works fully offline, and only signing in, playing with others and updates use the internet.</p>
-			</div>
-		</section>
+			</div></div></section>
 
-		<section id="download">
-			<div class="wrap">
-				<h2>Download</h2>
-				<p><a class="btn" href="https://github.com/WebArtWork/arena.temnorid.com/releases/latest/download/Temnorid-Arena-Setup.exe">Download Temnorid-Arena-Setup.exe</a></p>
+		<section id="download" aria-labelledby="download-title"><div class="wrap section-grid"><div class="section-intro"><h2 id="download-title">Download</h2></div><div class="section-body"><p class="release-status">Latest published installer: <a href="https://github.com/WebArtWork/arena.temnorid.com/releases/tag/v0.2.0">0.2.0</a>. Development version: 0.3.0. This page describes the development version; some features are not in the published installer yet.</p><p class="release-meta">A Temnorid game · Windows, Android, iOS · in development</p><p class="fine">Free · version 0.3.0 · Windows 10 or later · installer. </p>
+				<p><a class="btn" href="https://github.com/WebArtWork/arena.temnorid.com/releases/latest/download/Temnorid-Arena-Setup.exe">Download for Windows</a></p>
 				<ol>
 					<li>Download the installer and run it.</li>
 					<li>Windows may warn about an unknown publisher, because the installer is not signed yet. Choose <strong>More info</strong>, then <strong>Run anyway</strong>.</li>
 					<li>Start Temnorid Arena from the Start menu.</li>
 				</ol>
 				<p class="fine">Requires Windows 10 or later, 64-bit. All releases and release notes: <a href="https://github.com/WebArtWork/arena.temnorid.com/releases">GitHub Releases</a>.</p>
-			</div>
-		</section>
+			</div></div></section>
 	</main>
 
 	<footer>
 		<div class="wrap">
 			<p>Temnorid Arena is a <a href="https://temnorid.com">Temnorid</a> game, made with the <a href="https://3d.itkamianets.com">IT Kamianets 3D Engine</a>. <a href="https://github.com/WebArtWork/arena.temnorid.com">Source and feedback</a>.</p>
-		</div>
+		<a class="back-top" href="#main">Back to top</a></div>
 	</footer>
 </body>
 </html>
