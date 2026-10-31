@@ -137,3 +137,6 @@ node_modules/
 Thumbs.db
 desktop.ini
 .DS_Store
+
+# Google sign-in client for this machine (see 3d-unity-account); never committed
+/Assets/Resources/account-oauth.json*
