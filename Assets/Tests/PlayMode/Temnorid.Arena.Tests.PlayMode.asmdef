@@ -5,6 +5,10 @@
     "Temnorid.Arena",
     "ITKamianets.Engine.Combat",
     "ITKamianets.Engine.AI",
+    "ITKamianets.Engine.Net",
+    "ITKamianets.Engine.Shell",
+    "ITKamianets.Engine.Input",
+    "Unity.InputSystem",
     "UnityEngine.TestRunner",
     "UnityEditor.TestRunner"
   ],

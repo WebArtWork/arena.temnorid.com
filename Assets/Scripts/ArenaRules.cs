@@ -87,6 +87,39 @@ namespace Temnorid.Arena
 			_fighters[killer].LastKillAt = time;
 		}
 
+		// ---- online: a client mirrors what the host decided ----
+
+		/// <summary>Client: shows the host's current period and this fighter's score.</summary>
+		public void Mirror(int periodNumber, int fighter, int kills, int deaths, bool hero)
+		{
+			if (fighter < 0 || fighter >= _fighters.Count) return;
+			PeriodNumber = Math.Max(1, periodNumber);
+			_fighters[fighter].Kills = kills;
+			_fighters[fighter].Deaths = deaths;
+			_fighters[fighter].IsHero = hero;
+		}
+
+		/// <summary>Client: the host ended a period; takes its result (Heroes, history) and starts the next period's counts.</summary>
+		public void ApplyResult(PeriodResult result)
+		{
+			foreach (var fighter in _fighters) fighter.IsHero = false;
+			for (var c = 0; c < result.HeroIndex.Length; c++)
+			{
+				var hero = result.HeroIndex[c];
+				if (hero < 0 || hero >= _fighters.Count) continue;
+				_fighters[hero].IsHero = true;
+				_fighters[hero].HeroPeriods++;
+			}
+			_history.Add(result);
+			PeriodNumber = result.Number + 1;
+			foreach (var fighter in _fighters)
+			{
+				fighter.Kills = 0;
+				fighter.Deaths = 0;
+				fighter.LastKillAt = float.MaxValue;
+			}
+		}
+
 		/// <summary>The fighters of one class from first to last, as fighter indexes.</summary>
 		public int[] Ranking(HeroClass fighterClass)
 		{

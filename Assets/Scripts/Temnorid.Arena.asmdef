@@ -13,6 +13,9 @@
     "ITKamianets.Engine.Character",
     "ITKamianets.Engine.CharacterView.Camera",
     "ITKamianets.Engine.CharacterView.Controls",
+    "ITKamianets.Engine.Shell",
+    "ITKamianets.Engine.Net",
+    "ITKamianets.Engine.Update",
     "Unity.AI.Navigation",
     "Unity.InputSystem",
     "UnityEngine.UI"

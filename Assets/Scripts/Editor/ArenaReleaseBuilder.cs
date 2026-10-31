@@ -18,6 +18,14 @@ namespace Temnorid.Arena.EditorTools
 		const string PlayerFolder = "Builds/Windows/TemnoridArena";
 		const string ExeName = "TemnoridArena.exe";
 
+		static string[] EnabledScenes()
+		{
+			var list = new System.Collections.Generic.List<string>();
+			foreach (var scene in EditorBuildSettings.scenes)
+				if (scene.enabled) list.Add(scene.path);
+			return list.ToArray();
+		}
+
 		[MenuItem("Temnorid/Arena/Build Windows Player")]
 		public static void BuildWindows()
 		{
@@ -28,7 +36,7 @@ namespace Temnorid.Arena.EditorTools
 
 			var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
 			{
-				scenes = new[] { ScenePath },
+				scenes = EnabledScenes(), // Boot, Menu, then the arena: set by the scene builder
 				locationPathName = PlayerFolder + "/" + ExeName,
 				target = BuildTarget.StandaloneWindows64,
 				options = BuildOptions.None,

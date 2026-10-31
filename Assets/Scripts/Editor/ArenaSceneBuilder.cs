@@ -6,6 +6,7 @@ using ITKamianets.Engine.Combat;
 using ITKamianets.Engine.Feedback;
 using ITKamianets.Engine.Graybox;
 using ITKamianets.Engine.Graybox.EditorTools;
+using ITKamianets.Engine.Shell.Editor;
 using Unity.AI.Navigation;
 using UnityEditor;
 using UnityEditor.Build;
@@ -26,6 +27,7 @@ namespace Temnorid.Arena.EditorTools
 	/// </summary>
 	public static class ArenaSceneBuilder
 	{
+		const string Version = "0.3.0";
 		const string ScenePath = "Assets/Scenes/Main.unity";
 		const string MaterialDir = "Assets/Materials";
 		const string ModelDir = "Assets/Models/arena/";
@@ -37,9 +39,7 @@ namespace Temnorid.Arena.EditorTools
 		[MenuItem("Temnorid/Arena/Build Scene")]
 		public static void Build()
 		{
-			PlayerSettings.productName = "Temnorid Arena";
-			PlayerSettings.companyName = "Temnorid";
-			PlayerSettings.bundleVersion = "0.2.0";
+			ShellSceneKit.ApplyPlatformSettings("Temnorid", "Temnorid Arena", "com.itkamianets.arena", Version);
 			PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Standalone, "com.itkamianets.arena");
 			PlayerSettings.runInBackground = true;
 			PlayerSettings.fullScreenMode = FullScreenMode.FullScreenWindow;
@@ -61,9 +61,13 @@ namespace Temnorid.Arena.EditorTools
 			gameObject.AddComponent<ArenaHud>().Game = game;
 
 			EditorSceneManager.SaveScene(scene, ScenePath);
-			EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(ScenePath, true) };
+			// The shell scenes open new scenes, so copy out what the log line needs from this one first.
+			var summary = "[Arena] Scene built: " + ScenePath + " (" + courtyard.name + ", " + fighters.Length + " fighters, " + spawns.Length + " spawns)";
+			ShellSceneKit.BuildBoot();
+			ShellSceneKit.BuildMenu();
+			ShellSceneKit.SetBuildOrder(ScenePath);
 			AssetDatabase.SaveAssets();
-			Debug.Log("[Arena] Scene built: " + ScenePath + " (" + courtyard.name + ", " + fighters.Length + " fighters, " + spawns.Length + " spawns)");
+			Debug.Log(summary);
 		}
 
 		// ---- the courtyard ----
