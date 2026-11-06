@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.itkamianets.3d-unity-assetra": "https://github.com/IT-Kamianets/3d-unity-assetra.git",
     "com.itkamianets.3d-constructor-character-view-camera": "https://github.com/IT-Kamianets/3d-constructor-character-view-camera.git",
     "com.itkamianets.3d-constructor-character-view-controls": "https://github.com/IT-Kamianets/3d-constructor-character-view-controls.git",
     "com.itkamianets.3d-unity-ai": "https://github.com/IT-Kamianets/3d-unity-ai.git",

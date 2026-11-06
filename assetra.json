@@ -1,0 +1,566 @@
+{
+  "schemaVersion": "1.0.0",
+  "libraryId": "arena-temnorid",
+  "units": "meters",
+  "metadata": {
+    "tags": [
+      "assetra"
+    ],
+    "properties": {
+      "assetra": {
+        "format": 1,
+        "project": "arena-temnorid",
+        "name": "Temnorid Arena",
+        "modelsDir": "Assets/Models",
+        "brief": "models-to-do.md"
+      }
+    }
+  },
+  "assets": [
+    {
+      "id": "characters/mage",
+      "name": "Mage (player and bots)",
+      "kind": "model",
+      "source": {
+        "uri": "Assets/Models/characters/mage.glb",
+        "format": "glb"
+      },
+      "bounds": {
+        "min": {
+          "x": -0.35,
+          "y": 0,
+          "z": -0.25
+        },
+        "max": {
+          "x": 0.35,
+          "y": 1.8,
+          "z": 0.25
+        }
+      },
+      "placeholder": {
+        "shape": "capsule",
+        "color": {
+          "r": 0.35,
+          "g": 0.25,
+          "b": 0.6
+        }
+      },
+      "metadata": {
+        "tags": [
+          "character",
+          "rigged"
+        ],
+        "properties": {
+          "pivot": "bottom-center",
+          "front": "+Z",
+          "minTriangles": 15000,
+          "maxTriangles": 25000,
+          "eyeHeight": 1.65,
+          "materials": [
+            "body",
+            "accent"
+          ]
+        }
+      }
+    },
+    {
+      "id": "arena/pillar",
+      "name": "Pillar",
+      "kind": "model",
+      "source": {
+        "uri": "Assets/Models/arena/arena-pillar.glb",
+        "format": "glb"
+      },
+      "bounds": {
+        "min": {
+          "x": -0.6,
+          "y": 0,
+          "z": -0.6
+        },
+        "max": {
+          "x": 0.6,
+          "y": 4,
+          "z": 0.6
+        }
+      },
+      "placeholder": {
+        "shape": "box",
+        "color": {
+          "r": 0.45,
+          "g": 0.43,
+          "b": 0.4
+        }
+      },
+      "metadata": {
+        "tags": [
+          "prop",
+          "arena"
+        ],
+        "properties": {
+          "pivot": "bottom-center",
+          "front": "+Z",
+          "minTriangles": 1000,
+          "maxTriangles": 3000
+        }
+      }
+    },
+    {
+      "id": "arena/crate",
+      "name": "Crate",
+      "kind": "model",
+      "source": {
+        "uri": "Assets/Models/arena/arena-crate.glb",
+        "format": "glb"
+      },
+      "bounds": {
+        "min": {
+          "x": -0.6,
+          "y": 0,
+          "z": -0.6
+        },
+        "max": {
+          "x": 0.6,
+          "y": 1.2,
+          "z": 0.6
+        }
+      },
+      "placeholder": {
+        "shape": "box",
+        "color": {
+          "r": 0.55,
+          "g": 0.36,
+          "b": 0.2
+        }
+      },
+      "metadata": {
+        "tags": [
+          "prop",
+          "arena",
+          "cover"
+        ],
+        "properties": {
+          "pivot": "bottom-center",
+          "front": "+Z",
+          "minTriangles": 300,
+          "maxTriangles": 1000
+        }
+      }
+    },
+    {
+      "id": "arena/platform",
+      "name": "Central platform",
+      "kind": "model",
+      "source": {
+        "uri": "Assets/Models/arena/arena-platform.glb",
+        "format": "glb"
+      },
+      "bounds": {
+        "min": {
+          "x": -3,
+          "y": 0,
+          "z": -3
+        },
+        "max": {
+          "x": 3,
+          "y": 1.2,
+          "z": 3
+        }
+      },
+      "placeholder": {
+        "shape": "box",
+        "color": {
+          "r": 0.45,
+          "g": 0.43,
+          "b": 0.4
+        }
+      },
+      "metadata": {
+        "tags": [
+          "prop",
+          "arena"
+        ],
+        "properties": {
+          "pivot": "bottom-center",
+          "front": "+Z",
+          "minTriangles": 1500,
+          "maxTriangles": 4000,
+          "topFlat": true
+        }
+      }
+    },
+    {
+      "id": "arena/wall-segment",
+      "name": "Wall segment",
+      "kind": "model",
+      "source": {
+        "uri": "Assets/Models/arena/arena-wall-segment.glb",
+        "format": "glb"
+      },
+      "bounds": {
+        "min": {
+          "x": -2,
+          "y": 0,
+          "z": -0.3
+        },
+        "max": {
+          "x": 2,
+          "y": 4,
+          "z": 0.3
+        }
+      },
+      "placeholder": {
+        "shape": "box",
+        "color": {
+          "r": 0.45,
+          "g": 0.43,
+          "b": 0.4
+        }
+      },
+      "metadata": {
+        "tags": [
+          "prop",
+          "arena"
+        ],
+        "properties": {
+          "pivot": "bottom-center",
+          "front": "+Z",
+          "minTriangles": 800,
+          "maxTriangles": 2000
+        }
+      }
+    },
+    {
+      "id": "arena/low-wall",
+      "name": "Low wall",
+      "kind": "model",
+      "source": {
+        "uri": "Assets/Models/arena/arena-low-wall.glb",
+        "format": "glb"
+      },
+      "bounds": {
+        "min": {
+          "x": -1.5,
+          "y": 0,
+          "z": -0.3
+        },
+        "max": {
+          "x": 1.5,
+          "y": 1,
+          "z": 0.3
+        }
+      },
+      "placeholder": {
+        "shape": "box",
+        "color": {
+          "r": 0.45,
+          "g": 0.43,
+          "b": 0.4
+        }
+      },
+      "metadata": {
+        "tags": [
+          "prop",
+          "arena",
+          "cover"
+        ],
+        "properties": {
+          "pivot": "bottom-center",
+          "front": "+Z",
+          "minTriangles": 500,
+          "maxTriangles": 1500
+        }
+      }
+    },
+    {
+      "id": "arena/broken-pillar",
+      "name": "Broken pillar",
+      "kind": "model",
+      "source": {
+        "uri": "Assets/Models/arena/arena-broken-pillar.glb",
+        "format": "glb"
+      },
+      "bounds": {
+        "min": {
+          "x": -0.6,
+          "y": 0,
+          "z": -0.6
+        },
+        "max": {
+          "x": 0.6,
+          "y": 2.2,
+          "z": 0.6
+        }
+      },
+      "placeholder": {
+        "shape": "box",
+        "color": {
+          "r": 0.45,
+          "g": 0.43,
+          "b": 0.4
+        }
+      },
+      "metadata": {
+        "tags": [
+          "prop",
+          "arena"
+        ],
+        "properties": {
+          "pivot": "bottom-center",
+          "front": "+Z",
+          "minTriangles": 1000,
+          "maxTriangles": 3000
+        }
+      }
+    },
+    {
+      "id": "arena/rubble",
+      "name": "Rubble pile",
+      "kind": "model",
+      "source": {
+        "uri": "Assets/Models/arena/arena-rubble.glb",
+        "format": "glb"
+      },
+      "bounds": {
+        "min": {
+          "x": -1,
+          "y": 0,
+          "z": -0.75
+        },
+        "max": {
+          "x": 1,
+          "y": 0.5,
+          "z": 0.75
+        }
+      },
+      "placeholder": {
+        "shape": "box",
+        "color": {
+          "r": 0.45,
+          "g": 0.43,
+          "b": 0.4
+        }
+      },
+      "metadata": {
+        "tags": [
+          "prop",
+          "arena"
+        ],
+        "properties": {
+          "pivot": "bottom-center",
+          "front": "+Z",
+          "minTriangles": 500,
+          "maxTriangles": 1500
+        }
+      }
+    },
+    {
+      "id": "arena/stairs",
+      "name": "Stairs",
+      "kind": "model",
+      "source": {
+        "uri": "Assets/Models/arena/arena-stairs.glb",
+        "format": "glb"
+      },
+      "bounds": {
+        "min": {
+          "x": -1.5,
+          "y": 0,
+          "z": -1.2
+        },
+        "max": {
+          "x": 1.5,
+          "y": 1.2,
+          "z": 1.2
+        }
+      },
+      "placeholder": {
+        "shape": "box",
+        "color": {
+          "r": 0.45,
+          "g": 0.43,
+          "b": 0.4
+        }
+      },
+      "metadata": {
+        "tags": [
+          "prop",
+          "arena"
+        ],
+        "properties": {
+          "pivot": "bottom-center",
+          "front": "+Z",
+          "minTriangles": 500,
+          "maxTriangles": 1500,
+          "rise": "toward +Z"
+        }
+      }
+    },
+    {
+      "id": "arena/brazier",
+      "name": "Brazier",
+      "kind": "model",
+      "source": {
+        "uri": "Assets/Models/arena/arena-brazier.glb",
+        "format": "glb"
+      },
+      "bounds": {
+        "min": {
+          "x": -0.4,
+          "y": 0,
+          "z": -0.4
+        },
+        "max": {
+          "x": 0.4,
+          "y": 1.4,
+          "z": 0.4
+        }
+      },
+      "placeholder": {
+        "shape": "box",
+        "color": {
+          "r": 0.8,
+          "g": 0.4,
+          "b": 0.1
+        }
+      },
+      "metadata": {
+        "tags": [
+          "prop",
+          "arena",
+          "light"
+        ],
+        "properties": {
+          "pivot": "bottom-center",
+          "front": "+Z",
+          "minTriangles": 800,
+          "maxTriangles": 2000
+        }
+      }
+    },
+    {
+      "id": "arena/spawn-circle",
+      "name": "Spawn circle",
+      "kind": "model",
+      "source": {
+        "uri": "Assets/Models/arena/arena-spawn-circle.glb",
+        "format": "glb"
+      },
+      "bounds": {
+        "min": {
+          "x": -1,
+          "y": 0,
+          "z": -1
+        },
+        "max": {
+          "x": 1,
+          "y": 0.02,
+          "z": 1
+        }
+      },
+      "placeholder": {
+        "shape": "box",
+        "color": {
+          "r": 0.3,
+          "g": 0.6,
+          "b": 0.9
+        }
+      },
+      "metadata": {
+        "tags": [
+          "prop",
+          "arena",
+          "decal"
+        ],
+        "properties": {
+          "pivot": "center-on-floor",
+          "front": "+Z",
+          "minTriangles": 0,
+          "maxTriangles": 500
+        }
+      }
+    },
+    {
+      "id": "arena/banner",
+      "name": "Banner",
+      "kind": "model",
+      "source": {
+        "uri": "Assets/Models/arena/arena-banner.glb",
+        "format": "glb"
+      },
+      "bounds": {
+        "min": {
+          "x": -0.6,
+          "y": 0,
+          "z": -0.15
+        },
+        "max": {
+          "x": 0.6,
+          "y": 3,
+          "z": 0.15
+        }
+      },
+      "placeholder": {
+        "shape": "box",
+        "color": {
+          "r": 0.5,
+          "g": 0.1,
+          "b": 0.1
+        }
+      },
+      "metadata": {
+        "tags": [
+          "prop",
+          "arena"
+        ],
+        "properties": {
+          "pivot": "bottom-center",
+          "front": "+Z",
+          "minTriangles": 300,
+          "maxTriangles": 1000,
+          "materials": [
+            "cloth",
+            "accent"
+          ]
+        }
+      }
+    },
+    {
+      "id": "characters/vr-hands",
+      "name": "VR hands (not delivered yet)",
+      "kind": "model",
+      "bounds": {
+        "min": {
+          "x": -0.1,
+          "y": 0,
+          "z": -0.05
+        },
+        "max": {
+          "x": 0.1,
+          "y": 0.25,
+          "z": 0.05
+        }
+      },
+      "placeholder": {
+        "shape": "box",
+        "color": {
+          "r": 0.7,
+          "g": 0.55,
+          "b": 0.45
+        }
+      },
+      "metadata": {
+        "tags": [
+          "character",
+          "rigged",
+          "vr"
+        ],
+        "properties": {
+          "pivot": "wrist",
+          "front": "+Z",
+          "minTriangles": 3000,
+          "maxTriangles": 3000
+        }
+      }
+    }
+  ]
+}
