@@ -33,10 +33,15 @@ namespace Temnorid.Arena
 		UiBuilder _ui;
 		InputAction _scoreboard;
 		GameObject _select, _hud, _board, _periodEnd, _pause, _crosshair, _placeBoard, _nextButton;
-		Text _record, _classLabel, _timer, _score, _heroBanner, _respawn, _feed, _toast, _endWait;
+		Text _record, _heroBanner, _respawn, _feed, _toast, _endWait;
 		Text _boardW, _boardA, _boardM, _endTitle, _endW, _endA, _endM, _endNote;
 		Text _placeW, _placeA, _placeM, _placeRecord;
-		Image _healthFill;
+		Image _healthFill, _manaFill;
+		Text _healthText, _manaText, _kills, _deaths, _assists;
+		readonly Image[] _skillBack = new Image[Classes.SkillSlots];
+		readonly RectTransform[] _skillCool = new RectTransform[Classes.SkillSlots];
+		readonly Text[] _skillName = new Text[Classes.SkillSlots];
+		readonly Text[] _skillCost = new Text[Classes.SkillSlots];
 		int _shown = -1;
 		bool _touch;
 		readonly StringBuilder _text = new StringBuilder();
@@ -51,7 +56,13 @@ namespace Temnorid.Arena
 			var map = EngineInput.Default.Asset.FindActionMap("Arena");
 			if (map == null)
 			{
-				map = EngineInput.Default.AddMap("Arena", m => m.AddAction("Scoreboard", InputActionType.Button, "<Keyboard>/tab", groups: EngineInputActions.Groups.KeyboardMouse));
+				map = EngineInput.Default.AddMap("Arena", m =>
+				{
+					m.AddAction("Scoreboard", InputActionType.Button, "<Keyboard>/tab", groups: EngineInputActions.Groups.KeyboardMouse);
+					// Skills on 1 to 4, and C to train as the next class.
+					for (var i = 1; i <= Classes.SkillSlots; i++) m.AddAction("Skill" + i, InputActionType.Button, "<Keyboard>/" + i, groups: EngineInputActions.Groups.KeyboardMouse);
+					m.AddAction("NextClass", InputActionType.Button, "<Keyboard>/c", groups: EngineInputActions.Groups.KeyboardMouse);
+				});
 			}
 			_scoreboard = map.FindAction("Scoreboard");
 
@@ -86,7 +97,7 @@ namespace Temnorid.Arena
 		void BuildSelect(Transform root)
 		{
 			_select = UiBuilder.Box("ClassSelect", root, new Vector2(0.1f, 0.04f), new Vector2(0.9f, 0.96f), Panel);
-			_ui.Label("Subtitle", _select.transform, "Choose your class. Fight everyone. The best of each class becomes its Hero.", 36, TextAnchor.MiddleCenter, new Vector2(0.03f, 0.82f), new Vector2(0.97f, 0.97f), Color.white, wrap: true);
+			_ui.Label("Subtitle", _select.transform, "Choose your class and train alone in the arena.", 36, TextAnchor.MiddleCenter, new Vector2(0.03f, 0.82f), new Vector2(0.97f, 0.97f), Color.white, wrap: true);
 
 			var columns = new[] { (0.04f, 0.32f), (0.36f, 0.64f), (0.68f, 0.96f) };
 			var classes = new[] { Classes.Warrior, Classes.Archer, Classes.Mage };
@@ -116,25 +127,86 @@ namespace Temnorid.Arena
 			rect.offsetMin = Vector2.zero;
 			rect.offsetMax = Vector2.zero;
 
-			var left = UiBuilder.Box("HealthPanel", _hud.transform, new Vector2(0.015f, 0.86f), new Vector2(0.25f, 0.985f), Panel);
-			left.GetComponent<Image>().raycastTarget = false;
-			_classLabel = _ui.Label("Class", left.transform, "", 30, TextAnchor.UpperLeft, new Vector2(0.05f, 0.5f), new Vector2(0.95f, 0.96f), Color.white);
-			_healthFill = UiBuilder.Bar("Health", left.transform, new Vector2(0.05f, 0.14f), new Vector2(0.95f, 0.42f), new Color(0.85f, 0.15f, 0.12f));
+			// The footer: health and mana in the middle of the bottom edge, the numbers written inside the bars.
+			var footer = UiBuilder.Box("Footer", _hud.transform, new Vector2(0.3f, 0.015f), new Vector2(0.7f, 0.115f), Panel);
+			footer.GetComponent<Image>().raycastTarget = false;
+			_healthFill = UiBuilder.Bar("Health", footer.transform, new Vector2(0.03f, 0.54f), new Vector2(0.97f, 0.9f), new Color(0.85f, 0.15f, 0.12f));
+			_healthText = _ui.Label("HealthText", _healthFill.transform.parent, "", 26, TextAnchor.MiddleCenter, Vector2.zero, Vector2.one, Color.white);
+			_manaFill = UiBuilder.Bar("Mana", footer.transform, new Vector2(0.03f, 0.1f), new Vector2(0.97f, 0.46f), new Color(0.2f, 0.4f, 0.95f));
+			_manaText = _ui.Label("ManaText", _manaFill.transform.parent, "", 26, TextAnchor.MiddleCenter, Vector2.zero, Vector2.one, Color.white);
 
-			_timer = _ui.Label("Timer", _hud.transform, "", 40, TextAnchor.UpperCenter, new Vector2(0.3f, 0.92f), new Vector2(0.7f, 0.99f), Color.white);
+			// The skills, on keys 1 to 4, above the bars: the name, the mana it costs, and a shade that drains as it cools down.
+			var skills = UiBuilder.Box("Skills", _hud.transform, new Vector2(0.34f, 0.125f), new Vector2(0.66f, 0.22f), Color.clear);
+			skills.GetComponent<Image>().raycastTarget = false;
+			for (var i = 0; i < Classes.SkillSlots; i++)
+			{
+				var slot = UiBuilder.Box("Skill" + (i + 1), skills.transform, new Vector2(i / (float)Classes.SkillSlots + 0.006f, 0f), new Vector2((i + 1) / (float)Classes.SkillSlots - 0.006f, 1f), Panel);
+				_skillBack[i] = slot.GetComponent<Image>();
+				_skillBack[i].raycastTarget = false;
+				_skillName[i] = _ui.Label("Name", slot.transform, "", 20, TextAnchor.MiddleCenter, new Vector2(0.04f, 0.25f), new Vector2(0.96f, 0.85f), Color.white, wrap: true);
+				var cool = UiBuilder.Box("Cooldown", slot.transform, Vector2.zero, Vector2.one, new Color(0f, 0f, 0f, 0.65f));
+				cool.GetComponent<Image>().raycastTarget = false;
+				_skillCool[i] = (RectTransform)cool.transform;
+				_ui.Label("Key", slot.transform, (i + 1).ToString(), 22, TextAnchor.UpperLeft, new Vector2(0.06f, 0.6f), new Vector2(0.5f, 1f), Gold);
+				_skillCost[i] = _ui.Label("Cost", slot.transform, "", 20, TextAnchor.LowerRight, new Vector2(0.4f, 0f), new Vector2(0.95f, 0.4f), new Color(0.55f, 0.7f, 1f));
+			}
 
-			var right = UiBuilder.Box("ScorePanel", _hud.transform, new Vector2(0.78f, 0.86f), new Vector2(0.985f, 0.985f), Panel);
-			right.GetComponent<Image>().raycastTarget = false;
-			_score = _ui.Label("Score", right.transform, "", 30, TextAnchor.UpperLeft, new Vector2(0.06f, 0.1f), new Vector2(0.95f, 0.92f), Color.white);
+			// The top bar: kills and deaths as icons with their numbers, left of the player's name.
+			var bar = _chrome.TopBar;
+			SwordIcon(bar, 0.715f);
+			_kills = _ui.Label("KillsCount", bar, "0", 28, TextAnchor.MiddleLeft, new Vector2(0.73f, 0f), new Vector2(0.765f, 1f), Color.white);
+			GraveIcon(bar, 0.78f);
+			_deaths = _ui.Label("DeathsCount", bar, "0", 28, TextAnchor.MiddleLeft, new Vector2(0.795f, 0f), new Vector2(0.83f, 1f), Color.white);
+			AssistIcon(bar, 0.845f);
+			_assists = _ui.Label("AssistsCount", bar, "0", 28, TextAnchor.MiddleLeft, new Vector2(0.86f, 0f), new Vector2(0.895f, 1f), Color.white);
 			_heroBanner = _ui.Label("HeroBanner", _hud.transform, "", 30, TextAnchor.UpperRight, new Vector2(0.45f, 0.8f), new Vector2(0.985f, 0.86f), Gold);
 
 			_feed = _touch
 				? _ui.Label("Feed", _hud.transform, "", 26, TextAnchor.LowerLeft, new Vector2(0.22f, 0.08f), new Vector2(0.62f, 0.3f), new Color(1f, 1f, 1f, 0.85f))
-				: _ui.Label("Feed", _hud.transform, "", 26, TextAnchor.LowerLeft, new Vector2(0.015f, 0.08f), new Vector2(0.4f, 0.28f), new Color(1f, 1f, 1f, 0.85f));
+				: _ui.Label("Feed", _hud.transform, "", 26, TextAnchor.LowerLeft, new Vector2(0.015f, 0.14f), new Vector2(0.4f, 0.34f), new Color(1f, 1f, 1f, 0.85f));
 			_respawn = _ui.Label("Respawn", _hud.transform, "", 56, TextAnchor.MiddleCenter, new Vector2(0.25f, 0.45f), new Vector2(0.75f, 0.58f), new Color(1f, 0.5f, 0.45f));
 			_crosshair = UiBuilder.Box("Crosshair", _hud.transform, new Vector2(0.4985f, 0.4975f), new Vector2(0.5015f, 0.5025f), new Color(1f, 1f, 1f, 0.9f));
 			_crosshair.GetComponent<Image>().raycastTarget = false;
 			if (_touch) BuildTouch(_hud.transform);
+		}
+
+		// Small icons built from boxes, so they do not depend on a font having the symbol.
+		static GameObject IconHolder(Transform bar, float centre)
+		{
+			var holder = UiBuilder.Box("Icon", bar, new Vector2(centre - 0.012f, 0.18f), new Vector2(centre + 0.012f, 0.82f), Color.clear);
+			holder.GetComponent<Image>().raycastTarget = false;
+			return holder;
+		}
+
+		static void SwordIcon(Transform bar, float centre)
+		{
+			var holder = IconHolder(bar, centre).transform;
+			var steel = new Color(0.85f, 0.88f, 0.95f);
+			var blade = UiBuilder.Box("Blade", holder, new Vector2(0.42f, 0.2f), new Vector2(0.58f, 1f), steel);
+			var guard = UiBuilder.Box("Guard", holder, new Vector2(0.15f, 0.3f), new Vector2(0.85f, 0.4f), new Color(0.9f, 0.7f, 0.25f));
+			var grip = UiBuilder.Box("Grip", holder, new Vector2(0.44f, 0f), new Vector2(0.56f, 0.3f), new Color(0.6f, 0.38f, 0.2f));
+			foreach (var part in new[] { blade, guard, grip }) part.GetComponent<Image>().raycastTarget = false;
+			((RectTransform)holder).localRotation = Quaternion.Euler(0f, 0f, 35f);
+		}
+
+		static void AssistIcon(Transform bar, float centre)
+		{
+			var holder = IconHolder(bar, centre).transform;
+			var green = new Color(0.35f, 0.8f, 0.45f);
+			var up = UiBuilder.Box("PlusUp", holder, new Vector2(0.38f, 0.05f), new Vector2(0.62f, 0.95f), green);
+			var across = UiBuilder.Box("PlusAcross", holder, new Vector2(0f, 0.38f), new Vector2(1f, 0.62f), green);
+			foreach (var part in new[] { up, across }) part.GetComponent<Image>().raycastTarget = false;
+		}
+
+		static void GraveIcon(Transform bar, float centre)
+		{
+			var holder = IconHolder(bar, centre).transform;
+			var stone = new Color(0.72f, 0.74f, 0.78f);
+			var body = UiBuilder.Box("Stone", holder, new Vector2(0.15f, 0f), new Vector2(0.85f, 0.75f), stone);
+			var top = UiBuilder.Box("Top", holder, new Vector2(0.28f, 0.75f), new Vector2(0.72f, 0.95f), stone);
+			var up = UiBuilder.Box("CrossUp", holder, new Vector2(0.45f, 0.25f), new Vector2(0.55f, 0.7f), new Color(0.2f, 0.2f, 0.24f));
+			var across = UiBuilder.Box("CrossAcross", holder, new Vector2(0.3f, 0.5f), new Vector2(0.7f, 0.6f), new Color(0.2f, 0.2f, 0.24f));
+			foreach (var part in new[] { body, top, up, across }) part.GetComponent<Image>().raycastTarget = false;
 		}
 
 		// ---- phones: a stick on the left, buttons on the right, dragging anywhere else turns the view ----
@@ -212,7 +284,7 @@ namespace Temnorid.Arena
 			_endM = _ui.Label("Mages", _periodEnd.transform, "", 30, TextAnchor.UpperLeft, new Vector2(0.69f, 0.3f), new Vector2(0.99f, 0.73f), Color.white);
 			_nextButton = _ui.Button("Next period", _periodEnd.transform, new Vector2(0.2f, 0.16f), new Vector2(0.8f, 0.28f), () => Game.NextPeriod()).gameObject;
 			_endWait = _ui.Label("Wait", _periodEnd.transform, "The next period starts soon.", 30, TextAnchor.MiddleCenter, new Vector2(0.1f, 0.16f), new Vector2(0.9f, 0.28f), new Color(1f, 1f, 1f, 0.8f));
-			_ui.Button("Main menu", _periodEnd.transform, new Vector2(0.2f, 0.03f), new Vector2(0.8f, 0.14f), () => Game.QuitToMenu());
+			_ui.Button("Save and quit", _periodEnd.transform, new Vector2(0.2f, 0.03f), new Vector2(0.8f, 0.14f), () => Game.SaveAndQuit());
 		}
 
 		void BuildPause(Transform root)
@@ -221,7 +293,7 @@ namespace Temnorid.Arena
 			_ui.Label("Title", _pause.transform, "PAUSED", 56, TextAnchor.MiddleCenter, new Vector2(0f, 0.72f), new Vector2(1f, 0.96f), Gold);
 			_ui.Label("Note", _pause.transform, "", 26, TextAnchor.MiddleCenter, new Vector2(0.05f, 0.58f), new Vector2(0.95f, 0.72f), new Color(1f, 1f, 1f, 0.7f), wrap: true);
 			_ui.Button("Resume", _pause.transform, new Vector2(0.2f, 0.32f), new Vector2(0.8f, 0.56f), () => Game.SetPaused(false));
-			_ui.Button("Main menu", _pause.transform, new Vector2(0.2f, 0.06f), new Vector2(0.8f, 0.3f), () => Game.QuitToMenu());
+			_ui.Button("Save and quit", _pause.transform, new Vector2(0.2f, 0.06f), new Vector2(0.8f, 0.3f), () => Game.SaveAndQuit());
 		}
 
 		void OnPlace(string id)
@@ -266,14 +338,28 @@ namespace Temnorid.Arena
 			if (player == null || !_hud.activeSelf) return;
 
 			var record = Game.Scoring.Fighters[player.Index];
-			UiBuilder.SetText(_classLabel, $"{player.Definition.Name.ToUpperInvariant()}   {Mathf.CeilToInt(player.Health.Current)} / {Mathf.CeilToInt(player.Health.MaxHealth)}");
+			UiBuilder.SetText(_healthText, $"{Mathf.CeilToInt(player.Health.Current)} / {Mathf.CeilToInt(player.Health.MaxHealth)}");
 			UiBuilder.SetFill(_healthFill, player.Health.Fraction);
-			UiBuilder.SetText(_timer, $"Period {Game.Scoring.PeriodNumber}    {UiBuilder.FormatTime(Game.TimeLeft)}");
-			UiBuilder.SetText(_score, $"Kills  {record.Kills}\nDeaths  {record.Deaths}");
+			UiBuilder.SetText(_manaText, $"{Mathf.FloorToInt(player.Mana)} / {Mathf.CeilToInt(player.MaxMana)}");
+			UiBuilder.SetFill(_manaFill, player.MaxMana > 0f ? player.Mana / player.MaxMana : 0f);
+			var skillList = player.Definition.Skills;
+			for (var i = 0; i < Classes.SkillSlots; i++)
+			{
+				var has = i < skillList.Length;
+				_skillBack[i].gameObject.SetActive(has);
+				if (!has) continue;
+				UiBuilder.SetText(_skillName[i], skillList[i].Name);
+				UiBuilder.SetText(_skillCost[i], skillList[i].ManaCost.ToString("0"));
+				_skillCool[i].anchorMax = new Vector2(1f, player.SkillCooldownLeft(i));
+				_skillBack[i].color = player.Mana >= skillList[i].ManaCost ? Panel : new Color(0.25f, 0.06f, 0.06f, 0.8f);
+			}
+			_chrome.SetTitle(Game.Practice ? "Home" : $"Period {Game.Scoring.PeriodNumber}    {UiBuilder.FormatTime(Game.TimeLeft)}");
+			UiBuilder.SetText(_kills, record.Kills.ToString());
+			UiBuilder.SetText(_deaths, record.Deaths.ToString());
+			UiBuilder.SetText(_assists, record.Assists.ToString());
 			UiBuilder.SetText(_heroBanner, record.IsHero ? $"You are the Hero of the {player.Definition.Name}s" : "");
 			UiBuilder.SetText(_respawn, player.IsDown ? $"Back in {Mathf.Max(0f, player.RespawnAt - Time.time):0.0}" : "");
 			_crosshair.SetActive(!player.IsDown && player.Definition.Kind != AttackKind.Melee);
-			_chrome.SetStatus($"Kills {record.Kills}   Deaths {record.Deaths}");
 
 			_text.Clear();
 			foreach (var line in Game.Feed) _text.Append(line).Append('\n');
@@ -292,7 +378,7 @@ namespace Temnorid.Arena
 						? "Online: choose your class. The match starts when the host chooses.\n"
 						: "Online: a match is running. Choose a class to join in.\n";
 			}
-			if (session.PeriodsPlayed == 0) return online + "No periods played yet.";
+			if (session.PeriodsPlayed == 0) return online + "Training: no opponents.";
 			return online + $"Periods played  {session.PeriodsPlayed}     Best period  {session.BestKills} kills     Times Hero  {session.TimesHero}\n{session.Recent[session.Recent.Count - 1]}";
 		}
 

@@ -65,6 +65,9 @@ namespace Temnorid.Arena
 		public ArenaPhase Phase { get; private set; } = ArenaPhase.ClassSelect;
 		public Fighter Player { get; private set; }
 
+		/// <summary>Offline the player trains alone: the other fighters are put away, and the period never ends.</summary>
+		public bool Practice { get; private set; }
+
 		/// <summary>The link to the other players when this is an online game, else null.</summary>
 		public ArenaNet Net { get; private set; }
 
@@ -113,12 +116,50 @@ namespace Temnorid.Arena
 				fighter.Index = i;
 				fighter.gameObject.SetActive(true);
 				fighter.Health.Died += (health, info) => OnFighterDied(fighter, info);
+				fighter.Health.Damaged += (health, info) => OnFighterHit(fighter, info);
 				fighter.ConfigureAsBot();
 				var control = fighter.GetComponent<PlayerControl>();
 				if (control != null) control.Game = this;
 			}
 			PlaceAll();
 			if (online) Net = gameObject.AddComponent<ArenaNet>().Init(this);
+		}
+
+		void Start()
+		{
+			// Offline there is no class screen: the player is put in the arena as a warrior, alone, to train (tests start the match themselves).
+			if (Net == null && SaveRootOverride == null)
+			{
+				StartMatch(HeroClass.Warrior);
+				// The player trains as their lord's own class from Lords; a guest, or an account Lords has not read yet, starts as a warrior.
+				ApplyLordClass();
+			}
+		}
+
+		bool _lordClassApplied;
+
+		void ApplyLordClass()
+		{
+			if (_lordClassApplied || Player == null) return;
+			if (!Classes.TryFromLords(ShellLord.ClassId, out var id)) return;
+			_lordClassApplied = true;
+			TrainAs(id);
+		}
+
+		/// <summary>Practice: the player becomes <paramref name="id"/> (health, mana, skills and gear), back at full strength.</summary>
+		public void TrainAs(ClassId id)
+		{
+			if (Player == null || Net != null) return;
+			Player.SetRole(id);
+			ShowToast($"{Classes.Get(id).Name}: {Classes.Get(id).Description}", 3f);
+		}
+
+		/// <summary>Practice: the next of the six classes, to try their skills.</summary>
+		public void NextPracticeClass()
+		{
+			if (Player == null || !Practice) return;
+			var current = Player.Definition.Id;
+			TrainAs(Classes.All[((int)current + 1) % Classes.All.Length].Id);
 		}
 
 		void OnEnable() => ShellFlow.BeforeQuit += Save;
@@ -151,6 +192,12 @@ namespace Temnorid.Arena
 			Time.timeScale = 1f;
 			EngineInput.Default.PlayerEnabled = !autopilot;
 			PlaceAll();
+			Practice = !autopilot && Net == null;
+			if (Practice)
+			{
+				// No opponents: only the player stays in the arena.
+				foreach (var fighter in Fighters) if (fighter != Player) fighter.gameObject.SetActive(false);
+			}
 			EngineLog.Info(Log, $"Match started as {fighterClass}.");
 		}
 
@@ -203,6 +250,9 @@ namespace Temnorid.Arena
 				return;
 			}
 
+			// The lord's class can arrive a moment after the arena opened.
+			if (!_lordClassApplied && Practice) ApplyLordClass();
+
 			if (Phase == ArenaPhase.Playing)
 			{
 				PeriodTime += Time.deltaTime;
@@ -212,7 +262,7 @@ namespace Temnorid.Arena
 					if (fighter.IsDown && Time.time >= fighter.RespawnAt) Revive(fighter);
 				}
 
-				if (PeriodTime >= PeriodSeconds) EndPeriod();
+				if (!Practice && PeriodTime >= PeriodSeconds) EndPeriod();
 				else if (!UiHold && EngineInput.Default.UI.Pause.WasPressedThisFrame()) SetPaused(true);
 			}
 			else if (Phase == ArenaPhase.Paused && EngineInput.Default.UI.Pause.WasPressedThisFrame())
@@ -280,6 +330,13 @@ namespace Temnorid.Arena
 			var live = Phase == ArenaPhase.Playing && !UiHold && !LocalPaused;
 			if (Net == null) Time.timeScale = live ? 1f : 0f;
 			EngineInput.Default.PlayerEnabled = live && Player != null && Player.IsPlayer;
+		}
+
+		void OnFighterHit(Fighter victim, DamageInfo info)
+		{
+			if (Phase != ArenaPhase.Playing || info.Source == null) return;
+			var attacker = info.Source.GetComponent<Fighter>();
+			if (attacker != null) Scoring.RecordHit(attacker.Index, victim.Index);
 		}
 
 		void OnFighterDied(Fighter victim, DamageInfo info)

@@ -20,6 +20,12 @@ namespace Temnorid.Arena
 		public int Kills;
 		public int Deaths;
 
+		/// <summary>Defeats this fighter helped with: hit the victim, but somebody else landed the kill.</summary>
+		public int Assists;
+
+		/// <summary>Who has hit this fighter since they last fell (fighter indexes); they share the assist when this fighter falls.</summary>
+		public readonly HashSet<int> Attackers = new HashSet<int>();
+
 		/// <summary>When in the period the fighter got their last kill, in seconds (used to break ties).</summary>
 		public float LastKillAt = float.MaxValue;
 
@@ -82,9 +88,19 @@ namespace Temnorid.Arena
 		public void RecordKill(int killer, int victim, float time)
 		{
 			_fighters[victim].Deaths++;
+			foreach (var helper in _fighters[victim].Attackers)
+				if (helper != killer && helper != victim && helper >= 0 && helper < _fighters.Count) _fighters[helper].Assists++;
+			_fighters[victim].Attackers.Clear();
 			if (killer < 0 || killer == victim) return;
 			_fighters[killer].Kills++;
 			_fighters[killer].LastKillAt = time;
+		}
+
+		/// <summary><paramref name="attacker"/> hit <paramref name="victim"/>: if somebody else finishes them, the attacker gets an assist.</summary>
+		public void RecordHit(int attacker, int victim)
+		{
+			if (attacker < 0 || attacker == victim || victim < 0 || victim >= _fighters.Count) return;
+			_fighters[victim].Attackers.Add(attacker);
 		}
 
 		// ---- online: a client mirrors what the host decided ----
@@ -170,6 +186,8 @@ namespace Temnorid.Arena
 			{
 				fighter.Kills = 0;
 				fighter.Deaths = 0;
+				fighter.Assists = 0;
+				fighter.Attackers.Clear();
 				fighter.LastKillAt = float.MaxValue;
 			}
 			return result;

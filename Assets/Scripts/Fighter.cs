@@ -33,12 +33,23 @@ namespace Temnorid.Arena
 		public const ulong NoOwner = ulong.MaxValue;
 
 		public HeroClass Class;
+		/// <summary>The class in Lords' terms (knight, rogue...). Used when <see cref="RoleSet"/>; else the family's own class.</summary>
+		public ClassId Role;
+		public bool RoleSet;
 		public string DisplayName = "Fighter";
 
 		[HideInInspector] public int Index;
 		[HideInInspector] public float RespawnAt;
 
-		public ClassDefinition Definition => Classes.Get(Class);
+		public ClassDefinition Definition => RoleSet ? Classes.Get(Role) : Classes.Get(Class);
+
+		/// <summary>Mana left. Basic attacks are free; skills spend it, and it comes back by the class's regeneration.</summary>
+		public float Mana { get; private set; }
+
+		public float MaxMana => Definition.Mana;
+
+		/// <summary>A skill was cast: the slot (0 to 3).</summary>
+		public event System.Action<Fighter, int> SkillCast;
 		public Health Health { get; private set; }
 		public bool IsPlayer { get; private set; }
 		public bool IsDown { get; private set; }
@@ -82,6 +93,10 @@ namespace Temnorid.Arena
 		CapsuleCollider _proxy;
 		float _nextAttack;
 		bool _held;
+		ClassGear _gear;
+		readonly float[] _skillReadyAt = new float[Classes.SkillSlots];
+		float _guardUntil, _hasteUntil, _frenzyUntil;
+		float _baseWalk, _baseSprint, _baseAgent;
 
 		void Awake()
 		{
@@ -96,6 +111,9 @@ namespace Temnorid.Arena
 			_playerControl = GetComponent<PlayerControl>();
 			_animation = GetComponent<FighterAnimation>();
 			_badge = GetComponent<HeroBadge>();
+			_gear = GetComponent<ClassGear>();
+			if (_gear != null) _gear.Apply(Definition);
+			Mana = Definition.Mana;
 			if (_ai != null) _ai.AttackRequested += OnBotAttack;
 			Health.Damaged += (h, info) => _animation?.PlayHit();
 		}
@@ -189,7 +207,7 @@ namespace Temnorid.Arena
 		{
 			if (IsDown || Time.time < _nextAttack) return false;
 			var definition = Definition;
-			_nextAttack = Time.time + definition.Cooldown;
+			_nextAttack = Time.time + definition.Cooldown * (Time.time < _frenzyUntil ? _frenzyScale : 1f);
 			AttackCount++;
 			var team = Health.Team;
 			var amount = HitsAreRequests ? 0f : definition.Damage;
@@ -273,12 +291,163 @@ namespace Temnorid.Arena
 			TryAttack(direction);
 		}
 
+		// ---- classes, mana and skills ----
+
+		float _frenzyScale = 1f;
+
+		/// <summary>Becomes <paramref name="id"/>: its health, mana, skills and gear. Used to train as any class.</summary>
+		public void SetRole(ClassId id)
+		{
+			Role = id;
+			RoleSet = true;
+			var definition = Definition;
+			Class = definition.Class;
+			ClearEffects();
+			Health.MaxHealth = definition.Health;
+			Health.Restore();
+			Mana = definition.Mana;
+			for (var i = 0; i < _skillReadyAt.Length; i++) _skillReadyAt[i] = 0f;
+			if (_gear != null) _gear.Apply(definition);
+		}
+
+		/// <summary>0 to 1: how much of the skill's cooldown is left (1 just cast, 0 ready).</summary>
+		public float SkillCooldownLeft(int slot)
+		{
+			var skills = Definition.Skills;
+			if (slot < 0 || slot >= skills.Length || skills[slot].Cooldown <= 0f) return 0f;
+			return Mathf.Clamp01((_skillReadyAt[slot] - Time.time) / skills[slot].Cooldown);
+		}
+
+		/// <summary>Seconds left of a guard, haste or frenzy (the longest one), for the HUD.</summary>
+		public float BuffTimeLeft => Mathf.Max(0f, Mathf.Max(_guardUntil, Mathf.Max(_hasteUntil, _frenzyUntil)) - Time.time);
+
+		void Update()
+		{
+			if (IsDown) return;
+			Mana = Mathf.Min(MaxMana, Mana + Definition.ManaRegen * Time.deltaTime);
+			if (_guardUntil > 0f && Time.time >= _guardUntil) { _guardUntil = 0f; Health.DamageTaken = 1f; }
+			if (_hasteUntil > 0f && Time.time >= _hasteUntil) EndHaste();
+			if (_frenzyUntil > 0f && Time.time >= _frenzyUntil) _frenzyUntil = 0f;
+		}
+
+		void ClearEffects()
+		{
+			_guardUntil = 0f;
+			_frenzyUntil = 0f;
+			if (Health != null) Health.DamageTaken = 1f;
+			EndHaste();
+		}
+
+		void StartHaste(float power, float seconds)
+		{
+			EndHaste();
+			if (_motor != null) { _baseWalk = _motor.Settings.WalkSpeed; _baseSprint = _motor.Settings.SprintSpeed; }
+			if (_nav != null) _baseAgent = _nav.speed;
+			if (_motor != null) { _motor.Settings.WalkSpeed = _baseWalk * power; _motor.Settings.SprintSpeed = _baseSprint * power; }
+			if (_nav != null) _nav.speed = _baseAgent * power;
+			_hasteUntil = Time.time + seconds;
+		}
+
+		void EndHaste()
+		{
+			if (_hasteUntil <= 0f) return;
+			_hasteUntil = 0f;
+			if (_motor != null) { _motor.Settings.WalkSpeed = _baseWalk; _motor.Settings.SprintSpeed = _baseSprint; }
+			if (_nav != null) _nav.speed = _baseAgent;
+		}
+
+		/// <summary>What happened when a skill was cast.</summary>
+		public enum CastResult
+		{
+			Cast,
+			Down,
+			NoSuchSkill,
+			Unavailable,
+			Cooling,
+			NoMana,
+		}
+
+		/// <summary>Casts skill <paramref name="slot"/> (0 to 3) towards <paramref name="direction"/>, if there is mana and its cooldown is over.</summary>
+		public CastResult TryCastSkill(int slot, Vector3 direction)
+		{
+			if (IsDown) return CastResult.Down;
+			var skills = Definition.Skills;
+			if (slot < 0 || slot >= skills.Length) return CastResult.NoSuchSkill;
+			if (HitsAreRequests) return CastResult.Unavailable;
+			var skill = skills[slot];
+			if (Time.time < _skillReadyAt[slot]) return CastResult.Cooling;
+			if (Mana < skill.ManaCost) return CastResult.NoMana;
+
+			Mana -= skill.ManaCost;
+			_skillReadyAt[slot] = Time.time + skill.Cooldown;
+			_nextAttack = Mathf.Max(_nextAttack, Time.time + 0.3f);
+
+			var definition = Definition;
+			var flat = direction;
+			flat.y = 0f;
+			if (flat.sqrMagnitude < 0.001f) flat = transform.forward;
+			flat.Normalize();
+			var team = Health.Team;
+			var damage = definition.Damage * skill.Power;
+			var info = new DamageInfo(damage, gameObject, Chest, skill.Name);
+
+			switch (skill.Effect)
+			{
+				case SkillEffect.Strike:
+					CombatQueries.DamageInCone(transform.position, flat, skill.Range, skill.Angle, team, info);
+					Fx.Pulse(PrimitiveType.Cube, Chest + flat * (skill.Range * 0.5f), Quaternion.LookRotation(flat) * Quaternion.Euler(0f, 0f, 30f),
+						new Vector3(0.4f, 0.1f, 0.6f), new Vector3(skill.Range, 0.1f, 0.7f), definition.Tint, 0.2f);
+					_animation?.PlayAttack(AttackKind.Melee);
+					break;
+				case SkillEffect.Nova:
+					CombatQueries.DamageInRadius(transform.position, skill.Range, team, info);
+					Fx.Pulse(PrimitiveType.Sphere, transform.position + Vector3.up * 0.5f, Quaternion.identity, Vector3.one * 0.6f, Vector3.one * skill.Range * 2f, definition.Tint, 0.4f);
+					_animation?.PlayAttack(AttackKind.Melee);
+					break;
+				case SkillEffect.Bolt:
+				case SkillEffect.Volley:
+					var aim = direction.sqrMagnitude < 0.001f ? transform.forward : direction.normalized;
+					var count = Mathf.Max(1, skill.Count);
+					for (var i = 0; i < count; i++)
+					{
+						var offset = (i - (count - 1) * 0.5f) * skill.Angle;
+						var shot = Quaternion.AngleAxis(offset, Vector3.up) * aim;
+						Projectile.Launch(Chest + shot * 0.7f, shot, skill.Speed, skill.Range, definition.Kind == AttackKind.Arrow ? 0.18f : 0.45f, team, info,
+							Color.Lerp(definition.Tint, Color.white, 0.5f));
+					}
+					Fx.Pulse(PrimitiveType.Sphere, Chest + aim * 0.7f, Quaternion.identity, Vector3.one * 0.2f, Vector3.one * 1.0f, definition.Tint, 0.15f);
+					_animation?.PlayAttack(definition.Kind);
+					break;
+				case SkillEffect.Heal:
+					Health.Heal(Health.MaxHealth * skill.Power);
+					Fx.Pulse(PrimitiveType.Sphere, transform.position + Vector3.up * 0.9f, Quaternion.identity, Vector3.one * 0.8f, Vector3.one * 3f, new Color(0.4f, 1f, 0.5f), 0.5f);
+					break;
+				case SkillEffect.Guard:
+					Health.DamageTaken = Mathf.Clamp01(1f - skill.Power);
+					_guardUntil = Time.time + skill.Duration;
+					Fx.Pulse(PrimitiveType.Sphere, transform.position + Vector3.up * 0.9f, Quaternion.identity, Vector3.one * 1.2f, Vector3.one * 2.6f, new Color(0.5f, 0.7f, 1f), 0.5f);
+					break;
+				case SkillEffect.Haste:
+					StartHaste(skill.Power, skill.Duration);
+					Fx.Pulse(PrimitiveType.Sphere, transform.position + Vector3.up * 0.9f, Quaternion.identity, Vector3.one * 0.8f, Vector3.one * 2.4f, new Color(1f, 0.9f, 0.4f), 0.4f);
+					break;
+				case SkillEffect.Frenzy:
+					_frenzyScale = skill.Power;
+					_frenzyUntil = Time.time + skill.Duration;
+					Fx.Pulse(PrimitiveType.Sphere, transform.position + Vector3.up * 0.9f, Quaternion.identity, Vector3.one * 0.8f, Vector3.one * 2.4f, new Color(1f, 0.5f, 0.3f), 0.4f);
+					break;
+			}
+			SkillCast?.Invoke(this, slot);
+			return CastResult.Cast;
+		}
+
 		// ---- falling and getting up ----
 
 		/// <summary>Defeated: lie down and wait to be put back by the game.</summary>
 		public void GoDown()
 		{
 			IsDown = true;
+			ClearEffects();
 			if (_marker != null) _marker.Alive = false;
 			if (_ai != null) _ai.Stop();
 			_nav.enabled = false;
@@ -294,7 +463,10 @@ namespace Temnorid.Arena
 		public void GetUp(Vector3 position, Quaternion rotation)
 		{
 			IsDown = false;
+			ClearEffects();
 			Health.Restore();
+			Mana = Definition.Mana;
+			for (var i = 0; i < _skillReadyAt.Length; i++) _skillReadyAt[i] = 0f;
 			_nextAttack = Time.time + 0.5f;
 
 			_controller.enabled = false;

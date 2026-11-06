@@ -323,33 +323,11 @@ namespace Temnorid.Arena.EditorTools
 			var motion = root.AddComponent<FighterAnimation>();
 			motion.Animator = animator;
 
-			var tint = GrayboxBuilder.Mat("Class_" + definition.Name, definition.Tint, MaterialDir, 0.2f);
-			var steel = GrayboxBuilder.Mat("Steel", new Color(0.78f, 0.8f, 0.86f), MaterialDir, 0.5f);
-			var wood = GrayboxBuilder.Mat("Wood", new Color(0.45f, 0.3f, 0.18f), MaterialDir, 0.1f);
-			var body = new GameObject("ClassGear").transform;
-			body.SetParent(root.transform, false);
-			GrayboxBuilder.Prim(PrimitiveType.Cube, "Sash", body, new Vector3(0f, 1.15f, 0.2f), new Vector3(0.62f, 0.14f, 0.38f), tint);
-			switch (definition.Kind)
-			{
-				case AttackKind.Melee:
-					GrayboxBuilder.Prim(PrimitiveType.Cube, "Blade", body, new Vector3(0.5f, 1.05f, 0.45f), new Vector3(0.08f, 0.08f, 1.2f), steel);
-					GrayboxBuilder.Prim(PrimitiveType.Cube, "Guard", body, new Vector3(0.5f, 1.05f, -0.1f), new Vector3(0.28f, 0.08f, 0.1f), wood);
-					GrayboxBuilder.Prim(PrimitiveType.Cube, "ShoulderL", body, new Vector3(-0.36f, 1.5f, 0f), new Vector3(0.28f, 0.16f, 0.34f), tint);
-					GrayboxBuilder.Prim(PrimitiveType.Cube, "ShoulderR", body, new Vector3(0.36f, 1.5f, 0f), new Vector3(0.28f, 0.16f, 0.34f), tint);
-					break;
-				case AttackKind.Arrow:
-					GrayboxBuilder.Prim(PrimitiveType.Cube, "BowGrip", body, new Vector3(-0.5f, 1.1f, 0.35f), new Vector3(0.05f, 0.9f, 0.05f), wood);
-					var top = GrayboxBuilder.Prim(PrimitiveType.Cube, "BowTop", body, new Vector3(-0.5f, 1.6f, 0.3f), new Vector3(0.05f, 0.5f, 0.05f), wood);
-					top.transform.localRotation = Quaternion.Euler(-25f, 0f, 0f);
-					var bottom = GrayboxBuilder.Prim(PrimitiveType.Cube, "BowBottom", body, new Vector3(-0.5f, 0.6f, 0.3f), new Vector3(0.05f, 0.5f, 0.05f), wood);
-					bottom.transform.localRotation = Quaternion.Euler(25f, 0f, 0f);
-					GrayboxBuilder.Prim(PrimitiveType.Cube, "Quiver", body, new Vector3(0.1f, 1.2f, -0.28f), new Vector3(0.14f, 0.5f, 0.14f), tint);
-					break;
-				default:
-					GrayboxBuilder.Prim(PrimitiveType.Cylinder, "Staff", body, new Vector3(0.5f, 0.95f, 0.35f), new Vector3(0.05f, 0.95f, 0.05f), wood);
-					GrayboxBuilder.Prim(PrimitiveType.Sphere, "Orb", body, new Vector3(0.5f, 1.95f, 0.35f), Vector3.one * 0.22f, tint);
-					break;
-			}
+			// The class gear is built at run time (the player can train as any class): it only needs a lit material to copy.
+			var gear = root.AddComponent<ClassGear>();
+			gear.Template = GrayboxBuilder.Mat("Class_" + definition.Name, definition.Tint, MaterialDir, 0.2f);
+			fighter.Role = definition.Id;
+			fighter.RoleSet = true;
 
 			root.SetActive(false); // woken by the game once the NavMesh exists
 			return fighter;

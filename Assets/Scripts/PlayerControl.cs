@@ -1,5 +1,6 @@
 using ITKamianets.Engine.Input;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Temnorid.Arena
 {
@@ -13,6 +14,8 @@ namespace Temnorid.Arena
 		public ArenaGame Game;
 
 		Fighter _fighter;
+		InputAction[] _skills;
+		InputAction _nextClass;
 
 		void Awake()
 		{
@@ -23,6 +26,27 @@ namespace Temnorid.Arena
 		{
 			if (Game == null || Game.Phase != ArenaPhase.Playing || _fighter.IsDown) return;
 			if (EngineInput.Default.Player.Primary.IsPressed()) _fighter.TryAttack(AimDirection());
+			FindActions();
+			if (_skills == null) return;
+			for (var i = 0; i < _skills.Length; i++)
+			{
+				if (_skills[i] == null || !_skills[i].WasPressedThisFrame()) continue;
+				var result = _fighter.TryCastSkill(i, AimDirection());
+				if (result == Fighter.CastResult.NoMana) Game.ShowToast("Not enough mana", 1.2f);
+				else if (result == Fighter.CastResult.Cooling) Game.ShowToast("Not ready yet", 1.2f);
+			}
+			if (_nextClass != null && _nextClass.WasPressedThisFrame()) Game.NextPracticeClass();
+		}
+
+		/// <summary>The skill keys are actions of this game's own map (added by the HUD), so they can be rebound like the rest.</summary>
+		void FindActions()
+		{
+			if (_skills != null) return;
+			var map = EngineInput.Default.Asset.FindActionMap("Arena");
+			if (map == null) return;
+			_skills = new InputAction[Classes.SkillSlots];
+			for (var i = 0; i < _skills.Length; i++) _skills[i] = map.FindAction("Skill" + (i + 1));
+			_nextClass = map.FindAction("NextClass");
 		}
 
 		/// <summary>From the fighter's chest to the point in the middle of the screen.</summary>
