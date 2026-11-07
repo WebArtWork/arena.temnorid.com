@@ -68,7 +68,7 @@
       "name": "Pillar",
       "kind": "model",
       "source": {
-        "uri": "Assets/Models/arena/arena-pillar.glb",
+        "uri": "Assets/Models/arena/pillar.glb",
         "format": "glb"
       },
       "bounds": {
@@ -109,7 +109,7 @@
       "name": "Crate",
       "kind": "model",
       "source": {
-        "uri": "Assets/Models/arena/arena-crate.glb",
+        "uri": "Assets/Models/arena/crate.glb",
         "format": "glb"
       },
       "bounds": {
@@ -151,7 +151,7 @@
       "name": "Central platform",
       "kind": "model",
       "source": {
-        "uri": "Assets/Models/arena/arena-platform.glb",
+        "uri": "Assets/Models/arena/platform.glb",
         "format": "glb"
       },
       "bounds": {
@@ -193,7 +193,7 @@
       "name": "Wall segment",
       "kind": "model",
       "source": {
-        "uri": "Assets/Models/arena/arena-wall-segment.glb",
+        "uri": "Assets/Models/arena/wall-segment.glb",
         "format": "glb"
       },
       "bounds": {
@@ -234,7 +234,7 @@
       "name": "Low wall",
       "kind": "model",
       "source": {
-        "uri": "Assets/Models/arena/arena-low-wall.glb",
+        "uri": "Assets/Models/arena/low-wall.glb",
         "format": "glb"
       },
       "bounds": {
@@ -276,7 +276,7 @@
       "name": "Broken pillar",
       "kind": "model",
       "source": {
-        "uri": "Assets/Models/arena/arena-broken-pillar.glb",
+        "uri": "Assets/Models/arena/broken-pillar.glb",
         "format": "glb"
       },
       "bounds": {
@@ -317,7 +317,7 @@
       "name": "Rubble pile",
       "kind": "model",
       "source": {
-        "uri": "Assets/Models/arena/arena-rubble.glb",
+        "uri": "Assets/Models/arena/rubble.glb",
         "format": "glb"
       },
       "bounds": {
@@ -358,7 +358,7 @@
       "name": "Stairs",
       "kind": "model",
       "source": {
-        "uri": "Assets/Models/arena/arena-stairs.glb",
+        "uri": "Assets/Models/arena/stairs.glb",
         "format": "glb"
       },
       "bounds": {
@@ -400,7 +400,7 @@
       "name": "Brazier",
       "kind": "model",
       "source": {
-        "uri": "Assets/Models/arena/arena-brazier.glb",
+        "uri": "Assets/Models/arena/brazier.glb",
         "format": "glb"
       },
       "bounds": {
@@ -442,7 +442,7 @@
       "name": "Spawn circle",
       "kind": "model",
       "source": {
-        "uri": "Assets/Models/arena/arena-spawn-circle.glb",
+        "uri": "Assets/Models/arena/spawn-circle.glb",
         "format": "glb"
       },
       "bounds": {
@@ -484,7 +484,7 @@
       "name": "Banner",
       "kind": "model",
       "source": {
-        "uri": "Assets/Models/arena/arena-banner.glb",
+        "uri": "Assets/Models/arena/banner.glb",
         "format": "glb"
       },
       "bounds": {

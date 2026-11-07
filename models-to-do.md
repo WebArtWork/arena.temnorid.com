@@ -39,7 +39,7 @@ wrong way or be the wrong size.
 | Contents | the model only: no cameras, lights, ground planes or hidden helper objects |
 | Vertex colors | **none** (no `COLOR_0` / `COLOR_1`; Blender's "Color Attributes" export off) |
 | Skinned meshes | all material parts **share one vertex set**: one mesh, one set of vertices, one index list per material (Blender: export the character as a single joined mesh). Separate vertex data per material makes Unity's GLB importer fail |
-| Names | lowercase with dashes, as given below (`arena-pillar.glb`) |
+| Names | one GLB per id at `Assets/Models/<group>/<name>.glb`: the id `arena/pillar` is `Assets/Models/arena/pillar.glb` |
 
 **Size must match the bounds below.** The game already places these objects using these exact
 sizes (collision boxes and the grey placeholders use them), so a model bigger or smaller than its
@@ -59,19 +59,19 @@ delivery, Claude wires each file to its asset id, so the game swaps the placehol
 | # | Asset id | File | Group | Replaces |
 |---|---|---|---|---|
 | 1 | `characters/mage` | `mage.glb` | characters | the capsule player and bots |
-| 2 | `arena/pillar` | `arena-pillar.glb` | arena | grey pillar boxes |
-| 3 | `arena/crate` | `arena-crate.glb` | arena | brown crate boxes |
-| 4 | `arena/platform` | `arena-platform.glb` | arena | grey central block |
+| 2 | `arena/pillar` | `pillar.glb` | arena | grey pillar boxes |
+| 3 | `arena/crate` | `crate.glb` | arena | brown crate boxes |
+| 4 | `arena/platform` | `platform.glb` | arena | grey central block |
 | 5 | material `arena/stone-floor` | `stone-floor.png` set | materials | the plain floor |
 | 6 | material `arena/stone-wall` | `stone-wall.png` set | materials | the plain walls |
-| 7 | `arena/wall-segment` | `arena-wall-segment.glb` | arena | (next arena: modular walls) |
-| 8 | `arena/low-wall` | `arena-low-wall.glb` | arena | (more cover) |
-| 9 | `arena/broken-pillar` | `arena-broken-pillar.glb` | arena | (variety) |
-| 10 | `arena/rubble` | `arena-rubble.glb` | arena | (variety) |
-| 11 | `arena/stairs` | `arena-stairs.glb` | arena | (height, onto the platform) |
-| 12 | `arena/brazier` | `arena-brazier.glb` | arena | (light source, mood) |
-| 13 | `arena/spawn-circle` | `arena-spawn-circle.glb` | arena | (marks spawn points) |
-| 14 | `arena/banner` | `arena-banner.glb` | arena | (decoration on walls) |
+| 7 | `arena/wall-segment` | `wall-segment.glb` | arena | (next arena: modular walls) |
+| 8 | `arena/low-wall` | `low-wall.glb` | arena | (more cover) |
+| 9 | `arena/broken-pillar` | `broken-pillar.glb` | arena | (variety) |
+| 10 | `arena/rubble` | `rubble.glb` | arena | (variety) |
+| 11 | `arena/stairs` | `stairs.glb` | arena | (height, onto the platform) |
+| 12 | `arena/brazier` | `brazier.glb` | arena | (light source, mood) |
+| 13 | `arena/spawn-circle` | `spawn-circle.glb` | arena | (marks spawn points) |
+| 14 | `arena/banner` | `banner.glb` | arena | (decoration on walls) |
 | 15 | app icon | `AppIcon.png` | branding | the generated placeholder icon (needed for the App Store) |
 
 ---

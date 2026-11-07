@@ -85,7 +85,7 @@ namespace Temnorid.Arena.EditorTools
 			GrayboxBuilder.Box(t, "Floor", new Vector3(0f, -0.25f, 0f), new Vector3(Half * 2f + 1f, 0.5f, Half * 2f + 1f), floorMaterial);
 
 			// The wall: segments side by side along each edge, front towards the middle.
-			var wallPrefab = Load("arena-wall-segment");
+			var wallPrefab = Load("wall-segment");
 			var wallSize = MeasureSize(wallPrefab);
 			var count = Mathf.Max(1, Mathf.RoundToInt(Half * 2f / wallSize.x));
 			var width = Half * 2f / count;
@@ -104,10 +104,10 @@ namespace Temnorid.Arena.EditorTools
 			props.SetParent(t, false);
 
 			// The raised platform in the middle, with a stair on two sides. The stairs look like stairs; the collider is a smooth ramp.
-			var platform = Load("arena-platform");
+			var platform = Load("platform");
 			Prop(props, platform, "arena/platform", Vector3.zero, Quaternion.identity, true);
 			var platformSize = MeasureSize(platform);
-			var stairs = Load("arena-stairs");
+			var stairs = Load("stairs");
 			var stairSize = MeasureSize(stairs);
 			foreach (var side in new[] { 1f, -1f })
 			{
@@ -121,16 +121,16 @@ namespace Temnorid.Arena.EditorTools
 				box.size = new Vector3(stairSize.x, 0.1f, run);
 			}
 
-			var pillar = Load("arena-pillar");
+			var pillar = Load("pillar");
 			foreach (var x in new[] { -10f, 10f })
 				foreach (var z in new[] { -10f, 10f })
 					Prop(props, pillar, "arena/pillar", new Vector3(x, 0f, z), Quaternion.identity, true);
 
-			var crate = Load("arena-crate");
+			var crate = Load("crate");
 			foreach (var spot in new[] { new Vector3(-13f, 0f, -3f), new Vector3(-13f, 0f, -1.7f), new Vector3(13f, 0f, 3f), new Vector3(13f, 0f, 1.7f), new Vector3(3f, 0f, -13f), new Vector3(1.7f, 0f, -13f), new Vector3(-3f, 0f, 13f), new Vector3(-1.7f, 0f, 13f) })
 				Prop(props, crate, "arena/crate", spot, Quaternion.Euler(0f, spot.x * 7f, 0f), true);
 
-			var lowWall = Load("arena-low-wall");
+			var lowWall = Load("low-wall");
 			foreach (var x in new[] { -7f, 7f })
 				foreach (var z in new[] { -13f, 13f })
 					Prop(props, lowWall, "arena/low-wall", new Vector3(x, 0f, z), Quaternion.identity, true);
@@ -138,17 +138,17 @@ namespace Temnorid.Arena.EditorTools
 				foreach (var z in new[] { -7f, 7f })
 					Prop(props, lowWall, "arena/low-wall", new Vector3(x, 0f, z), Quaternion.Euler(0f, 90f, 0f), true);
 
-			var broken = Load("arena-broken-pillar");
+			var broken = Load("broken-pillar");
 			foreach (var x in new[] { -16f, 16f })
 				foreach (var z in new[] { -16f, 16f })
 					Prop(props, broken, "arena/broken-pillar", new Vector3(x, 0f, z), Quaternion.Euler(0f, x * z, 0f), true);
 
-			var rubble = Load("arena-rubble");
+			var rubble = Load("rubble");
 			foreach (var spot in new[] { new Vector3(-5f, 0f, -17f), new Vector3(5f, 0f, 17f), new Vector3(-17f, 0f, 5f), new Vector3(17f, 0f, -5f) })
 				Prop(props, rubble, "arena/rubble", spot, Quaternion.Euler(0f, spot.x * 11f, 0f), true);
 
 			// Braziers in the corners, each with a warm light.
-			var brazier = Load("arena-brazier");
+			var brazier = Load("brazier");
 			foreach (var x in new[] { -18f, 18f })
 				foreach (var z in new[] { -18f, 18f })
 				{
@@ -165,14 +165,14 @@ namespace Temnorid.Arena.EditorTools
 				}
 
 			// Banners hanging on the middle of each wall.
-			var banner = Load("arena-banner");
+			var banner = Load("banner");
 			Prop(props, banner, "arena/banner", new Vector3(0f, 2.2f, -Half + 0.45f), Quaternion.identity, false);
 			Prop(props, banner, "arena/banner", new Vector3(0f, 2.2f, Half - 0.45f), Quaternion.Euler(0f, 180f, 0f), false);
 			Prop(props, banner, "arena/banner", new Vector3(-Half + 0.45f, 2.2f, 0f), Quaternion.Euler(0f, 90f, 0f), false);
 			Prop(props, banner, "arena/banner", new Vector3(Half - 0.45f, 2.2f, 0f), Quaternion.Euler(0f, -90f, 0f), false);
 
 			// Where fighters start and come back: eight circles on a ring, each facing the middle.
-			var circle = Load("arena-spawn-circle");
+			var circle = Load("spawn-circle");
 			var spawnRoot = new GameObject("Spawns").transform;
 			spawnRoot.SetParent(t, false);
 			var list = new List<Transform>();
